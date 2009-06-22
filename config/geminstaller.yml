@@ -6,3 +6,5 @@ gems:
   version: >= 2.3
 - name: braid
   version: "0.5"
+- name: thoughtbot-factory_girl
+  version: "1.2.1"
