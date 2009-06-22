@@ -1,0 +1,27 @@
+<html>
+	<head>
+		<%=stylesheet_link_tag "reset-fonts-grids" %>
+		<%=stylesheet_link_tag "site" %>
+		<%=javascript_include_tag "jquery-1.3.2.min" %>
+	</head>
+	<body>
+		<div id="doc4"> 
+			<div id="hd">
+				<div>
+					<% if logged_in? %>
+						<div id="welcome">
+							Welcome, <%=current_user.login%>.  <%=link_to "Log out", logout_url %>
+						</div>
+					<% end %>
+					<a href="/" id="logo">eq</a>
+				</div>  
+			</div>
+		  <div id="bd"><%=yield%></div>  
+		  <div id="ft">
+				<div>
+					Copyright &copy;2009 Kyle Maxwell
+				</div>  
+			</div>
+		</div>
+	</body>
+</html>

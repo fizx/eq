@@ -1,0 +1,75 @@
+#hd>div {
+  background-color:#ffc;
+  margin-bottom:1em;
+}
+
+.highlight {
+  background-color: lightgreen;
+  padding:7px;
+}
+
+textarea {
+  height: 80px;
+}
+
+#welcome {
+  float:right;
+  padding:7px;
+}
+#logo {
+  font-weight:bold;
+  color: black;
+  text-decoration: none;
+  display:table;
+  padding:7px;
+}
+#ft>div{
+  margin-top: 2em;
+  padding:7px;
+  border-top:1px silver solid;
+}
+
+#ideas {
+  padding:20px;
+  font-family: Georgia, serif;
+}
+
+h2{
+  font-size: 2em;
+  font-family: Georgia, serif;
+}
+
+h3{
+  font-size: 1.4em;
+  font-family: Georgia, serif;
+}
+
+
+#ideas ul {
+  padding:10px;
+  font-style: italic;
+}
+
+#ideas li {
+  font-size: 1.4em;
+  list-style: disc inside;
+  margin-bottom: 0.5em;
+}
+
+h1 {
+  font-size: 1.4em;
+  margin-bottom: 0.5em;
+}
+
+p{
+  margin-bottom: 0.5em;
+}
+
+#blurb {
+  max-width: 50%;
+} 
+
+em {
+  font-weight: bold;
+  color: darkgreen;
+}

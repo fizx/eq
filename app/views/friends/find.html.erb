@@ -1,0 +1,17 @@
+<h2>Find your friends</h2>
+
+<form>
+	<p>We need your friends email addresses. <em>We will not spam them!</em></em>
+	<p>
+		Email addresses: <%=gmail_link %><br />
+		<%=text_area_tag :emails, params[:emails] %>
+	</p>
+	<p>
+		<input type="submit" value="Look them up!"> (does not send mail)
+	</p>
+</form>
+
+<% if @users %>
+	<h3 class="highlight">We found <%=@users.length%> of your friends.</h3>
+	<ul><%=render @users %></ul>
+<% end %>

@@ -8,3 +8,5 @@ gems:
   version: "0.5"
 - name: thoughtbot-factory_girl
   version: "1.2.1"
+- name: gdata
+  version: "> 0"

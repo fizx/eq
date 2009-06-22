@@ -1,5 +1,5 @@
 require 'digest/sha1'
-
+require "gravtastic"
 class User < ActiveRecord::Base
   include Authentication
   include Authentication::ByPassword
@@ -25,13 +25,17 @@ class User < ActiveRecord::Base
   has_many :followers, :through => :followings_as_followee
   has_many :followees, :through => :followings_as_follower
   has_many :friends, :through => :friendings_as_followee, :source => :follower
+  
+  has_many :busy_intervals
 
   # HACK HACK HACK -- how to do attr_accessible from here?
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.
   attr_accessible :login, :email, :name, :password, :password_confirmation
 
-
+  def self.find_any_email(emails)
+    find :all, :conditions => ["email IN(?)", emails] 
+  end
 
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
   #

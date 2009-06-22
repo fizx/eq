@@ -8,6 +8,15 @@ include AuthenticatedTestHelper
 describe User do
   fixtures :users
   
+  describe "#find_any_email" do
+    it "should find by emails" do
+      users = Array.new(10).map { Factory.create(:user) }
+      findable = users[2..4]
+      emails = findable.map(&:email)
+      User.find_any_email(emails).should == findable
+    end
+  end
+  
   describe "factory" do
     it "should generate a valid user" do
       Factory.create(:user).should be_valid
