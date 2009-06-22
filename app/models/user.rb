@@ -1,5 +1,5 @@
 require 'digest/sha1'
-require "gravtastic"
+# require "geokit"
 class User < ActiveRecord::Base
   include Authentication
   include Authentication::ByPassword
@@ -37,10 +37,32 @@ class User < ActiveRecord::Base
   # HACK HACK HACK -- how to do attr_accessible from here?
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.
-  attr_accessible :login, :email, :name, :password, :password_confirmation
+  attr_accessible :login, :email, :name, :password, :password_confirmation, :location_string
   
   def location_string
-    location.try(:name)
+    @location_string ||= location.try(:name)
+  end
+  
+  def location_string=(string)
+    @location_string = string
+    @location_string_dirty = true
+  end
+  
+  before_save :update_location_string
+  
+  def update_location_string
+    self.default_location = Location.from(@location_string) if @location_string_dirty
+    @location_string_dirty = false
+    true
+  end
+  
+  def default_location=(loc)
+    self.default_locationings.clear
+    ing = Locationing.new
+    ing.location = loc
+    ing.user = self
+    ing.save!
+    ing
   end
   
   def location

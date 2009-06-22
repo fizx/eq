@@ -23,6 +23,16 @@ describe User do
       Factory.create(:user).should be_valid
     end
   end
+  
+  describe "creating with location" do
+    it "should set default location" do
+      user = Factory(:user)
+      user.location_string = "100 Spear st, San Francisco, CA"
+      user.save!
+      user.reload
+      user.default_location.should be_a(Location)
+    end
+  end
 
   describe 'being created' do
     before do

@@ -9,4 +9,25 @@ class ApplicationController < ActionController::Base
 
   filter_parameter_logging :password
   layout "site"
+  
+  around_filter :user_scope
+  
+  def user_scope
+    user = { 
+              :find => { :conditions => { :user_id => current_user && current_user.id } },
+              :create => {:user_id => current_user && current_user.id }
+           }
+    Invitation.send :with_scope, user do
+      yield
+    end
+  end
+  
+  def admin_required
+    if current_user.is_a?(AdminUser)
+      return true
+    else
+      redirect_to login_url
+      return false
+    end
+  end
 end

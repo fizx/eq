@@ -7,3 +7,7 @@ Factory.define :user do |user|
   user.password "hiworld"
   user.password_confirmation "hiworld"
 end
+
+Factory.define :web_calendar do |cal|
+  cal.url "http://www.google.com/calendar/ical/kyle.c.maxwell%40gmail.com/foo/basic.ics"
+end

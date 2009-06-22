@@ -10,6 +10,11 @@
 
 textarea {
   height: 80px;
+  width: 50%;
+}
+
+textarea.large {
+  height:200px;
 }
 
 #welcome {
@@ -92,7 +97,9 @@ li.user span {
   line-height:40px;
   height: 40px;
 }
-
+.user .location {
+  color: #999;
+}
 li.user img {
   width: 40px;
   height: 40px;

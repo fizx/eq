@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090622215045) do
+ActiveRecord::Schema.define(:version => 20090622230803) do
 
   create_table "followings", :force => true do |t|
     t.integer  "follower_id"
@@ -34,6 +34,14 @@ ActiveRecord::Schema.define(:version => 20090622215045) do
   add_index "intervals", ["type"], :name => "index_intervals_on_type"
   add_index "intervals", ["user_id"], :name => "index_intervals_on_user_id"
 
+  create_table "invitations", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "email"
+    t.text     "message"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "locationings", :force => true do |t|
     t.integer  "user_id"
     t.integer  "location_id"
@@ -55,6 +63,18 @@ ActiveRecord::Schema.define(:version => 20090622215045) do
     t.datetime "updated_at"
   end
 
+  create_table "resources", :force => true do |t|
+    t.string   "type"
+    t.text     "url"
+    t.text     "data"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "resources", ["type"], :name => "index_resources_on_type"
+  add_index "resources", ["user_id"], :name => "index_resources_on_user_id"
+
   create_table "users", :force => true do |t|
     t.string   "login",                     :limit => 40
     t.string   "name",                      :limit => 100, :default => ""
@@ -65,6 +85,7 @@ ActiveRecord::Schema.define(:version => 20090622215045) do
     t.datetime "updated_at"
     t.string   "remember_token",            :limit => 40
     t.datetime "remember_token_expires_at"
+    t.string   "type"
   end
 
   add_index "users", ["login"], :name => "index_users_on_login", :unique => true
