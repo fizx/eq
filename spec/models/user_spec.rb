@@ -7,6 +7,13 @@ include AuthenticatedTestHelper
 
 describe User do
   fixtures :users
+  
+  describe "factory" do
+    it "should generate a valid user" do
+      Factory.create(:user).should be_valid
+      Factory.create(:user).should be_valid
+    end
+  end
 
   describe 'being created' do
     before do

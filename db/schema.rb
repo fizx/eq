@@ -9,7 +9,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090622190832) do
+ActiveRecord::Schema.define(:version => 20090622191516) do
+
+  create_table "followings", :force => true do |t|
+    t.integer  "follower_id"
+    t.integer  "followee_id"
+    t.boolean  "bidi"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "followings", ["followee_id"], :name => "index_followings_on_followee_id"
+  add_index "followings", ["follower_id"], :name => "index_followings_on_follower_id"
 
   create_table "users", :force => true do |t|
     t.string   "login",                     :limit => 40
