@@ -73,3 +73,28 @@ em {
   font-weight: bold;
   color: darkgreen;
 }
+
+li.user {
+  margin: 7px;
+  margin-bottom:0;
+  overflow:auto;
+}
+
+li.user input {
+  margin:10px;
+  float:left;
+  vertical-align:middle;  
+}
+
+li.user span {
+  font-family: Georgia, serif;
+  font-size: 1.4em;
+  line-height:40px;
+  height: 40px;
+}
+
+li.user img {
+  width: 40px;
+  height: 40px;
+  float:right;
+}
