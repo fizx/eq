@@ -28,11 +28,34 @@ describe Following do
     before do
       @following = Following.create :follower_id => @joe.id, :followee_id => @suzy.id, :bidi => false
     end
+    
+    it "should have the correct belongs_tos" do
+      @following.follower.should == @joe
+      @following.followee.should == @suzy
+    end
+    
+    it "should not set bidi" do
+      @following.bidi.should == false
+    end
+    
   end
   
   describe "two-way relationship" do
     before do 
-      @following = Following.create :follower_id => @joe.id, :followee_id => @suzy.id, :bidi => true
+      @following = Following.create! :follower_id => @joe.id, :followee_id => @suzy.id
+      @reciprocal = Following.create! :follower_id => @suzy.id, :followee_id => @joe.id
+      @following.reload
+      @reciprocal.reload
+    end
+    
+    it "should set bidi" do
+      @following.bidi.should == true
+      @reciprocal.bidi.should == true
+    end
+    
+    it "should have the correct belongs_tos" do
+      @following.follower.should == @joe
+      @following.followee.should == @suzy
     end
   end
   
