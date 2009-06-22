@@ -13,3 +13,10 @@ vendor/plugins/gravatar-plugin:
   revision: e9e34ac98de79a6c525fe93d99bf60b21db92ccf
   branch: master
   remote: braid/vendor/plugins/gravatar-plugin
+vendor/plugins/geokit: 
+  squashed: true
+  url: git://github.com/ptb/geokit.git
+  type: git
+  revision: e65a8ed1e7f7d72a6e075cc425defcca1e233c23
+  branch: master
+  remote: braid/vendor/plugins/geokit
