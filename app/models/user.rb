@@ -26,12 +26,26 @@ class User < ActiveRecord::Base
   has_many :followees, :through => :followings_as_follower
   has_many :friends, :through => :friendings_as_followee, :source => :follower
   
+  has_many :locationings
+  has_many :default_locationings, :class_name => "Locationing", 
+                                  :conditions => {:interval_id => nil}
+  has_many :locations, :through => :locationings
+  has_one :default_location, :through => :default_locationings, :source => :location
+  
   has_many :busy_intervals
 
   # HACK HACK HACK -- how to do attr_accessible from here?
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.
   attr_accessible :login, :email, :name, :password, :password_confirmation
+  
+  def location_string
+    location.try(:name)
+  end
+  
+  def location
+    default_location
+  end
 
   def self.find_any_email(emails)
     find :all, :conditions => ["email IN(?)", emails] 
