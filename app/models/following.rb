@@ -7,6 +7,9 @@ class Following < ActiveRecord::Base
   before_create :check_bidi
   after_create :update_bidi
   
+  before_destroy :check_bidi
+  after_destroy :update_bidi
+  
   def check_bidi
     @other = Following.find_by_follower_id_and_followee_id(followee_id, follower_id)
     self.bidi = !!@other
@@ -15,9 +18,11 @@ class Following < ActiveRecord::Base
   
   def update_bidi
     if @other
-      @other.update_attribute :bidi, true
+      @other.update_attribute :bidi, !destroyed?
       @other = nil
     end
     return true
   end
+  
+  alias_method :destroyed?, :frozen?
 end

@@ -18,10 +18,13 @@ class User < ActiveRecord::Base
   validates_uniqueness_of   :email
   validates_format_of       :email,    :with => Authentication.email_regex, :message => Authentication.bad_email_message
 
-  has_many :followings
-  has_many :followers, :through => :followings, :foreign_key => "followee_id"
-  has_many :friends, :through => :followings, :foreign_key => "followee_id"
-  has_many :followees, :through => :followings, :foreign_key => "follower_id"
+  has_many :friendings_as_followee, :foreign_key => "followee_id", :class_name => "Following", 
+                                    :conditions => {:bidi => true}
+  has_many :followings_as_followee, :foreign_key => "followee_id", :class_name => "Following"
+  has_many :followings_as_follower, :foreign_key => "follower_id", :class_name => "Following"
+  has_many :followers, :through => :followings_as_followee
+  has_many :followees, :through => :followings_as_follower
+  has_many :friends, :through => :friendings_as_followee, :source => :follower
 
   # HACK HACK HACK -- how to do attr_accessible from here?
   # prevents a user from submitting a crafted form that bypasses activation

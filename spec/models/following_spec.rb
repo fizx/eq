@@ -14,19 +14,28 @@ describe Following do
   end
   
   describe "no relationship" do
-    # it "should not list them as friends" do
-    #   @joe.friends.should be_empty
-    #   @suzy.friends.should be_empty
-    #   @joe.followers.should be_empty
-    #   @suzy.followers.should be_empty
-    #   @joe.following.should be_empty
-    #   @suzy.following.should be_empty
-    # end
+    it "should not list them as friends" do
+      @joe.friends.should be_empty
+      @suzy.friends.should be_empty
+      @joe.followers.should be_empty
+      @suzy.followers.should be_empty
+      @joe.followees.should be_empty
+      @suzy.followees.should be_empty
+    end
   end
   
   describe "one-way relationship" do
     before do
       @following = Following.create :follower_id => @joe.id, :followee_id => @suzy.id, :bidi => false
+    end
+    
+    it "should has_many :through" do
+      @joe.friends.should be_empty
+      @suzy.friends.should be_empty
+      @joe.followers.should be_empty
+      @suzy.followers.should == [@joe]
+      @joe.followees.should == [@suzy]
+      @suzy.followees.should be_empty      
     end
     
     it "should have the correct belongs_tos" do
@@ -47,6 +56,15 @@ describe Following do
       @following.reload
       @reciprocal.reload
     end
+
+    it "should has_many :through" do
+      @joe.friends.should == [@suzy]
+      @suzy.friends.should == [@joe]
+      @joe.followers.should == [@suzy]
+      @suzy.followers.should == [@joe]
+      @joe.followees.should == [@suzy]
+      @suzy.followees.should == [@joe]      
+    end
     
     it "should set bidi" do
       @following.bidi.should == true
@@ -56,6 +74,11 @@ describe Following do
     it "should have the correct belongs_tos" do
       @following.follower.should == @joe
       @following.followee.should == @suzy
+    end
+    
+    it "should unset bidi on deletion" do
+      @reciprocal.destroy
+      @following.reload.bidi.should == false
     end
   end
   
