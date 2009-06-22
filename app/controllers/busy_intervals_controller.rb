@@ -1,0 +1,2 @@
+class BusyIntervalsController < ApplicationController
+end

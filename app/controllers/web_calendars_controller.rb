@@ -1,0 +1,2 @@
+class WebCalendarsController < ApplicationController
+end
