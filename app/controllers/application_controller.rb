@@ -18,7 +18,11 @@ class ApplicationController < ActionController::Base
               :create => {:user_id => current_user && current_user.id }
            }
     Invitation.send :with_scope, user do
-      yield
+      WebCalendar.send :with_scope, user do
+        BusyInterval.send :with_scope, user do
+          yield
+        end
+      end
     end
   end
   

@@ -7,4 +7,12 @@ class Interval < ActiveRecord::Base
       r.errors.add(a, "must be before the finish")
     end
   end
+  
+  def startms
+    (start.to_f * 1000).to_i
+  end
+  
+  def finishms
+    (finish.to_f * 1000).to_i
+  end
 end

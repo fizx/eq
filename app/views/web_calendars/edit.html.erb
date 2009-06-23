@@ -1,0 +1,20 @@
+<h1>Editing web_calendar</h1>
+
+<% form_for(@web_calendar) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :url %><br />
+    <%= f.text_area :url %>
+  </p>
+  <p>
+    <%= f.label :data %><br />
+    <%= f.text_area :data %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @web_calendar %> |
+<%= link_to 'Back', web_calendars_path %>

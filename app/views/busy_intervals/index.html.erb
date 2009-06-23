@@ -2,7 +2,7 @@
 	<div class="yui-u first"> 
 		<% form_for WebCalendar.new do |f| %>
 			<h3>Add a web calendar</h3>
-			<%=f.text_field :url %> 
+			<%=f.text_field :url, :value => "http://" %> 
 			<input type="submit" value="Add">
 		<% end %>
   </div> 
@@ -17,22 +17,33 @@
 	</div>
 	
 	<div class="fw">
-		<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
-					id="calendar" width="100%" height="100%"
-					codebase="http://fpdownload.macromedia.com/get/flashplayer/current/swflash.cab">
-			<param name="movie" value="/calendar/bin-release/calendar.swf?url=<%=h @data_url%>" />
-			<param name="quality" value="high" />
-			<param name="bgcolor" value="#869ca7" />
-			<param name="allowScriptAccess" value="sameDomain" />
-			<embed src="/calendar/bin-release/calendar.swf?url=<%=h @data_url%>" quality="high" bgcolor="#869ca7"
-				width="100%" height="100%" name="calendar" align="middle"
-				play="true"
-				loop="false"
-				quality="high"
-				allowScriptAccess="sameDomain"
-				type="application/x-shockwave-flash"
-				pluginspage="http://www.adobe.com/go/getflashplayer">
-			</embed>
-		</object>
+		<div id="calendar"></div>
 	</div>
+	
+	<script>
+	$(document).ready(function() {
+
+			var d = new Date();
+			var y = d.getFullYear();
+			var m = d.getMonth();
+
+			$('#calendar').fullCalendar({
+				draggable: true,
+				events: [<%=@events.map {|e|
+					<<-STR
+					{
+						"id": #{e.id},
+						"title": "Busy",
+						"start": new Date(#{e.startms}),
+						"end": new Date(#{e.finishms}),
+					}
+					
+					STR
+				}.join(",") 
+				%>]
+			});
+
+		});
+	
+	</script>
 </div>
