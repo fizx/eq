@@ -105,3 +105,8 @@ li.user img {
   height: 40px;
   float:right;
 }
+
+.fw{
+  padding-top: 1em;
+  clear:both;
+}
