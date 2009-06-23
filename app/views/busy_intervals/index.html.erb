@@ -1,14 +1,21 @@
 <div class="yui-g"> 
 	<div class="yui-u first"> 
-		<h3>Add a web calendar</h3>
-		<%=text_field_tag :url, "http://" %> <input type="submit" value="Add">
-		
+		<% form_for WebCalendar.new do |f| %>
+			<h3>Add a web calendar</h3>
+			<%=f.text_field :url %> 
+			<input type="submit" value="Add">
+		<% end %>
   </div> 
 	<div class="yui-u"> 
-		<h3>Add a busy period</h3>
-		<%=text_field_tag :url, "today" %> to <%=text_field_tag :url, "all day" %> <input type="submit" value="Add">
+		<% form_for BusyInterval.new do |f| %>
+			<h3>Add a busy period</h3>
+			<%=f.text_field :start, :size => 20, :class=> "date-pick" %> 
+			to 
+			<%=f.text_field :finish, :size => 20, :class=> "date-pick" %> 
+			<input type="submit" value="Add">
+		<% end %>
 	</div>
-
+	
 	<div class="fw">
 		<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
 					id="calendar" width="100%" height="100%"
