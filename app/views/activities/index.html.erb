@@ -1,0 +1,15 @@
+<h2>Activities</h2>
+<div class="space"></div>
+<div class="yui-ge"> 
+	<div class="yui-u first"> 
+		<h3>Stream</h3>
+		
+  </div> 
+	<div class="yui-u"> 
+		<h3><%=link_to "add", "#", :class => "right" %> Scheduled</h3>
+		<ul><%=render current_user.scheduled_events%></ul>
+		<div class="space"></div>
+		<h3><%=link_to "add", "#",:class => "right" %> Desired</h3>
+		<ul><%=render current_user.desired_events%></ul>
+	</div>
+</div>

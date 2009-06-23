@@ -1,6 +1,44 @@
 #hd>div {
   background-color:#ffc;
   margin-bottom:1em;
+  overflow:auto;
+}
+.right {
+  display:block;
+  float:right;
+}
+.subtle {
+  color: #ccc;
+}
+
+.green {
+  color:#0c0 !important;
+}
+
+div.space {
+  height: 1em;
+}
+
+ul#tabs {
+  float:left;
+  display:table;
+}
+
+ul#tabs li {
+  font-weight:bold;
+  float:left;
+  background-color: white;
+  padding: 4px 12px 4px 12px;
+  margin: 6px 15px 0 0;
+}
+ul#tabs li a{
+  color:blue;
+  text-decoration:none;
+}
+
+ul#web_calendars li{
+/*  list-style: disc inside;*/
+  margin-top:0.5em;
 }
 
 .highlight {
@@ -25,8 +63,10 @@ textarea.large {
   font-weight:bold;
   color: black;
   text-decoration: none;
-  display:table;
-  padding:7px;
+  display:block;
+  float:left;
+  padding:7px 16px;
+  margin-right:25px;
 }
 #ft>div{
   margin-top: 2em;
@@ -94,8 +134,6 @@ li.user input {
 li.user span {
   font-family: Georgia, serif;
   font-size: 1.4em;
-  line-height:40px;
-  height: 40px;
 }
 .user .location {
   color: #999;

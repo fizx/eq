@@ -1,3 +1,5 @@
+<h2>Availability</h2>
+<div class="space"></div>
 <div class="yui-g"> 
 	<div class="yui-u first"> 
 		<% form_for WebCalendar.new do |f| %>
@@ -5,8 +7,10 @@
 			<%=f.text_field :url, :value => "http://" %> 
 			<input type="submit" value="Add">
 		<% end %>
-  </div> 
-	<div class="yui-u"> 
+		<div class="space"></div>
+		<h3>Following these calendars:</h3>
+		<ul id="web_calendars"><%=render current_user.web_calendars %></ul>
+		<div class="space"></div>
 		<% form_for BusyInterval.new do |f| %>
 			<h3>Add a busy period</h3>
 			<%=f.text_field :start, :size => 20, :class=> "date-pick" %> 
@@ -14,10 +18,12 @@
 			<%=f.text_field :finish, :size => 20, :class=> "date-pick" %> 
 			<input type="submit" value="Add">
 		<% end %>
+  </div> 
+	<div class="yui-u"> 
+		<div id="calendar"></div>
 	</div>
 	
 	<div class="fw">
-		<div id="calendar"></div>
 	</div>
 	
 	<script>
@@ -44,6 +50,10 @@
 			});
 
 		});
-	
+		
+		$(function() {
+			$('.date-pick').datepicker();
+		});
+		
 	</script>
 </div>

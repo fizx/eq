@@ -14,13 +14,22 @@
 	<body>
 		<div id="doc4"> 
 			<div id="hd">
-				<div>
+				<div>						
 					<% if logged_in? %>
 						<div id="welcome">
 							Welcome, <%=current_user.login%>.  <%=link_to "Log out", logout_url %>
 						</div>
 					<% end %>
 					<a href="/" id="logo">eq</a>
+					<ul id="tabs">
+						<li>
+							<%=link_to_unless_current "Activities", activities_url %>
+							<span class="subtle">|</span>
+							<%=link_to "+", new_activity_url, :class => "green"%>
+						</li>
+						<li><%=link_to_unless_current "Friends", friends_url %></li>
+						<li><%=link_to_unless_current "Availability", busy_intervals_url %></li>
+					</ul>
 				</div>  
 			</div>
 		  <div id="bd"><%=yield%></div>  

@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :categories
+
   map.resources :web_calendars
 
   map.resources :invitations
@@ -18,4 +20,6 @@ ActionController::Routing::Routes.draw do |map|
   map.connect ':controller/:action/:id.:format'
   map.resources :busy_intervals
   map.resources :web_calendars
+  map.resources :activities
+  map.resources :friends
 end
