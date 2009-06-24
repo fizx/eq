@@ -1,5 +1,14 @@
 require "nokogiri"
+require "will_paginate"
 class FriendsController < ApplicationController
+  def index
+    @friends = current_user.followees.paginate(:page => params[:page])
+    if @friends.empty?
+      flash[:notice] = "You haven't listed any friends yet.  Let's find some!"
+      redirect_to :action => "find"
+    end
+  end
+  
   def find
     if params[:emails]
       @emails = params[:emails].split(/[,;\s]+/)

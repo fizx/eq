@@ -1,0 +1,3 @@
+<h2>Page <%=@friends.current_page%> of <%=@friends.total_pages%></h2>
+<ul><%=render @friends%></ul>
+<%=will_paginate @friends%>

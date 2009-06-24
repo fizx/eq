@@ -35,28 +35,61 @@
 				<input type="submit" value="Add">
 			</div>
 		<% end %>
+		<div class="space"></div>
+		<div class="tgt" id="clicked">
+			<a href="#" class="x">x</a>
+			<h3>Event Details&nbsp;&nbsp;&nbsp;<%=check_box_tag "selected_busy"%> <label for="selected_busy">busy?</label></h3>	
+			<div class="space"></div>
+			<h4>Where</h4>
+			<%=text_field_tag :selected_location, ""%> 
+			<div class="space"></div>
+			<h4>When</h4>
+			<%=hidden_field_tag :selected_id, "" %>
+			<%=text_field_tag :selected_start, "", :size => 20, :class=> "date-pick" %> 
+			to 
+			<%=text_field_tag :selected_finish, "", :size => 20, :class=> "date-pick" %>
+			<div class="space"></div>
+			
+			<input type="submit" value="Update">
+			<%=link_to "delete this", intervals_url, :method => :delete, :confirm => "Are you sure?"%>
+		</div>
+		
   </div> 
 	<div class="yui-u"> 
 		<div id="calendar"></div>
 	</div>
 	
-	<div class="fw">
-	</div>
-	
 	<script>
+	
 	$(document).ready(function() {
 
 			var d = new Date();
 			var y = d.getFullYear();
 			var m = d.getMonth();
+			
+			function clicky(calEvent, jsEvent) {
+				$("#selected_id").val(calEvent.id)
+				if(calEvent.title == "Busy") {
+					$("#selected_busy").checked(true);
+					$("#selected_location").val("");
+				} else {
+					$("#selected_busy").checked(false);
+					$("#selected_location").val(calEvent.title);
+				}
+				$("#selected_start").val(calEvent.start);
+				$("#selected_finish").val(calEvent.end);
+				location.href = "#clicked";
+				return false;
+			}
 
 			$('#calendar').fullCalendar({
-				draggable: true,
+				// draggable: true,
+				"eventClick": clicky,
 				events: [<%=@events.map {|e|
 					<<-STR
 					{
 						"id": #{e.id},
-						"title": "Busy",
+						"title":  "#{h e.label}",
 						"start": new Date(#{e.startms}),
 						"end": new Date(#{e.finishms}),
 					}

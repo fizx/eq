@@ -1,13 +1,16 @@
-<h2>Find your friends</h2>
+<h2>Find <%=link_to "or invite", new_invitation_url%> your friends</h2>
+
+<div class="space"></div>
+<h4><%=gmail_link %></h4>
 
 <form>
-	<p>We need your friends email addresses. <em>We will not spam them! (We don't even save these addresses!)</em></em>
+	<div class="space"></div>
 	<p>
-		Email addresses: <%=gmail_link %><br />
+		Please enter your friends' email addresses. <em>We will not save or spam them!</em><br />
 		<%=text_area_tag :emails, params[:emails] %>
 	</p>
 	<p>
-		<input type="submit" value="Look them up!"> (does not send mail)
+		<input type="submit" value="Look them up!">
 	</p>
 </form>
 

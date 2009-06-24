@@ -4,6 +4,13 @@
   overflow:auto;
 }
 
+.x {
+  float:right;
+  text-decoration:none;
+  font-size: 1.4em;
+  font-family: serif;
+}
+
 .tgt {
   display:none;
 }
