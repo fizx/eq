@@ -1,6 +1,10 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe InvitationsController do
+  
+  before do
+    login_as Factory(:user)
+  end
 
   def mock_invitation(stubs={})
     @mock_invitation ||= mock_model(Invitation, stubs)
@@ -29,15 +33,7 @@ describe InvitationsController do
       assigns[:invitation].should equal(mock_invitation)
     end
   end
-
-  describe "GET edit" do
-    it "assigns the requested invitation as @invitation" do
-      Invitation.stub!(:find).with("37").and_return(mock_invitation)
-      get :edit, :id => "37"
-      assigns[:invitation].should equal(mock_invitation)
-    end
-  end
-
+  
   describe "POST create" do
     
     describe "with valid params" do
@@ -68,64 +64,6 @@ describe InvitationsController do
       end
     end
     
-  end
-
-  describe "PUT update" do
-    
-    describe "with valid params" do
-      it "updates the requested invitation" do
-        Invitation.should_receive(:find).with("37").and_return(mock_invitation)
-        mock_invitation.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, :id => "37", :invitation => {:these => 'params'}
-      end
-
-      it "assigns the requested invitation as @invitation" do
-        Invitation.stub!(:find).and_return(mock_invitation(:update_attributes => true))
-        put :update, :id => "1"
-        assigns[:invitation].should equal(mock_invitation)
-      end
-
-      it "redirects to the invitation" do
-        Invitation.stub!(:find).and_return(mock_invitation(:update_attributes => true))
-        put :update, :id => "1"
-        response.should redirect_to(invitation_url(mock_invitation))
-      end
-    end
-    
-    describe "with invalid params" do
-      it "updates the requested invitation" do
-        Invitation.should_receive(:find).with("37").and_return(mock_invitation)
-        mock_invitation.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, :id => "37", :invitation => {:these => 'params'}
-      end
-
-      it "assigns the invitation as @invitation" do
-        Invitation.stub!(:find).and_return(mock_invitation(:update_attributes => false))
-        put :update, :id => "1"
-        assigns[:invitation].should equal(mock_invitation)
-      end
-
-      it "re-renders the 'edit' template" do
-        Invitation.stub!(:find).and_return(mock_invitation(:update_attributes => false))
-        put :update, :id => "1"
-        response.should render_template('edit')
-      end
-    end
-    
-  end
-
-  describe "DELETE destroy" do
-    it "destroys the requested invitation" do
-      Invitation.should_receive(:find).with("37").and_return(mock_invitation)
-      mock_invitation.should_receive(:destroy)
-      delete :destroy, :id => "37"
-    end
-  
-    it "redirects to the invitations list" do
-      Invitation.stub!(:find).and_return(mock_invitation(:destroy => true))
-      delete :destroy, :id => "1"
-      response.should redirect_to(invitations_url)
-    end
   end
 
 end

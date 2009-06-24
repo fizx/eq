@@ -11,3 +11,15 @@ end
 Factory.define :web_calendar do |cal|
   cal.url "http://www.google.com/calendar/ical/kyle.c.maxwell%40gmail.com/foo/basic.ics"
 end
+
+Factory.define :location do |loc|
+  loc.name "100 spear st, sf ca"
+  loc.lng(-122.394)
+  loc.lat(37.79215)
+end
+
+Factory.define :trip do |trip|
+  trip.start Time.now
+  trip.finish 1.week.from_now
+  trip.locations [Factory(:location)]
+end

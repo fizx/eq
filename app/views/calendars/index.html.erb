@@ -1,0 +1,78 @@
+<div class="yui-g"> 
+	<div class="yui-u first"> 
+
+		<% form_for WebCalendar.new do |f| %>
+			<h3><%=link_to "Add a web calendar", "#cal" %></h3>
+			<div class="tgt" id="cal">
+				<%=f.text_field :url, :value => "http://" %> 
+				<input type="submit" value="Add">
+			</div>
+		<% end %>
+		<div class="space"></div>
+		<% form_for BusyInterval.new do |f| %>
+			<h3><%=link_to "Add a busy period", "#busy" %></h3>
+			<div class="tgt" id="busy">
+				<%=f.text_field :start, :size => 20, :class=> "date-pick" %> 
+				to 
+				<%=f.text_field :finish, :size => 20, :class=> "date-pick" %> 
+				<input type="submit" value="Add">
+			</div>
+		<% end %>
+		<div class="space"></div>
+		<% form_for Trip.new do |f| %>
+			<h3><%=link_to "Add a trip", "#trip" %></h3>
+			<div class="tgt" id="trip">
+				I'm going to:<br/> <%=f.text_field :location_string, :size => 20 %> from
+				<div class="space"></div>
+				<%=f.text_field :start, :size => 20, :class=> "date-pick" %> 
+				to 
+				<%=f.text_field :finish, :size => 20, :class=> "date-pick" %> 
+				<input type="submit" value="Add">
+			</div>
+		<% end %>
+
+		<blockquote>
+			<h3>Following these calendars:</h3>
+			<ul id="web_calendars"><%=render current_user.web_calendars %></ul>
+		</blockquote>
+
+
+  </div> 
+	<div class="yui-u"> 
+		<div id="calendar"></div>
+	</div>
+	
+	<div class="fw">
+	</div>
+	
+	<script>
+	$(document).ready(function() {
+
+			var d = new Date();
+			var y = d.getFullYear();
+			var m = d.getMonth();
+
+			$('#calendar').fullCalendar({
+				draggable: true,
+				events: [<%=@events.map {|e|
+					<<-STR
+					{
+						"id": #{e.id},
+						"title": "Busy",
+						"start": new Date(#{e.startms}),
+						"end": new Date(#{e.finishms}),
+					}
+					
+					STR
+				}.join(",") 
+				%>]
+			});
+
+		});
+		
+		$(function() {
+			$('.date-pick').datepicker();
+		});
+		
+	</script>
+</div>

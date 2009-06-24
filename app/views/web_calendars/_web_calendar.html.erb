@@ -1,4 +1,4 @@
 <li>
-	[ <%=link_to "x", web_calendar_url(web_calendar, :method => "delete")%> ]
+	[ <%=link_to "x", :controller => "web_calendars", :action => "delete", :id => web_calendar %> ]
 	<%=h truncate(web_calendar.url, :length => 60)%> 
 </li>

@@ -2,10 +2,16 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe WebCalendar do
   before do
-    @cal_path = File.dirname(__FILE__) + "/../fixtures/basic.ics"
+    @cal_path = $cal_path = File.dirname(__FILE__) + "/../fixtures/basic.ics"
     @user = Factory(:user)
+    
+    class ::WebCalendar < Resource
+      def open_uri(*args)
+        File.open($cal_path)
+      end
+    end
+
     @cal = Factory(:web_calendar, :user => @user)
-    @cal.should_receive(:open_uri).at_least(1).and_return(File.open(@cal_path))
   end
   
   describe "#fetch" do

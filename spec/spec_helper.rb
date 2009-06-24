@@ -4,7 +4,16 @@ ENV["RAILS_ENV"] ||= 'test'
 require File.dirname(__FILE__) + "/../config/environment" unless defined?(RAILS_ROOT)
 require 'spec/autorun'
 require 'spec/rails'
+
+class Location
+  def auto_geocode_address
+    true
+  end
+end
+
 require File.dirname(__FILE__) + "/girl"
+include AuthenticatedTestHelper
+
 
 Spec::Runner.configure do |config|
   # If you're not using ActiveRecord you should remove these

@@ -22,4 +22,6 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :web_calendars
   map.resources :activities
   map.resources :friends
+  map.resources :trips
+  map.resources :calendars
 end

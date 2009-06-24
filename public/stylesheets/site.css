@@ -3,6 +3,20 @@
   margin-bottom:1em;
   overflow:auto;
 }
+
+.tgt {
+  display:none;
+}
+
+.tgt:target {
+  display:block;
+  background-color:#eee;
+  padding:12px;
+}
+
+blockquote {
+  padding: 20px;
+}
 .right {
   display:block;
   float:right;

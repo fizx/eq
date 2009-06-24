@@ -17,10 +17,16 @@ class ApplicationController < ActionController::Base
               :find => { :conditions => { :user_id => current_user && current_user.id } },
               :create => {:user_id => current_user && current_user.id }
            }
+    interval = { 
+              :find => { :conditions => { :intervalable_id => current_user && current_user.id, :intervalable_type => "User" } },
+             :create => { :intervalable_id => current_user && current_user.id, :intervalable_type => "User" }
+          }
     Invitation.send :with_scope, user do
       WebCalendar.send :with_scope, user do
-        BusyInterval.send :with_scope, user do
-          yield
+        BusyInterval.send :with_scope, interval do
+          Trip.send :with_scope, interval do
+            yield
+          end
         end
       end
     end

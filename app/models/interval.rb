@@ -1,6 +1,10 @@
 class Interval < ActiveRecord::Base
   validates_presence_of :start
   validates_presence_of :finish
+  belongs_to :intervalable, :polymorphic => true
+  
+  has_many :locations, :through => :locationings
+  has_many :locationings, :as => :locatable
   
   validates_each(:start) do |r, a, v|
     if r.start && r.finish && r.start > r.finish
@@ -14,5 +18,9 @@ class Interval < ActiveRecord::Base
   
   def finishms
     (finish.to_f * 1000).to_i
+  end
+  
+  def location_string
+    locations.first.try(&:name)
   end
 end

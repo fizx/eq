@@ -28,13 +28,13 @@ class User < ActiveRecord::Base
   has_many :followees, :through => :followings_as_follower
   has_many :friends, :through => :friendings_as_followee, :source => :follower
   
-  has_many :locationings
-  has_many :default_locationings, :class_name => "Locationing", 
-                                  :conditions => {:interval_id => nil}
+  has_many :locationings, :as => :locatable
+  has_many :default_locationings, :as => :locatable
   has_many :locations, :through => :locationings
   has_one :default_location, :through => :default_locationings, :source => :location
   
-  has_many :busy_intervals
+  has_many :busy_intervals, :as => :intervalable
+  has_many :trips, :as => :intervalable
 
   # HACK HACK HACK -- how to do attr_accessible from here?
   # prevents a user from submitting a crafted form that bypasses activation
@@ -60,11 +60,15 @@ class User < ActiveRecord::Base
   
   def default_location=(loc)
     self.default_locationings.clear
-    ing = Locationing.new
+    ing = DefaultLocationing.new
     ing.location = loc
-    ing.user = self
+    ing.locatable = self
     ing.save!
     ing
+  end
+  
+  def events
+    busy_intervals + trips
   end
   
   def location
