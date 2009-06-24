@@ -1,0 +1,2 @@
+class FoundEmailAddress < EmailAddress
+end

@@ -17,6 +17,16 @@ describe User do
     end
   end
   
+  describe "#add_found_emails" do
+    it "should add has_many emails" do
+      user = Factory(:user)
+      emails = ["a@example.com", "b@example.com"]
+      user.add_found_emails(emails)
+      user.found_email_addresses.length.should == 2
+      user.found_email_addresses.map(&:address).sort.should == emails
+    end
+  end
+  
   describe "factory" do
     it "should generate a valid user" do
       Factory.create(:user).should be_valid

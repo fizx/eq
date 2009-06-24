@@ -8,8 +8,11 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :calendars
   map.resources :users
   map.resources :intervals
+  map.resources :found_email_addresses
   map.resource :session
 
+
+  map.connect "/invitations_autocomplete", :controller => "invitations", :action => "autocomplete"
   map.current_event '/current_event', :controller => 'calendars', :action => "current_event"
   map.friends '/friends/:action', :controller => 'friends'
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'

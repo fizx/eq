@@ -12,6 +12,15 @@ class InvitationsController < ApplicationController
       format.xml  { render :xml => @invitations }
     end
   end
+  
+  def autocomplete
+    render :text => current_user.
+                    found_email_addresses.
+                    find(:all, 
+                         :limit => 10, 
+                         :conditions => ["address LIKE ?", "%#{params[:q]}%"]
+                    ).map {|model| model.address }.join("\n")
+  end
 
   # GET /invitations/1
   # GET /invitations/1.xml
@@ -27,7 +36,7 @@ class InvitationsController < ApplicationController
   # GET /invitations/new
   # GET /invitations/new.xml
   def new
-    @invitation = Invitation.new
+    @invitation = Invitation.new(params[:invitation])
 
     respond_to do |format|
       format.html # new.html.erb

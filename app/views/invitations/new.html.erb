@@ -1,4 +1,4 @@
-<h1>New invitation</h1>
+<h2>New invitation</h2>
 
 <% form_for(@invitation) do |f| %>
   <%= f.error_messages %>
@@ -15,5 +15,11 @@
     <%= f.submit 'Send!' %>
   </p>
 <% end %>
+
+<script>
+	$(function(){
+		$("#invitation_email").autocomplete("/invitations_autocomplete");
+	});
+</script>
 
 <%= link_to 'Back', root_path %>

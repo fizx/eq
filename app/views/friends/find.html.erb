@@ -6,7 +6,7 @@
 <form>
 	<div class="space"></div>
 	<p>
-		Please enter your friends' email addresses. <em>We will not save or spam them!</em><br />
+		Please enter your friends' email addresses. <em>We will not send them email!</em><br />
 		<%=text_area_tag :emails, params[:emails] %>
 	</p>
 	<p>
@@ -15,6 +15,6 @@
 </form>
 
 <% if @users %>
-	<h3 class="highlight">We found <%=@users.length%> of your friends.</h3>
+	<h3 class="highlight">We found <%=@users.length%> of your friends on <b>eq</b>. There are <%=link_to "#{current_user.invitable_count} people you could invite", found_email_addresses_url %>.</h3>
 	<ul><%=render @users %></ul>
 <% end %>

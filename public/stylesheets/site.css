@@ -3,6 +3,20 @@
   margin-bottom:1em;
   overflow:auto;
 }
+#found_addresses {
+  overflow:hidden;
+}
+#found_addresses>li{
+  float:left;
+  padding: 0 10px 10px 0;
+}
+
+.pagination {
+  clear:both;
+  padding:10px;
+  background-color: #eee;
+  margin-top: 20px;
+}
 
 .x {
   float:right;

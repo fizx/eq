@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
   validates_presence_of     :email
   validates_length_of       :email,    :within => 6..100 #r@a.wk
   validates_uniqueness_of   :email
-  validates_format_of       :email,    :with => Authentication.email_regex, :message => Authentication.bad_email_message
+  validates_email           :email
   
   has_many :web_calendars
 
@@ -27,6 +27,8 @@ class User < ActiveRecord::Base
   has_many :followers, :through => :followings_as_followee
   has_many :followees, :through => :followings_as_follower
   has_many :friends, :through => :friendings_as_followee, :source => :follower
+  
+  has_many :found_email_addresses
   
   has_many :locationings, :as => :locatable
   has_many :default_locationings, :as => :locatable
@@ -106,6 +108,16 @@ class User < ActiveRecord::Base
   
   def desired_events
     []
+  end
+  
+  def invitable_count
+    found_email_addresses.length - followees.length
+  end
+  
+  def add_found_emails(emails)
+    emails.each do |e|
+      FoundEmailAddress.find_or_create_by_user_id_and_address(self.id, e)
+    end
   end
 
   protected

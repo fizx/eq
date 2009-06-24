@@ -12,14 +12,16 @@ class FriendsController < ApplicationController
   def find
     if params[:emails]
       @emails = params[:emails].split(/[,;\s]+/)
-    elsif session[:token]
+    elsif session[:token] && !session[:parsed_gmail]
       client = GData::Client::Contacts.new
       client.authsub_token = session[:token]
-      atom = client.get("http://www.google.com/m8/feeds/contacts/default/full")
-      logger.info atom.body
-      @emails = GmailParser.new.parse(atom.body)
+      @emails = GmailParser.new(client).parse("http://www.google.com/m8/feeds/contacts/default/full")
+      session[:parsed_gmail] = true
+    elsif session[:token] && session[:parsed_gmail]
+      @emails = current_user.found_email_addresses.find(:all, :select => "address").map(&:address)
     end
     if @emails
+      current_user.add_found_emails(@emails)
       @users = User.find_any_email @emails
     end
   end

@@ -10,8 +10,8 @@ I'd like to invite you to try eq, a social network that actually helps you be mo
 Signing up is really easy!
   STR
   
-  def initialize
-    super
+  def initialize(*args)
+    super(*args)
     self[:message] ||= DEFAULT_MESSAGE.strip
   end
 end

@@ -1,0 +1,32 @@
+<div class="right">
+	<h4>Search addresses</h4>
+	<%=form_tag new_invitation_url, :method => "GET" %>
+	<form action="/invitations/new" method="GET">
+		<input type="text" id="invitation_email" name="invitation[email]" size="30" />
+		<input type="submit" value="Go">
+	</form>
+	
+	<div class="space"></div>
+	<h4><%=link_to "Send invitation to someone else", new_invitation_url %></h4>
+</div>
+
+<h2>People from your address book</h2>
+<h4>Click an address to send an invitation to <b>eq</b>.</h4>
+
+<div class="space"></div>
+
+<script>
+	$(function(){
+		$("#invitation_email").autocomplete("/invitations_autocomplete");
+	});
+</script>
+
+
+<ul id="found_addresses">
+	<% @addresses.in_groups_of(34, false) do |group| %>
+		<li>
+			<ul><%=render group %></ul>
+		</li>
+	<% end %>
+</ul>
+<%=will_paginate @addresses%>
