@@ -12,6 +12,12 @@ class Interval < ActiveRecord::Base
     end
   end
   
+  def location_string=(s)
+    location = Location.from(s)
+    locations.clear
+    locations << location if location
+  end
+  
   def startms
     (start.to_f * 1000).to_i
   end
