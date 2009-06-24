@@ -37,21 +37,24 @@
 		<% end %>
 		<div class="space"></div>
 		<div class="tgt" id="clicked">
-			<a href="#" class="x">x</a>
-			<h3>Event Details&nbsp;&nbsp;&nbsp;<%=check_box_tag "selected_busy"%> <label for="selected_busy">busy?</label></h3>	
-			<div class="space"></div>
-			<h4>Where</h4>
-			<%=text_field_tag :selected_location, ""%> 
-			<div class="space"></div>
-			<h4>When</h4>
-			<%=hidden_field_tag :selected_id, "" %>
-			<%=text_field_tag :selected_start, "", :size => 20, :class=> "date-pick" %> 
-			to 
-			<%=text_field_tag :selected_finish, "", :size => 20, :class=> "date-pick" %>
-			<div class="space"></div>
+			<form method="POST" action="/current_event" id="selected_event">
+				<a href="#" class="x">x</a>
+				<h3>Event Details&nbsp;&nbsp;&nbsp;<%=check_box_tag "selected_busy"%> <label for="selected_busy">busy?</label></h3>	
+				<div class="space"></div>
+				<h4>Where</h4>
+				<%=text_field_tag :selected_location, ""%> 
+				<div class="space"></div>
+				<h4>When</h4>
+				<%=hidden_field_tag :selected_id, "" %>
+				<%=text_field_tag :selected_start, "", :size => 20, :class=> "date-pick" %> 
+				to 
+				<%=text_field_tag :selected_finish, "", :size => 20, :class=> "date-pick" %>
+				<div class="space"></div>
 			
-			<input type="submit" value="Update">
-			<%=link_to "delete this", intervals_url, :method => :delete, :confirm => "Are you sure?"%>
+				<input type="submit" name="button" value="Update">
+				<%=link_to_function "delete this", "if(confirm('Are you sure?')) $('#selected_delete').click()" %>
+				<input style="position:absolute;left:-6000px" id="selected_delete" type="submit" name="button" value="Delete" >
+			</form>
 		</div>
 		
   </div> 
@@ -70,10 +73,10 @@
 			function clicky(calEvent, jsEvent) {
 				$("#selected_id").val(calEvent.id)
 				if(calEvent.title == "Busy") {
-					$("#selected_busy").checked(true);
-					$("#selected_location").val("");
+					$("#selected_busy").attr("checked", "checked");
+					$("#selected_location").val("N/A");
 				} else {
-					$("#selected_busy").checked(false);
+					$("#selected_busy").removeAttr("checked");
 					$("#selected_location").val(calEvent.title);
 				}
 				$("#selected_start").val(calEvent.start);

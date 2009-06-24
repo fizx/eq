@@ -10,6 +10,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :intervals
   map.resource :session
 
+  map.current_event '/current_event', :controller => 'calendars', :action => "current_event"
   map.friends '/friends/:action', :controller => 'friends'
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'
   map.login '/login', :controller => 'sessions', :action => 'new'

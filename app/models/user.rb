@@ -33,6 +33,7 @@ class User < ActiveRecord::Base
   has_many :locations, :through => :locationings
   has_one :default_location, :through => :default_locationings, :source => :location
   
+  has_many :intervals, :as => :intervalable
   has_many :busy_intervals, :as => :intervalable
   has_many :trips, :as => :intervalable
 
