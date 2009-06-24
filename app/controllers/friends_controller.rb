@@ -24,6 +24,8 @@ class FriendsController < ApplicationController
       current_user.add_found_emails(@emails)
       @users = User.find_any_email @emails
     end
+    
+    @invites = current_user.found_email_addresses.find(:all, :limit => 5) 
   end
   
   def gmail

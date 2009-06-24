@@ -1,3 +1,12 @@
+<% if @invites.any? %>
+	<div class="right">
+		<h3>People to invite</h3>
+		<ul><%=render @invites%></ul>
+		<div class="space"></div>
+		<h4><%=link_to "more ... ", found_email_addresses_url %></h4>
+	</div>
+<% end %>
+
 <h2>Find <%=link_to "or invite", new_invitation_url%> your friends</h2>
 
 <div class="space"></div>
