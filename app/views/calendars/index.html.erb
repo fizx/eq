@@ -6,10 +6,15 @@
 			<div class="tgt" id="cal">
 				<%=f.text_field :url, :value => "http://" %> 
 				<input type="submit" value="Add">
+				
+				<blockquote>
+					<h4>Following these calendars:</h4>
+					<ul id="web_calendars"><%=render current_user.web_calendars %></ul>
+				</blockquote>
 			</div>
 		<% end %>
 		<div class="space"></div>
-		<% form_for BusyInterval.new do |f| %>
+		<% form_for BusyInterval.new(params[:busy_interval]) do |f| %>
 			<h3><%=link_to "Add a busy period", "#busy" %></h3>
 			<div class="tgt" id="busy">
 				<%=f.text_field :start, :size => 20, :class=> "date-pick" %> 
@@ -30,13 +35,6 @@
 				<input type="submit" value="Add">
 			</div>
 		<% end %>
-
-		<blockquote>
-			<h3>Following these calendars:</h3>
-			<ul id="web_calendars"><%=render current_user.web_calendars %></ul>
-		</blockquote>
-
-
   </div> 
 	<div class="yui-u"> 
 		<div id="calendar"></div>
