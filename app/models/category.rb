@@ -5,7 +5,7 @@ class Category < ActiveRecord::Base
   end
   
   def self.subclasses
-    [Activity, TimeSpan, GroupSize, Familiarity]
+    [Activity, TimeSpan, GroupSize, Familiarity, Proximity]
   end
 
   def self.all_roots
@@ -13,7 +13,6 @@ class Category < ActiveRecord::Base
   end
 
   def self.build(data)
-    delete_all :type => self.to_s
     _build(data, nil, self)
   end
 
@@ -23,12 +22,15 @@ private
     [data].flatten.each do |entry|
       case entry
       when String:
-        klass.create :parent_id => parent_id, :name => entry, :type => klass.to_s
+        klass.find_or_create! :parent_id => parent_id, :name => entry, :type => klass.to_s
       when Hash:
         entry.each do |k, v|
-          inst = klass.create :parent_id => parent_id, :name => k, :type => klass.to_s
+          inst = klass.find_or_create! :parent_id => parent_id, :name => k, :type => klass.to_s
           _build(v, inst.id, klass)
         end
+      when YAML::DomainType:
+        method = entry.type_id
+        _build(klass.send(method), parent_id, klass)
       end
     end
   end

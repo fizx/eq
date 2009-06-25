@@ -15,10 +15,10 @@ describe Activity do
   end
   
   describe "#build" do
-    it "should start fresh" do
+    it "should not start fresh" do
       a = Factory(:activity)
       Activity.build([])
-      Activity.all.should be_empty
+      Activity.all.should_not be_empty
     end
     
     it "should make the structure" do

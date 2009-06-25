@@ -1,5 +1,5 @@
 class ActivitiesController < ApplicationController
   def new
-    @activities = Category.find_all_by_parent_id_and_type(params[:parent], "Activity")
+    @activities = Category.find(:all, :conditions => {:type => "Activity", :parent_id => params[:parent]}, :limit =>6)
   end
 end

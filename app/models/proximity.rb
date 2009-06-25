@@ -1,0 +1,2 @@
+class Proximity < Category
+end

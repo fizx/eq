@@ -16,9 +16,5 @@
 - eat something:
   - eat somewhere simple
   - eat somewhere nice
-- see a movie:
-  - see option a
-  - see option b
-  - see option c
-  - see option d
+- see a movie: !movie_list
   
