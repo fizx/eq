@@ -1,6 +1,7 @@
-class CreateCategories < ActiveRecord::Migration
+class CreateActivities < ActiveRecord::Migration
   def self.up
-    create_table :categories do |t|
+    create_table :activities do |t|
+      t.string :type
       t.string :name
       t.integer :parent_id
       t.integer :position
@@ -10,6 +11,6 @@ class CreateCategories < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :categories
+    drop_table :activities
   end
 end

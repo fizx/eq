@@ -1,3 +1,16 @@
+#tree {
+  display:table;
+}
+
+#tree li a{
+  color: #ccc;
+  float:right;
+  margin-left:10px;
+}
+
+#tree a:hover{
+  color:blue
+}
 #hd>div {
   background-color:#ffc;
   margin-bottom:1em;

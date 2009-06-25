@@ -23,3 +23,7 @@ Factory.define :trip do |trip|
   trip.finish 1.week.from_now
   trip.locations [Factory(:location)]
 end
+
+Factory.define :activity do |act|
+  act.name "something to do"
+end
