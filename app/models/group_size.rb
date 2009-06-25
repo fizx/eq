@@ -1,0 +1,2 @@
+class GroupSize < Category
+end

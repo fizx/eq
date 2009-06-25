@@ -1,0 +1,2 @@
+class TimeSpan < Category
+end

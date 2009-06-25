@@ -1,0 +1,2 @@
+class Familiarity < Category
+end
