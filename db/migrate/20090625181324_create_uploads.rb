@@ -11,6 +11,7 @@ class CreateUploads < ActiveRecord::Migration
       t.integer :height
       t.integer :parent_id
       t.string :thumbnail
+      t.string :type
 
       t.timestamps
     end

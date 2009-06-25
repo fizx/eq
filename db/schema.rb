@@ -9,13 +9,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090625052232) do
+ActiveRecord::Schema.define(:version => 20090625181621) do
 
   create_table "categories", :force => true do |t|
     t.string   "type"
     t.string   "name"
     t.integer  "parent_id"
     t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "comments", :force => true do |t|
+    t.integer  "commentable_id"
+    t.string   "commentable_type"
+    t.text     "body"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -95,6 +104,22 @@ ActiveRecord::Schema.define(:version => 20090625052232) do
 
   add_index "resources", ["type"], :name => "index_resources_on_type"
   add_index "resources", ["user_id"], :name => "index_resources_on_user_id"
+
+  create_table "uploads", :force => true do |t|
+    t.integer  "uploadable_id"
+    t.string   "uploadable_type"
+    t.integer  "uploaded_by"
+    t.string   "content_type"
+    t.string   "filename"
+    t.integer  "size"
+    t.integer  "width"
+    t.integer  "height"
+    t.integer  "parent_id"
+    t.string   "thumbnail"
+    t.string   "type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", :force => true do |t|
     t.string   "login",                     :limit => 40

@@ -1,0 +1,2 @@
+class UploadedImage < Upload
+end
