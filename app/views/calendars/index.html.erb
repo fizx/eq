@@ -1,5 +1,8 @@
 <div class="yui-g"> 
 	<div class="yui-u first"> 
+		
+		<h3><%=link_to "Add an event", new_event_url %></h3>
+		<div class="space"></div>
 
 		<% form_for WebCalendar.new do |f| %>
 			<h3><%=link_to "Add a web calendar", "#cal" %></h3>

@@ -102,6 +102,14 @@ class User < ActiveRecord::Base
     write_attribute :email, (value ? value.downcase : nil)
   end
   
+  def followees?
+    followees.present?
+  end
+  
+  def found_email_addresses?
+    found_email_addresses.present?
+  end
+  
   def scheduled_events
     []
   end

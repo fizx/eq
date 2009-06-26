@@ -1,0 +1,43 @@
+<p>
+  <b>Matcher:</b>
+  <%=h @eventlet.matcher %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%=h @eventlet.name %>
+</p>
+
+<p>
+  <b>Category:</b>
+  <%=h @eventlet.category %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%=h @eventlet.description %>
+</p>
+
+<p>
+  <b>Venue:</b>
+  <%=h @eventlet.venue %>
+</p>
+
+<p>
+  <b>Location:</b>
+  <%=h @eventlet.location %>
+</p>
+
+<p>
+  <b>Start:</b>
+  <%=h @eventlet.start %>
+</p>
+
+<p>
+  <b>Finish:</b>
+  <%=h @eventlet.finish %>
+</p>
+
+
+<%= link_to 'Edit', edit_eventlet_path(@eventlet) %> |
+<%= link_to 'Back', eventlets_path %>

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090625231750) do
+ActiveRecord::Schema.define(:version => 20090626193735) do
 
   create_table "categories", :force => true do |t|
     t.string   "type"
@@ -33,6 +33,28 @@ ActiveRecord::Schema.define(:version => 20090625231750) do
     t.integer  "user_id"
     t.string   "type"
     t.string   "address"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "eventlets", :force => true do |t|
+    t.string   "matcher"
+    t.string   "name"
+    t.string   "category"
+    t.string   "description"
+    t.string   "venue"
+    t.string   "location"
+    t.string   "start"
+    t.string   "finish"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "events", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.boolean  "private"
+    t.integer  "creator_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

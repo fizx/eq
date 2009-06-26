@@ -1,0 +1,34 @@
+<h1>Listing eventlets</h1>
+
+<table>
+  <tr>
+    <th>Matcher</th>
+    <th>Name</th>
+    <th>Category</th>
+    <th>Description</th>
+    <th>Venue</th>
+    <th>Location</th>
+    <th>Start</th>
+    <th>Finish</th>
+  </tr>
+
+<% @eventlets.each do |eventlet| %>
+  <tr>
+    <td><%=h eventlet.matcher %></td>
+    <td><%=h eventlet.name %></td>
+    <td><%=h eventlet.category %></td>
+    <td><%=h eventlet.description %></td>
+    <td><%=h eventlet.venue %></td>
+    <td><%=h eventlet.location %></td>
+    <td><%=h eventlet.start %></td>
+    <td><%=h eventlet.finish %></td>
+    <td><%= link_to 'Show', eventlet %></td>
+    <td><%= link_to 'Edit', edit_eventlet_path(eventlet) %></td>
+    <td><%= link_to 'Destroy', eventlet, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New eventlet', new_eventlet_path %>

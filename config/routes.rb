@@ -1,6 +1,9 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :eventlets
+
   map.resources :categories
   map.resources :invitations
+  map.resources :events
   map.resources :busy_intervals
   map.resources :web_calendars
   map.resources :activities do |a|
@@ -21,6 +24,9 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :found_email_addresses
   map.resource :session
 
+  map.bookmarklet '/bookmarklet.js', :controller => 'bookmarklet', :action => "bookmarklet"
+  map.bookmarklet_target '/bookmarklet', :controller => 'bookmarklet', :action => "target"
+
   map.connect '/destroy_interest/:id', :controller => 'interests', :action => "destroy"
   map.connect "/invitations_autocomplete", :controller => "invitations", :action => "autocomplete"
   map.current_event '/current_event', :controller => 'calendars', :action => "current_event"
@@ -31,5 +37,4 @@ ActionController::Routing::Routes.draw do |map|
   map.signup '/signup', :controller => 'users', :action => 'new'
   
   map.root :controller => "activities"
-
 end

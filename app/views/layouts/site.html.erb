@@ -28,12 +28,8 @@
 					<% end %>
 					<a href="/" id="logo">eq</a>
 					<ul id="tabs">
-						<li><%=link_to_unless_current "Suggest", new_activity_url %></li>
-						<li>
-							<%=link_to_unless_current "Explore", activities_url %>
-							<span class="subtle">|</span>
-							<%=link_to "+", new_activity_url, :class => "green"%>
-						</li>
+						<li><%=link_to_unless_current "Activities", "/" %></li>
+						<li><%=link_to_unless_current "Events", events_url %></li>
 						<li><%=link_to_unless_current "Friends", friends_url %></li>
 						<li><%=link_to_unless_current "Calendar", calendars_url %></li>
 					</ul>

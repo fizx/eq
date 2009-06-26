@@ -1,0 +1,44 @@
+<h1>Editing eventlet</h1>
+
+<% form_for(@eventlet) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :matcher %><br />
+    <%= f.text_field :matcher %>
+  </p>
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :category %><br />
+    <%= f.text_field :category %>
+  </p>
+  <p>
+    <%= f.label :description %><br />
+    <%= f.text_field :description %>
+  </p>
+  <p>
+    <%= f.label :venue %><br />
+    <%= f.text_field :venue %>
+  </p>
+  <p>
+    <%= f.label :location %><br />
+    <%= f.text_field :location %>
+  </p>
+  <p>
+    <%= f.label :start %><br />
+    <%= f.text_field :start %>
+  </p>
+  <p>
+    <%= f.label :finish %><br />
+    <%= f.text_field :finish %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @eventlet %> |
+<%= link_to 'Back', eventlets_path %>

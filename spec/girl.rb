@@ -30,3 +30,7 @@ end
 
 Factory.define :interest do |i|
 end
+
+Factory.define :eventlet do |e|
+  
+end

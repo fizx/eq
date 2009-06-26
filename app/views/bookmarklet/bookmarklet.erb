@@ -1,0 +1,33 @@
+<%=@jquery %>
+window.myJQuery = jQuery.noConflict(true);
+
+(function(){
+	function myopen(url){
+		if(a = window.open(url)) {
+			
+		} else {
+			location.href = url;
+		}
+	}
+	
+	<% if @eventlet %>
+		var data = <%=@eventlet.json %>
+		var output = new Object();
+		for(var key in data) {
+			var tmp = data[key].split("@")
+			var selector = tmp[0];
+			var attr = tmp[1];
+			var selected = myJQuery(selector).get(0);
+			if(selected) {
+				if(attr) {
+					output[key] = myJQuery(selected).attr(attr);
+				} else {
+					output[key] = myJQuery.trim(myJQuery(selected).text()).replace(/\s+/g, ' ');
+				}
+			}
+		}
+		myopen("<%=bookmarklet_target_url%>?" + myJQuery.param(output));
+	<% else %>
+		myopen("<%=bookmarklet_target_url%>?");
+	<% end %>	
+})();
