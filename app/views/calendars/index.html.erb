@@ -6,11 +6,19 @@
 			<div class="tgt" id="cal">
 				<%=f.text_field :url, :value => "http://" %> 
 				<input type="submit" value="Add">
+				<% if current_user.web_calendars? %>
+					<blockquote>
+						<h4>Following these calendars:</h4>
+						<ul id="web_calendars"><%=render current_user.web_calendars %></ul>
+						
+					</blockquote>
+				<% end %>	
+				<div class="space"></div>
+				<p>We can get your busy information from a publicly shared web calendar in the iCal format.  </p>
 				
-				<blockquote>
-					<h4>Following these calendars:</h4>
-					<ul id="web_calendars"><%=render current_user.web_calendars %></ul>
-				</blockquote>
+				<p><b>gCal:</b> http://www.google.com/calendar/ical/<b>your email</b>/public/basic.ics</p>
+				<p><b>MobileMe:</b> http://cal.mac.com/<b>membername</b>/<b>Calendarname</b></p>
+				<p>Check with your calendar provider, and make sure to enable at least free/busy sharing.</p>
 			</div>
 		<% end %>
 		<div class="space"></div>

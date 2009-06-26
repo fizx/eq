@@ -1,7 +1,10 @@
 class InterestsController < ApplicationController
   def new
     @klass = params[:negative] ? NegativeInterest : PositiveInterest
-    @interest = @klass.find_or_create(params[:interest].update(:user_id => current_user.id, :type => @klass.to_s))
+    params[:interest].delete(:type)
+    @interest = Interest.find_or_create!(params[:interest].update(:user_id => current_user.id))
+    @interest.update_attribute :type, @klass.to_s
+    @interest = Interest.find(@interest.id)
 
     if @interest.negative?
       flash[:unescaped_notice] = "We've recorded that you do not want to #{@interest.description}. " +

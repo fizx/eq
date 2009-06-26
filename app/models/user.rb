@@ -110,6 +110,10 @@ class User < ActiveRecord::Base
     []
   end
   
+  def web_calendars?
+    web_calendars.present?
+  end
+  
   def invitable_count
     found_email_addresses.length - followees.length
   end
