@@ -1,0 +1,16 @@
+<div class="right">
+	<h2><%=link_to "or add a specific event", "#"%></h2>
+</div>
+
+<div id="ideas">
+	<h4>You want to <%=@activity.name%></h4>
+	<h2>When? </h2>	
+	<ul>
+		<% @time_spans.each do |span| %>
+			<li><%=link_to span.name, new_activity_time_span_proximity_url(@activity, span) %></li>
+		<% end %>
+		<li><%=text_field_tag "other", "Other", :onfocus => "if(this.value == 'Other')this.value=''" %>
+			<input type="submit" value="Go">
+		</li>
+	</ul>
+</div>

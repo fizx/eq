@@ -2,6 +2,51 @@
   display:table;
 }
 
+.plus{
+  font-size:0.9em;
+  font-weight:bold;
+}
+
+.yui-u h2.full-calendar-title {
+  font-size: 1.2em;
+}
+
+a.interested {
+  color: #36f;
+}
+a.interested:hover {
+  color: #009;
+}
+
+.interested {
+  float:right;
+  margin-left: 8px;
+}
+
+ul.rows{
+  
+}
+
+ul.rows>li{
+  padding:3px;
+  background-color:#eee;
+  border-top: 1px #ccc solid;
+  margin-top:2px;
+}
+
+ul.big {
+  padding:10px;
+  font-style: italic;
+  font-family: Georgia, serif;
+}
+
+ul.big>li {
+  font-size: 1.4em;
+  list-style: disc inside;
+  margin-bottom: 0.5em;
+}
+
+
 #tree li a{
   color: #ccc;
   float:right;
@@ -162,10 +207,6 @@ h1 {
 p{
   margin-bottom: 0.5em;
 }
-
-#blurb {
-  max-width: 50%;
-} 
 
 em {
   font-weight: bold;

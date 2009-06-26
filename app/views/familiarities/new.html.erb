@@ -1,0 +1,17 @@
+<div class="right">
+	<h2><%=link_to "or add a specific event", "#"%></h2>
+</div>
+
+<div id="ideas">
+	<h4>You want to <%=@activity.name%> <%=@time_span.name%> <%=@proximity.name %> with
+		<%=@group_size.name%></h4>
+	<h2>That?</h2>	
+	<ul>
+		<% @familiarities.each do |fam| %>
+			<li><%=link_to fam.name, new_interest_url(:interest => {:activity_id => @activity, :time_span_id => @time_span, :proximity_id => @proximity, :group_size_id => @group_size, :familiarity_id => fam}) %></li>
+		<% end %>
+		<li><%=text_field_tag "other", "Other", :onfocus => "if(this.value == 'Other')this.value=''" %>
+			<input type="submit" value="Go">
+		</li>
+	</ul>
+</div>

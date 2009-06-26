@@ -1,0 +1,2 @@
+class NegativeInterest < Interest
+end

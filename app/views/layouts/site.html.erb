@@ -37,8 +37,8 @@
 						<li><%=link_to_unless_current "Friends", friends_url %></li>
 						<li><%=link_to_unless_current "Calendar", calendars_url %></li>
 					</ul>
-				<% if flash[:notice] %>
-					<div class="highlight" style="clear:both"><%=h flash[:notice]%></div>
+				<% if flash[:notice] || flash[:unescaped_notice]%>
+					<div class="highlight" style="clear:both"><%=flash[:unescaped_notice]%><%=h flash[:notice]%></div>
 				<% end %>
 				</div>  
 			</div>

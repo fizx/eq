@@ -14,6 +14,7 @@ end
 require File.dirname(__FILE__) + "/girl"
 include AuthenticatedTestHelper
 
+Category.build_all_from_yaml
 
 Spec::Runner.configure do |config|
   # If you're not using ActiveRecord you should remove these

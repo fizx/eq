@@ -4,12 +4,21 @@ class Category < ActiveRecord::Base
     find_all_by_type(self.to_s)
   end
   
+  def self.build_all_from_yaml
+    subclasses.each do |klass|
+      name = klass.to_s.underscore.pluralize
+      puts "Building #{name}..."
+      path = File.dirname(__FILE__) + "/../../config/categories/#{name}.yml"
+      klass.build(YAML.load(File.open(path)))
+    end
+  end
+  
   def self.subclasses
     [Activity, TimeSpan, GroupSize, Familiarity, Proximity]
   end
 
-  def self.all_roots
-    find_all_by_parent_id(nil)
+  def children?
+    Category.count(:conditions => {:parent_id => self.id}) > 0
   end
 
   def self.build(data)
@@ -18,7 +27,6 @@ class Category < ActiveRecord::Base
 
 private
   def self._build(data, parent_id, klass)
-    puts klass.to_s
     [data].flatten.each do |entry|
       case entry
       when String:

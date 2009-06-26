@@ -1,0 +1,20 @@
+<div class="yui-gc"> 
+	<div class="yui-u first"> 
+		
+		<h2>You <%="<em>do not</em>" if @interest.negative?%> want to...</h2>
+		<h4><%=@interest.description%></h4>
+		<div class="space"></div>
+		<h4 class="highlight">Your friends are already interested in 2 things that share this description</h4>
+		<ul class="rows">
+			<li><%=link_to_interest%> <%=link_to "Jeff" %> wants to see Up this weekend </li>
+			<li><%=link_to_interest%> <%=link_to "Suzy" %> wants to go hiking this summer</li>
+		</ul>
+	</div>
+	<div class="yui-u">
+		<h2>Similar ideas</h2>
+		<ul class="rows">
+			<li><%=link_to_interest%> <%=link_to "Jeff" %> wants to see Up this weekend </li>
+			<li><%=link_to_interest%> <%=link_to "Suzy" %> wants to go hiking this summer</li>
+		</ul>
+	</div>
+</div>

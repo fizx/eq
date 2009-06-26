@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090625181621) do
+ActiveRecord::Schema.define(:version => 20090625231750) do
 
   create_table "categories", :force => true do |t|
     t.string   "type"
@@ -47,6 +47,18 @@ ActiveRecord::Schema.define(:version => 20090625181621) do
 
   add_index "followings", ["followee_id"], :name => "index_followings_on_followee_id"
   add_index "followings", ["follower_id"], :name => "index_followings_on_follower_id"
+
+  create_table "interests", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "activity_id"
+    t.integer  "time_span_id"
+    t.integer  "proximity_id"
+    t.integer  "group_size_id"
+    t.integer  "familiarity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "type"
+  end
 
   create_table "intervals", :force => true do |t|
     t.string   "type"

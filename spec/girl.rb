@@ -27,3 +27,6 @@ end
 Factory.define :activity do |act|
   act.name "something to do"
 end
+
+Factory.define :interest do |i|
+end

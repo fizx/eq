@@ -1,0 +1,16 @@
+<div class="right">
+	<h2><%=link_to "or add a specific event", "#"%></h2>
+</div>
+
+<div id="ideas">
+	<h4>You want to <%=@activity.name%> <%=@time_span.name%> <%=@proximity.name %></h4>
+	<h2>With? </h2>	
+	<ul>
+		<% @group_sizes.each do |size| %>
+			<li><%=link_to size.name, new_activity_time_span_proximity_group_size_familiarity_url(@activity, @time_span, @proximity, size) %></li>
+		<% end %>
+		<li><%=text_field_tag "other", "Other", :onfocus => "if(this.value == 'Other')this.value=''" %>
+			<input type="submit" value="Go">
+		</li>
+	</ul>
+</div>

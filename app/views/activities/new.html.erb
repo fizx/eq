@@ -1,17 +1,8 @@
 <div class="right">
-	<h2><%=link_to "or add a specific event"%></h2>
+	<h2><%=link_to "or add a specific event", "#"%></h2>
 </div>
 
 <div id="ideas">
 	<h2>I want to... </h2>	
-	<ul>
-		<% @activities.each do |act| %>
-			<li><%=link_to act.name, :parent => act.id%></li>
-		<% end %>
-		
-		<li><%=link_to "Any of these" %></li>
-		<li><%=text_field_tag "other", "Other", :onfocus => "if(this.value == 'Other')this.value=''" %>
-			<input type="submit" value="Go">
-		</li>
-	</ul>
+	<%= render :partial => 'root', :activities => @activities %>
 </div>

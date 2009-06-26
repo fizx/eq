@@ -6,7 +6,10 @@ class ApplicationController < ActionController::Base
   # protect_from_forgery # See ActionController::RequestForgeryProtection for details
   include AuthenticatedSystem
   before_filter :login_required
-
+  
+  include CollapsedRoutes
+  collapsed_routes :activities, :time_spans
+    
   filter_parameter_logging :password
   layout "site"
   

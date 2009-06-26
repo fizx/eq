@@ -1,15 +1,51 @@
-<h2>Activities</h2>
-<div class="space"></div>
-<div class="yui-ge"> 
+<div class="yui-gc"> 
 	<div class="yui-u first"> 
-		<h3>Stream</h3>
+		<h3><%=link_to "What would you like to do?", "#suggest" %></h3>
+		<div class="tgt ideas" id="suggest">
+			<h2>I want to...</h2>
+			<%= render :partial => 'root', :activities => @activities %>
+		</div>
+		<div class="space"></div>
 		
+		<h3>Critical mass</h3>
+		<ul class="rows">
+			<li><%=link_to_organize%> <%=link_to "Jeff" %> <span class="plus">+6</span> wants to see Up this weekend </li>
+			<li><%=link_to_organize%> <%=link_to "Suzy" %> <span class="plus">+2</span> wants to go hiking this summer</li>
+		</ul>
+		<div class="space"></div>
+		<h3>The stream</h3>
+		<ul class="rows">
+			<li><%=link_to_interest%> <%=link_to "Jeff" %> <span class="plus">+1</span> wants to see Up this weekend </li>
+			<li><%=link_to_interest%> <%=link_to "Suzy" %> wants to go hiking this summer</li>
+			<li><%=link_to_interest%> <%=link_to "Jeff" %>  wants to see Up this weekend </li>
+			<li><%=link_to_interest%> <%=link_to "Suzy" %> wants to go hiking this summer</li>
+			<li><%=link_to_interest%> <%=link_to "Jeff" %>  wants to see Up this weekend </li>
+			<li><%=link_to_interest%> <%=link_to "Suzy" %> wants to go hiking this summer</li>
+			<li><%=link_to_interest%> <%=link_to "Jeff" %>  wants to see Up this weekend </li>
+			<li><%=link_to_interest%> <%=link_to "Suzy" %> wants to go hiking this summer</li>
+			<li><%=link_to_interest%> <%=link_to "Jeff" %>  wants to see Up this weekend </li>
+			<li><%=link_to_interest%> <%=link_to "Suzy" %> wants to go hiking this summer</li>
+		</ul>
+	
   </div> 
 	<div class="yui-u"> 
-		<h3><%=link_to "add", "#", :class => "right" %> Scheduled</h3>
-		<ul><%=render current_user.scheduled_events%></ul>
+		<div id="calendar"></div>
+		<script>
+		$(function(){
+			$('#calendar').fullCalendar({
+				events: [],
+			});
+		});
+		</script>
 		<div class="space"></div>
+		<h3>Upcoming</h3>
+		<ul class="rows">
+			<li><b>7/27</b> Going with <%=link_to "6 people" %> to see Up</li>
+			<li><b>7/29</b> Going with <%=link_to "Suzy" %> to go hiking</li>
+		</ul>
+
+		<!-- <div class="space"></div>
 		<h3><%=link_to "add", "#",:class => "right" %> Desired</h3>
-		<ul><%=render current_user.desired_events%></ul>
+		<ul><%=render current_user.desired_events%></ul> -->
 	</div>
 </div>
