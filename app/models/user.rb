@@ -19,6 +19,7 @@ class User < ActiveRecord::Base
   validates_email           :email
   
   has_many :web_calendars
+  has_many :interests
 
   has_many :friendings_as_followee, :foreign_key => "followee_id", :class_name => "Following", 
                                     :conditions => {:bidi => true}

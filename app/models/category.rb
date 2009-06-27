@@ -1,4 +1,8 @@
 class Category < ActiveRecord::Base
+  trgm_index :name
+  
+  belongs_to :parent, :class_name => "Category"
+  has_many :children, :foreign_key => "parent_id", :class_name => "Category"  
   
   def self.all
     find_all_by_type(self.to_s)
@@ -18,9 +22,9 @@ class Category < ActiveRecord::Base
   end
 
   def children?
-    Category.count(:conditions => {:parent_id => self.id}) > 0
+    children.count > 0
   end
-
+  
   def self.build(data)
     _build(data, nil, self)
   end

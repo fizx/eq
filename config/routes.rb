@@ -24,6 +24,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :found_email_addresses
   map.resource :session
 
+  map.ac "/ac", :controller => "activities", :action => "ac"
+
   map.bookmarklet '/bookmarklet.js', :controller => 'bookmarklet', :action => "bookmarklet"
   map.bookmarklet_target '/bookmarklet', :controller => 'bookmarklet', :action => "target"
 

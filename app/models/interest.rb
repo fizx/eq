@@ -8,18 +8,22 @@ class Interest < ActiveRecord::Base
   
   include ActionController::UrlWriter
   
-  def self.random
+  def self.random_interest
     i = Interest.new
-    i.familiarity = Familiarity.all.rand
-    i.activity = Activity.all.rand
-    i.proximity = Proximity.all.rand
-    i.group_size = GroupSize.all.rand
-    i.time_span = TimeSpan.all.rand
+    i.familiarity_id = PositiveInterest.random.familiarity_id
+    i.activity_id = PositiveInterest.random.activity_id
+    i.proximity_id = PositiveInterest.random.proximity_id
+    i.group_size_id = PositiveInterest.random.group_size_id
+    i.time_span_id = PositiveInterest.random.time_span_id
     i
   end
   
   def negative?
-    kind_of? NegativeInterest
+    score < 0
+  end
+  
+  def score
+    0
   end
   
   def url_hash

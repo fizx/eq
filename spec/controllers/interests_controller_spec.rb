@@ -4,7 +4,7 @@ describe InterestsController do
   before do 
     @user = Factory(:user)
     login_as @user
-    @interest = Interest.random
+    @interest = Interest.random_interest
   end
   
   describe "new" do

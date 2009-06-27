@@ -1,0 +1,51 @@
+pseudocount of 3-5!?
+
+positive interest	=> category
+
++1 on the category
++0.x on the category parent, in proportion to this within category
++1 distributed among children in proportion to their individual probabilities
+
+Work edge towards root.
+
+
+
+
+questions: 
+- how to sample a distribution from the db?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

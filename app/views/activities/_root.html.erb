@@ -2,7 +2,7 @@
 		<% @activities.each do |act| %>
 			<li>
 				<% if act.children? %>
-					<%=link_to act.name, new_activity_url(:parent => act.id)%>
+					<%=link_to act.name, new_activity_url(:parent => act.id)%> ...
 				<% else %>
 					<%=link_to act.name, new_time_span_url(act) %>
 				<% end %>
@@ -10,7 +10,14 @@
 		<% end %>
 		
 		<li><%=link_to "Any of these", new_time_span_url(@parent) %></li>
-		<li><%=text_field_tag "other", "Other", :onfocus => "if(this.value == 'Other')this.value=''" %>
-			<input type="submit" value="Go">
-		</li>
+		<form method="post" action="/activities">
+			<%=hidden_field_tag "activity[parent_id]", params[:parent] if params[:parent] %>
+			<li><%=text_field_tag "activity[name]", "Other", :onfocus => "if(this.value == 'Other')this.value=''" %>
+				<input type="submit" value="Go">
+			</li>
+		</form>
 	</ul>
+
+	<script>
+	$("#activity_name").autocomplete("/ac")
+	</script>

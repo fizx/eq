@@ -4,12 +4,12 @@ include ActionController::UrlWriter
 
 describe Interest do
   before do 
-    @interest = Interest.random
+    @interest = Interest.random_interest
   end
   
   describe "#random" do
     it "should be different each time-ish" do
-      interests = Array.new(10).map { Interest.random }
+      interests = Array.new(10).map { Interest.random_interest }
       equal_count = 0
       10.times do 
         equal_count += 1 if interests.rand.attributes == interests.rand.attributes

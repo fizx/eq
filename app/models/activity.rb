@@ -2,8 +2,6 @@ require "rubygems"
 require "nokogiri"
 require "open-uri"
 class Activity < Category
-  belongs_to :parent, :class_name => "Activity"
-  has_many :children, :foreign_key => "parent_id", :class_name => "Activity"  
   
   def self.movie_list
     doc = Nokogiri::HTML(open("http://www.apple.com/trailers"))
