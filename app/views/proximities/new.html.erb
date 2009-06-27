@@ -9,8 +9,10 @@
 		<% @proximities.each do |prox| %>
 			<li><%=link_to prox.name, new_activity_time_span_proximity_group_size_url(@activity, @time_span, prox) %></li>
 		<% end %>
-		<li><%=text_field_tag "other", "Other", :onfocus => "if(this.value == 'Other')this.value=''" %>
-			<input type="submit" value="Go">
+		<li>
+		Within <input type="text" size=4 value=10> miles of 
+		<%=text_field_tag "other", "Me", :onfocus => "if(this.value == 'Me')this.value=''" %>
+			<input type="submit" value="Choose">
 		</li>
 	</ul>
 </div>

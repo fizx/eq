@@ -9,8 +9,9 @@
 		<% @group_sizes.each do |size| %>
 			<li><%=link_to size.name, new_activity_time_span_proximity_group_size_familiarity_url(@activity, @time_span, @proximity, size) %></li>
 		<% end %>
-		<li><%=text_field_tag "other", "Other", :onfocus => "if(this.value == 'Other')this.value=''" %>
-			<input type="submit" value="Go">
+		<li>
+			<input type=text value=2 size=4 /> to <input size=4 type=text value=2 size=20 /> people
+			<input type="submit" value="Choose">
 		</li>
 	</ul>
 </div>

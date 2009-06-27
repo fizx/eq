@@ -14,9 +14,12 @@
 			</p>
 
 			<p>
-				Category: <br/>
+				Activity: <br/>
 				<%=f.text_field :category%>
 			</p>
+			<script>
+				$("#event_category").autocomplete("/ac");
+			</script>
 	
 			<p>
 				Description (optional): <br/>

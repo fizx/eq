@@ -10,8 +10,5 @@
 		<% @familiarities.each do |fam| %>
 			<li><%=link_to fam.name, new_interest_url(:interest => {:activity_id => @activity, :time_span_id => @time_span, :proximity_id => @proximity, :group_size_id => @group_size, :familiarity_id => fam}) %></li>
 		<% end %>
-		<li><%=text_field_tag "other", "Other", :onfocus => "if(this.value == 'Other')this.value=''" %>
-			<input type="submit" value="Go">
-		</li>
 	</ul>
 </div>

@@ -9,10 +9,25 @@ positive interest	=> category
 Work edge towards root.
 
 
+== Problems
+
+Recommend interests
+- (multi?-)sample global space
+- (multi?-)sample knn (people with shared interests)
+
+find overlaps
+- "play soccer vs be active"
+- "near me"
+- "interval"
+
+
+
+
 
 
 questions: 
-- how to sample a distribution from the db?
+- Q. How to sample a distribution from the db?
+	A. Sample associated instances (Dice has_many rolls, sample rolls->die)
 
 
 
