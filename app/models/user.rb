@@ -54,7 +54,7 @@ class User < ActiveRecord::Base
     @location_string_dirty = true
   end
   
-  before_save :update_location_string
+  after_save :update_location_string
   
   def update_location_string
     self.default_location = Location.from(@location_string) if @location_string_dirty
@@ -66,7 +66,8 @@ class User < ActiveRecord::Base
     self.default_locationings.clear
     ing = DefaultLocationing.new
     ing.location = loc
-    ing.locatable = self
+    ing.locatable_id = self.id
+    ing.locatable_type = self.type
     ing.save!
     ing
   end
