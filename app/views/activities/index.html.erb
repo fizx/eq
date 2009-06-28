@@ -1,6 +1,6 @@
 <div class="yui-gc"> 
 	<div class="yui-u first"> 
-		<% if @mass.blank? && @steam.blank?%>
+		<% if @mass.blank? && @stream.blank?%>
 			<div>
 				Thanks for joining <b>eq</b>, the first social network that plans events and activites for you and your friends. To get the most out of <b>eq</b>, start with the steps below:
 			</div>
@@ -32,18 +32,7 @@
 		<% end %>
 		<% unless @stream.blank? %>
 			<h3>The stream</h3>
-			<ul class="rows">
-				<li><%=link_to_interest%> <%=link_to "Jeff" %> <span class="plus">+1</span> wants to see Up this weekend </li>
-				<li><%=link_to_interest%> <%=link_to "Suzy" %> wants to go hiking this summer</li>
-				<li><%=link_to_interest%> <%=link_to "Jeff" %>  wants to see Up this weekend </li>
-				<li><%=link_to_interest%> <%=link_to "Suzy" %> wants to go hiking this summer</li>
-				<li><%=link_to_interest%> <%=link_to "Jeff" %>  wants to see Up this weekend </li>
-				<li><%=link_to_interest%> <%=link_to "Suzy" %> wants to go hiking this summer</li>
-				<li><%=link_to_interest%> <%=link_to "Jeff" %>  wants to see Up this weekend </li>
-				<li><%=link_to_interest%> <%=link_to "Suzy" %> wants to go hiking this summer</li>
-				<li><%=link_to_interest%> <%=link_to "Jeff" %>  wants to see Up this weekend </li>
-				<li><%=link_to_interest%> <%=link_to "Suzy" %> wants to go hiking this summer</li>
-			</ul>
+			<ul class="rows"><%=render @stream%></ul>
 		<% end %>
   </div> 
 	<div class="yui-u"> 

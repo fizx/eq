@@ -1,0 +1,6 @@
+<% if negative_interest.user == current_user %>
+	<li>
+		<a class="interested" href="/destroy_interest/<%=negative_interest.id%>">never mind</a>
+		<%=negative_interest.description%>
+	</li>
+<% end %>

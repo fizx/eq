@@ -1,4 +1,10 @@
 class InterestsController < ApplicationController
+  
+  def index
+    @positives = current_user.positive_interests.paginate :page => params[:positive_page]
+    @negatives = current_user.negative_interests.paginate :page => params[:negative_page]
+  end
+  
   def new
     @klass = params[:negative] ? NegativeInterest : PositiveInterest
     params[:interest].delete(:type)
@@ -17,6 +23,11 @@ class InterestsController < ApplicationController
   
   def show
     @interest = Interest.find(params[:id])
+    @friends = Interest.
+                    of_friends_of(current_user).
+                    interval_overlapping_with(@interest.intervals.first).
+                    paginate(:page => params[:page])
+    @similar = Interest.of_friends_of(current_user)
   end
   
   def destroy

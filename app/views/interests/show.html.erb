@@ -4,17 +4,16 @@
 		<h2>You <%="<em>do not</em>" if @interest.negative?%> want to...</h2>
 		<h4><%=@interest.description%></h4>
 		<div class="space"></div>
-		<h4 class="highlight">Your friends are already interested in 2 things that share this description</h4>
-		<ul class="rows">
-			<li><%=link_to_interest%> <%=link_to "Jeff" %> wants to see Up this weekend </li>
-			<li><%=link_to_interest%> <%=link_to "Suzy" %> wants to go hiking this summer</li>
-		</ul>
+		<h4 class="highlight">Your friends are already interested in <%=@friends.total_entries %> things that share this description</h4>
+		<ul class="rows"><%=render @friends%></ul>
+		<%=will_paginate @friends%>
 	</div>
 	<div class="yui-u">
 		<h2>Similar ideas</h2>
-		<ul class="rows">
-			<li><%=link_to_interest%> <%=link_to "Jeff" %> wants to see Up this weekend </li>
-			<li><%=link_to_interest%> <%=link_to "Suzy" %> wants to go hiking this summer</li>
-		</ul>
+		<% if @similar.blank? %>
+			<h4>We couldn't find any similar things in your friends interests.  Maybe you should <%=link_to "invite more people", new_invitation_url %>?</h4>
+		<% else %>
+			<ul class="rows"><%=render @similar %></ul>
+		<% end %>
 	</div>
 </div>

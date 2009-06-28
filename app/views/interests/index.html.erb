@@ -1,0 +1,12 @@
+<div class="yui-gc"> 
+	<div class="yui-u first"> 
+		<h2>Loves</h2>
+		<ul class="rows"><%=render @positives%></ul>
+		<%=will_paginate @positives%>
+	</div>
+	<div class="yui-u">
+		<h2>Hates</h2>
+		<ul class="rows"><%=render @negatives%></ul>
+		<%=will_paginate @negatives%>
+	</div>
+</div>
