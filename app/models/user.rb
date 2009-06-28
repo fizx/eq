@@ -74,6 +74,10 @@ class User < ActiveRecord::Base
     ing
   end
   
+  def to_param
+    "#{id}-#{login}"
+  end
+  
   def events
     busy_intervals + trips
   end
