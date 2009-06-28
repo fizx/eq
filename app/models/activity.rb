@@ -3,6 +3,18 @@ require "nokogiri"
 require "open-uri"
 class Activity < Category
   
+  has_many :interests, :dependent => :destroy
+  
+  def self.interest_cache
+    @interest_cache ||= proc {
+      time_spans = TimeSpan.find(:all, :select => "id, type", :conditions => {:type => "TimeSpan"}).map(&:id)
+      activities = Activity.find(:all, :select => "id, type", :conditions => {:type => "Activity"}).map(&:id)
+      tmp = []
+      activities.each{|a| time_spans.each{|t| tmp << [a, t]} }
+      tmp
+    }.call
+  end
+  
   def self.movie_list
     doc = Nokogiri::HTML(open("http://www.apple.com/trailers"))
     

@@ -18,6 +18,11 @@ Factory.define :location do |loc|
   loc.lat(37.79215)
 end
 
+Factory.define :interval do |interval|
+  interval.start Time.now
+  interval.finish 1.week.from_now
+end
+
 Factory.define :trip do |trip|
   trip.start Time.now
   trip.finish 1.week.from_now
@@ -25,10 +30,13 @@ Factory.define :trip do |trip|
 end
 
 Factory.define :activity do |act|
-  act.name "something to do"
+  act.name "something to do: " + rand.to_s
 end
 
 Factory.define :interest do |i|
+end
+
+Factory.define :time_span do |t|
 end
 
 Factory.define :eventlet do |e|

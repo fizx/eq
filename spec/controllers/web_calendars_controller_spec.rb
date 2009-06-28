@@ -30,7 +30,7 @@ describe WebCalendarsController do
       it "redirects to the created web_calendar" do
         WebCalendar.stub!(:new).and_return(mock_web_calendar(:save => true))
         post :create, :web_calendar => {}
-        response.should redirect_to(web_calendar_url(mock_web_calendar))
+        response.should redirect_to(web_calendar_path(mock_web_calendar))
       end
     end
     

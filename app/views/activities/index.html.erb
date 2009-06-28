@@ -49,9 +49,8 @@
 	<div class="yui-u"> 
 		<h3>Random idea</h3>
 		<p>Do you want to <%=@interest.description%>?</p>
-		<%=link_to "another", "/", :class => "right" %>
-		<%=link_to "yes", @interest.url_hash, :class => "ajax" %> 
-		<%=link_to "no", @interest.url_hash.merge(:negative => true), :class => "ajax" %>
+		<%=link_to "yes", @interest.url_hash %> 
+		<%=link_to "no", @interest.url_hash.merge(:negative => true) %>
 		<div class="space"></div>
 		
 		<div id="calendar"></div>

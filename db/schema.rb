@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090627050335) do
+ActiveRecord::Schema.define(:version => 20090627050737) do
 
   create_table "categories", :force => true do |t|
     t.string   "type"
@@ -19,6 +19,8 @@ ActiveRecord::Schema.define(:version => 20090627050335) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "categories", ["name"], :name => "trgm_idx"
 
   create_table "comments", :force => true do |t|
     t.integer  "commentable_id"

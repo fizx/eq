@@ -10,11 +10,8 @@ class Interest < ActiveRecord::Base
   
   def self.random_interest
     i = Interest.new
-    i.familiarity_id = PositiveInterest.random.familiarity_id
-    i.activity_id = PositiveInterest.random.activity_id
-    i.proximity_id = PositiveInterest.random.proximity_id
-    i.group_size_id = PositiveInterest.random.group_size_id
-    i.time_span_id = PositiveInterest.random.time_span_id
+    i.time_span_id = TimeSpan.all.rand.id
+    i.activity_id = PositiveInterest.random.try(:activity_id) || Activity.all.rand.id
     i
   end
   
@@ -27,22 +24,24 @@ class Interest < ActiveRecord::Base
   end
   
   def url_hash
+    interest = {
+      :type => self.class.to_s,
+      :familiarity_id => familiarity_id,
+      :group_size_id => group_size_id,
+      :proximity_id => proximity_id,
+      :time_span_id => time_span_id,
+      :activity_id => activity_id
+    }.hash_compact
+    
     {
       :controller => "interests",
       :action => (new_record? ? "new" : "edit"),
-      :interest => {
-        :type => self.class.to_s,
-        :familiarity_id => familiarity_id,
-        :group_size_id => group_size_id,
-        :proximity_id => proximity_id,
-        :time_span_id => time_span_id,
-        :activity_id => activity_id
-      }
+      :interest => interest
     }
   end
   
   def description_segments
-    [activity.name, time_span.name, proximity.name, "with #{group_size.name}", "that #{familiarity.name}"]
+    [activity.name, time_span.name]#, proximity.name, "with #{group_size.name}", "that #{familiarity.name}"]
   end
   
   def description
