@@ -33,10 +33,7 @@ class User < ActiveRecord::Base
   
   has_many :found_email_addresses
   
-  has_many :locationings, :as => :locatable
-  has_many :default_locationings, :as => :locatable
-  has_many :locations, :through => :locationings
-  has_one :default_location, :through => :default_locationings, :source => :location
+  belongs_to :default_location, :class_name => "Location"
   
   has_many :intervals, :as => :intervalable
   has_many :busy_intervals, :as => :intervalable
@@ -48,30 +45,11 @@ class User < ActiveRecord::Base
   attr_accessible :login, :email, :name, :password, :password_confirmation, :location_string
   
   def location_string
-    @location_string ||= location.try(:name)
+    default_location.try(:name)
   end
   
   def location_string=(string)
-    @location_string = string
-    @location_string_dirty = true
-  end
-  
-  after_save :update_location_string
-  
-  def update_location_string
-    self.default_location = Location.from(@location_string) if @location_string_dirty
-    @location_string_dirty = false
-    true
-  end
-  
-  def default_location=(loc)
-    self.default_locationings.clear
-    ing = DefaultLocationing.new
-    ing.location = loc
-    ing.locatable_id = self.id
-    ing.locatable_type = self.type
-    ing.save!
-    ing
+    self.default_location = Location.from(string)
   end
   
   def to_param
@@ -80,10 +58,6 @@ class User < ActiveRecord::Base
   
   def events
     busy_intervals + trips
-  end
-  
-  def location
-    default_location
   end
   
   def new_interest
