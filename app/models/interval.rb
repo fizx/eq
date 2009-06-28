@@ -18,6 +18,10 @@ class Interval < ActiveRecord::Base
     locations << location if location
   end
   
+  def busy
+    nil
+  end
+  
   def startms
     (start.to_f * 1000).to_i
   end

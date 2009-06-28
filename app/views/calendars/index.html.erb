@@ -48,76 +48,29 @@
 		<% end %>
 		<div class="space"></div>
 		<div class="tgt" id="clicked">
-			<form method="POST" action="/current_event" id="selected_event">
+			<!-- <form method="POST" action="/current_event" id="selected_event"> -->
+			<% form_for @event do |f| %>
 				<a href="#" class="x">x</a>
-				<h3>Event Details&nbsp;&nbsp;&nbsp;<%=check_box_tag "selected_busy"%> <label for="selected_busy">busy?</label></h3>	
+				<h3>Event Details&nbsp;&nbsp;&nbsp;<%=f.check_box :busy %> <label for="selected_busy">busy?</label></h3>	
 				<div class="space"></div>
 				<h4>Where</h4>
-				<%=text_field_tag :selected_location, ""%> 
+				<%=f.text_field :location_string%> 
 				<div class="space"></div>
 				<h4>When</h4>
-				<%=hidden_field_tag :selected_id, "" %>
-				<%=text_field_tag :selected_start, "", :size => 20, :class=> "date-pick" %> 
+				<%=hidden_field_tag :selected_id, @event && @event.id %>
+				<%=f.text_field :start, :size => 20, :class=> "date-pick" %> 
 				to 
-				<%=text_field_tag :selected_finish, "", :size => 20, :class=> "date-pick" %>
+				<%=f.text_field :finish, :size => 20, :class=> "date-pick" %>
 				<div class="space"></div>
 			
 				<input type="submit" name="button" value="Update">
 				<%=link_to_function "delete this", "if(confirm('Are you sure?')) $('#selected_delete').click()" %>
 				<input style="position:absolute;left:-6000px" id="selected_delete" type="submit" name="button" value="Delete" >
-			</form>
+			<% end %>
 		</div>
 		
   </div> 
 	<div class="yui-u"> 
-		<div id="calendar"></div>
+		<%= render 'calendar', :events => @events %>
 	</div>
-	
-	<script>
-	
-	$(document).ready(function() {
-
-			var d = new Date();
-			var y = d.getFullYear();
-			var m = d.getMonth();
-			
-			function clicky(calEvent, jsEvent) {
-				$("#selected_id").val(calEvent.id)
-				if(calEvent.title == "Busy") {
-					$("#selected_busy").attr("checked", "checked");
-					$("#selected_location").val("N/A");
-				} else {
-					$("#selected_busy").removeAttr("checked");
-					$("#selected_location").val(calEvent.title);
-				}
-				$("#selected_start").val(calEvent.start);
-				$("#selected_finish").val(calEvent.end);
-				location.href = "#clicked";
-				return false;
-			}
-
-			$('#calendar').fullCalendar({
-				// draggable: true,
-				"eventClick": clicky,
-				events: [<%=@events.map {|e|
-					<<-STR
-					{
-						"id": #{e.id},
-						"title":  "#{h e.label}",
-						"start": new Date(#{e.startms}),
-						"end": new Date(#{e.finishms}),
-					}
-					
-					STR
-				}.join(",") 
-				%>]
-			});
-
-		});
-		
-		$(function() {
-			$('.date-pick').datepicker();
-		});
-		
-	</script>
 </div>

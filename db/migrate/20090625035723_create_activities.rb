@@ -1,6 +1,6 @@
 class CreateActivities < ActiveRecord::Migration
   def self.up
-    create_table :activities do |t|
+    create_table :categories do |t|
       t.string :type
       t.string :name
       t.integer :parent_id

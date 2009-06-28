@@ -53,28 +53,12 @@
 		<%=link_to "no", @interest.url_hash.merge(:negative => true) %>
 		<div class="space"></div>
 		
-		<div id="calendar"></div>
+		<%=render "/calendars/calendar", :events => @events %>
 		Add: 
 		<%=link_to "event", new_event_url %> -
 		<%=link_to "web calendar", "/calendars#cal" %> -
 		<%=link_to "busy period", "/calendars#busy" %> -
 		<%=link_to "trip", "/calendars#trip" %>
-		<script>
-		$(function(){
-			$('a.ajax').click(function(){
-				if(!$(this).hasClass("selected")) {
-					$('a.ajax').removeClass("selected")
-					$(this).addClass("selected")
-					$.get(this.href);
-				}
-				return false;
-			});
-			
-			$('#calendar').fullCalendar({
-				events: [],
-			});
-		});
-		</script>
 		<div class="space"></div>
 		<% unless @upcoming.blank? %>
 			<h3>Upcoming</h3>

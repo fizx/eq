@@ -1,6 +1,8 @@
 class CalendarsController < ApplicationController
   def index
     @events = current_user.events
+    @event = current_user.intervals.find(params[:id]) if params[:id]
+    @event ||= Interval.new
   end
   
   def current_event
