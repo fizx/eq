@@ -23,7 +23,7 @@
 				<div>						
 					<% if logged_in? %>
 						<div id="welcome">
-							Welcome, <%=current_user.login%>.  <%=link_to "Log out", logout_url %>
+							Welcome, <%=link_to current_user.login, edit_user_url(current_user)%>  <%=link_to "Log out", logout_url %>
 						</div>
 					<% end %>
 					<a href="/" id="logo">eq</a>

@@ -1,9 +1,28 @@
 class UsersController < ApplicationController
   skip_before_filter :login_required
+  before_filter :setup_user
+  before_filter :admin_or_current, :only => %w[edit update]
+  # before_filter :show_friend_request, :only => "show"
+  
 
   # render new.rhtml
   def new
     @user = User.new
+  end
+  
+  def edit
+  end
+  
+  def update
+    if @user.update_attributes(params[:user])
+      flash[:notice] = "Profile updated."
+      redirect_to @user
+    else
+      render :action => "edit"
+    end
+  end
+  
+  def show
   end
  
   def create
@@ -21,6 +40,29 @@ class UsersController < ApplicationController
     else
       flash[:error]  = "We couldn't set up that account, sorry.  Please try again, or contact an admin (link is above)."
       render :action => 'new'
+    end
+  end
+  
+private 
+  def setup_user
+    @user = User.find(params[:id]) if params[:id]
+  end
+  
+  def show_friend_request
+    if @user == current_user || @user.follows?(current_user)
+      return true
+    else
+      render :action => "friend_request" 
+      return false
+    end
+  end
+  
+  def admin_or_current
+    if @user != current_user && !current_user.admin?
+      redirect_to params.merge(:action => "show")
+      return false
+    else
+      return true
     end
   end
 end

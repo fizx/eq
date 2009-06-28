@@ -1,0 +1,8 @@
+<% if @user.profile_image_thumb %>
+	<div align="right"><%=image_tag @user.profile_image_thumb%></div>
+<% end %>
+<h2><%=@user.login%>'s profile</h2>
+<h4><%=@user.location_string%></h4>
+<div class="space"></div>
+<h3>Likes</h3>
+<ul><%=render @user.positive_interests.find(:all, :limit => 10)%></ul>

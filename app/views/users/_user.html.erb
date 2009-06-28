@@ -1,5 +1,10 @@
 <li class="user">
-	<input type="submit" value="Follow" /><%= gravatar_for user %> <span><%=user.login%></span>
-	
-	<span class="location"><%=user.location_string%>
+	<% if current_user.follows?(user)%>
+		<%= gravatar_for user %> <span><%=link_to user.login, user%></span>
+		<span class="location"><%=user.location_string%>
+	<% else %>
+		<input type="submit" value="Follow" />
+		<%= gravatar_for user %> <span><%=user.login%></span>
+		<span class="location"><%=user.location_string%>
+	<% end %>
 </li>

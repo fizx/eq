@@ -4,6 +4,8 @@ require File.dirname(__FILE__) + '/../spec_helper'
 # Be sure to include AuthenticatedTestHelper in spec/spec_helper.rb instead.
 # Then, you can remove it from this and the functional test.
 include AuthenticatedTestHelper
+require 'action_controller/test_process'
+include ActionController::TestProcess
 
 describe User do
   fixtures :users
@@ -66,6 +68,19 @@ describe User do
       user.default_location.should be_a(Location)
     end
   end
+  
+  describe "creating with profile image" do
+    it "should upload the image" do
+      user = Factory(:user)
+      user.uploaded_images.length.should == 0
+      user.profile_image_file = fixture_file_upload("walrus.jpg")
+      user.save!
+      user.reload
+      user.uploaded_images.length.should == 1
+      user.profile_image.should be_a(UploadedImage)
+    end
+  end
+  
 
   describe 'being created' do
     before do

@@ -1,7 +1,7 @@
 class ActiveRecord::Migration
   def self.add_trgm_index(table, field)
     puts "Adding trgm index"
-    ActiveRecord::Base.connection.execute("CREATE INDEX trgm_idx ON #{table} USING gist(#{field} gist_trgm_ops);")
+    ActiveRecord::Base.connection.execute("CREATE INDEX #{table}_#{field}_trgm_idx ON #{table} USING gist(#{field} gist_trgm_ops);")
   end
 end
 

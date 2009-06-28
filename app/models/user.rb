@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   include Authentication::ByCookieToken
 
   validates_presence_of     :login
+  validates_presence_of     :default_location_id
   validates_length_of       :login,    :within => 3..40
   validates_uniqueness_of   :login
   validates_format_of       :login,    :with => Authentication.login_regex, :message => Authentication.bad_login_message
@@ -34,15 +35,19 @@ class User < ActiveRecord::Base
   has_many :found_email_addresses
   
   belongs_to :default_location, :class_name => "Location"
+  belongs_to :profile_image, :class_name => "UploadedImage"
   
   has_many :intervals, :as => :intervalable
   has_many :busy_intervals, :as => :intervalable
   has_many :trips, :as => :intervalable
+  
+  has_many :uploaded_images, :foreign_key => :uploaded_by_id
 
   # HACK HACK HACK -- how to do attr_accessible from here?
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.
-  attr_accessible :login, :email, :name, :password, :password_confirmation, :location_string
+  # attr_accessible :login, :email, :name, :password, :password_confirmation, :location_string
+  attr_protected :type
   
   def location_string
     default_location.try(:name)
@@ -50,6 +55,27 @@ class User < ActiveRecord::Base
   
   def location_string=(string)
     self.default_location = Location.from(string)
+  end
+  
+  def profile_image_url
+    profile_image.try(:public_filename)
+  end
+  
+  def profile_image_thumb
+    profile_image && profile_image.public_filename(:thumb)
+  end
+  
+  def profile_image_file
+    
+  end
+  
+  def follows?(user)
+    Following.count(:conditions => {:follower_id => id, :followee_id => user.id}) > 0
+  end
+  
+  def profile_image_file=(f)
+    img = UploadedImage.create!(:uploaded_data => f, :uploaded_by_id => self.id)
+    self.profile_image = img
   end
   
   def to_param
@@ -123,6 +149,10 @@ class User < ActiveRecord::Base
     emails.each do |e|
       FoundEmailAddress.find_or_create_by_user_id_and_address(self.id, e)
     end
+  end
+  
+  def admin?
+    is_a?(AdminUser)
   end
 
   protected
