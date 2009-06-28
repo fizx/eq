@@ -1,0 +1,52 @@
+<div id="calendar"></div>
+<script>
+
+$(document).ready(function() {
+
+		var d = new Date();
+		var y = d.getFullYear();
+		var m = d.getMonth();
+		
+		function clicky(calEvent, jsEvent) {
+			$("#selected_id").val(calEvent.id)
+			if(calEvent.title == "Busy") {
+				$("#selected_busy").attr("checked", "checked");
+				$("#selected_location").val("N/A");
+			} else {
+				$("#selected_busy").removeAttr("checked");
+				$("#selected_location").val(calEvent.title);
+			}
+			$("#selected_start").val(calEvent.start);
+			$("#selected_finish").val(calEvent.end);
+			if(location.href.match("calendar")) {
+				location.href = "#clicked";	
+			} else {
+				location.href = "/calendars?id="+calEvent.id+"#clicked";	
+			} 
+			
+			return false;
+		}
+
+		$('#calendar').fullCalendar({
+			// draggable: true,
+			"eventClick": clicky,
+			events: [<%=events.map {|e|
+				<<-STR
+				{
+					"id": #{e.id},
+					"title":  "#{h e.label}",
+					"start": new Date(#{e.startms}),
+					"end": new Date(#{e.finishms}),
+				}
+				STR
+			}.join(",") 
+			%>]
+		});
+
+	});
+	
+	$(function() {
+		$('.date-pick').datepicker();
+	});
+	
+</script>

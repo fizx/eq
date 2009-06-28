@@ -6,6 +6,26 @@ describe Following do
     @suzy = Factory(:user, :login => "suzy")
   end
   
+  describe "#create_friendship" do
+    it "should create the relationship" do
+      Following.create_friendship(@joe, @suzy)
+      @joe.reload
+      @suzy.reload
+      @joe.friends.should == [@suzy]
+      @suzy.friends.should == [@joe]
+    end
+  end
+  
+  describe "#create_follows" do
+    it "should create the relationship" do
+      Following.create_follows(@joe, @suzy)
+      @joe.reload
+      @suzy.reload
+      @joe.followees.should == [@suzy]
+      @suzy.followers.should == [@joe]
+    end
+  end
+    
   describe "validity" do
     it "should require both foreign keys" do
       Following.new.should_not be_valid

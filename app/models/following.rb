@@ -10,6 +10,23 @@ class Following < ActiveRecord::Base
   before_destroy :check_bidi
   after_destroy :update_bidi
   
+  def self.create_friendship(a, b)
+    f = Following.find_or_initialize_by_follower_id_and_followee_id(a.id, b.id)
+    f.bidi = true
+    f.save!
+    f = Following.find_or_initialize_by_follower_id_and_followee_id(b.id, a.id)
+    f.bidi = true
+    f.save!
+  end
+  
+  def self.create_follows(a, b)
+    f = Following.find_or_initialize_by_follower_id_and_followee_id(a.id, b.id)
+    f.bidi = false
+    f.save!
+    f = Following.find_by_follower_id_and_followee_id(b.id, a.id)
+    f.try(:destroy)
+  end
+  
   def check_bidi
     @other = Following.find_by_follower_id_and_followee_id(followee_id, follower_id)
     self.bidi = !!@other
