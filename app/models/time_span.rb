@@ -1,9 +1,9 @@
 require "chronic"
 class TimeSpan < Category
-  THIS_WEEKEND  = TimeSpan.find_or_create_by_name("this weekend")
-  ANY_WEEKEND   = TimeSpan.find_or_create_by_name("any weekend")
-  MIDWEEK       = TimeSpan.find_or_create_by_name("midweek")
-  WHENEVER      = TimeSpan.find_or_create_by_name("whenever")
+  THIS_WEEKEND  = TimeSpan.find_or_create :private => false, :name => "this weekend"
+  ANY_WEEKEND   = TimeSpan.find_or_create :private => false, :name => "any weekend"
+  MIDWEEK       = TimeSpan.find_or_create :private => false, :name => "midweek"
+  WHENEVER      = TimeSpan.find_or_create :private => false, :name => "whenever"
   
   WEEKS_IN_FUTURE = 20
   

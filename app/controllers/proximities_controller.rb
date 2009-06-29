@@ -6,6 +6,11 @@ class ProximitiesController < ApplicationController
   end
   
   def create
+    if params[:proximity][:location_string] != "Me"
+      params[:proximity][:location_id] = Location.from(params[:proximity][:location_string]).try(:id)
+    end
+    params[:proximity].delete(:location_string)
+    
     proximity = Proximity.find_or_initialize(params[:proximity])
     if proximity.new_record?
       proximity.private = true
