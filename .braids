@@ -13,6 +13,13 @@ vendor/plugins/attachment_fu:
   revision: fa08cb03914b02b66853b4615cd3eca768291ca7
   branch: master
   remote: braid/vendor/plugins/attachment-fu
+vendor/plugins/spec_integration: 
+  squashed: true
+  url: git://github.com/aiwilliams/spec_integration.git
+  type: git
+  revision: b45acd80c65d1fbb6cfee506e6bb4df715b5fdc1
+  branch: master
+  remote: braid/vendor/plugins/spec-integration
 vendor/plugins/gravatar-plugin: 
   squashed: true
   url: git://github.com/woods/gravatar-plugin.git

@@ -1,0 +1,98 @@
+== Rails Spec Integration Plugin
+
+The Spec Integration plugin brings together RSpec on Rails and Rails integration
+testing, while also adding a number of very useful new matchers and some more
+integration testing DSL methods.
+
+=== Installation
+
+script/plugin install git://github.com/aiwilliams/spec_integration.git
+
+=== Quick Start
+
+It's easy to get started. Create a directory named 'integration' in your spec
+directory, right alongside your controllers, models, and views spec
+directories. In your spec_helper:
+
+  require 'spec/integration'
+
+A simple integration spec looks like this:
+
+  # in spec/integration/signup_spec.rb
+  require File.dirname(__FILE__) + "/../spec_helper"
+  
+  describe "Logging in" do
+    dataset :single_person
+    
+    it "should send a user to the home page after login" do
+      # get the login page
+      get "/login"
+      response.should be_success
+  
+      # post the login and follow through to the home page
+      post "/login", :username => people(:jamis).username,
+        :password => people(:jamis).password
+      follow_redirect!
+      response.should be_success
+      path.should == "/home"
+    end
+  end
+
+This is taken straight from integration.rb, the Rails integration test
+documentation. Of course, it's been modified to specify instead of assert!
+
+=== Integration DSL
+
+Spec Integration adds some great tools to make you even more productive. An
+example explains some of these features best.
+
+  # in spec/integration/signup_spec.rb
+  require File.dirname(__FILE__) + "/../spec_helper"
+  
+  describe "Logging in" do
+    dataset :single_person
+    
+    before do
+      navigate_to login_path
+    end
+    
+    it "should send a user to the home page after login" do
+      submit_form :username => people(:jamis).username,
+                  :password => people(:jamis).password
+                  
+      response.should be_showing(home_path)
+    end
+  end
+
+The dataset method is provided by another plugin, Dataset(1). It's a
+great alternative to fixtures. navigate_to, submit_form, and be_showing are a
+few of the DSL methods provided by the Spec Integration plugin.
+
+navigate_to does a get, as in the prior test, but it also follows redirects
+and generally ensures that navigating worked - the document isn't missing, the
+template rendered, etc.
+
+submit_form posts the parameters (actually, it uses the method defined in the
+rendered form's action attribute), follows any redirects, and ensures that all
+that was successful. In fact, it does even more. Check out
+spec/integration/dsl/form.rb to learn more.
+
+be_showing returns a matcher that ensures the response has the expected path.
+
+=== More Information
+
+(1) http://github.com/aiwilliams/dataset
+
+== Credits
+
+Written by [Adam Williams](http://github.com/aiwilliams).
+    
+Contributors:
+
+- [John Long](http://github.com/jlong)
+- [Steve Iannopollo](http://github.com/siannopollo)
+- [Austin Taylor](http://github.com/dotjerky)
+
+---
+
+Spec Integration is released under the MIT-License and is Copyright (c)2007-2009 Adam Williams.
