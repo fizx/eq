@@ -69,17 +69,17 @@ describe User do
     end
   end
   
-  describe "creating with profile image" do
-    it "should upload the image" do
-      user = Factory(:user)
-      user.uploaded_images.length.should == 0
-      user.profile_image_file = fixture_file_upload("walrus.jpg")
-      user.save!
-      user.reload
-      user.uploaded_images.length.should == 1
-      user.profile_image.should be_a(UploadedImage)
-    end
-  end
+  # describe "creating with profile image" do
+  #   it "should upload the image" do
+  #     user = Factory(:user)
+  #     user.uploaded_images.length.should == 0
+  #     user.profile_image_file = fixture_file_upload("walrus.jpg")
+  #     user.save!
+  #     user.reload
+  #     user.uploaded_images.length.should == 1
+  #     user.profile_image.should be_a(UploadedImage)
+  #   end
+  # end
   
 
   describe 'being created' do

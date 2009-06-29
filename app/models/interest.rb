@@ -13,6 +13,7 @@ class Interest < ActiveRecord::Base
   after_save :create_intervals_from_time_span
   
   def create_intervals_from_time_span
+    Interval.delete_all "intervalable_id=#{self.id} AND intervalable_type='Interest'"
     if time_span && intervals = time_span.intervals
       intervals.each do |interval|
         interval.intervalable = self

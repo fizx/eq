@@ -1,4 +1,3 @@
-- need to get "this weekend" pointing to an intervalset
 - wire "other" in the activity tree
 - mturk activities hierarchy
 - "that share this description"

@@ -9,34 +9,37 @@
 		<% @time_spans.each do |span| %>
 			<li><%=link_to span.name, new_activity_time_span_proximity_url(@activity, span) %></li>
 		<% end %>
-		<li><a href="#advanced">Advanced</a>
+		<li>
+			<a href="#advanced">Advanced</a>
 			<div class="tgt" id="advanced" style="overflow:hidden">
-				<p style="float:left">
-				Between:<br />
-				<%=text_field_tag "other", Time.now.to_s, :onfocus => "if(this.value == 'Start')this.value=''" %>
-				and
-				<%=text_field_tag "other", 1.month.from_now.to_s, :onfocus => "if(this.value == 'Fin')this.value=''" %> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<br>				<br><input type="submit" value="Choose">	</p>
-				</p>
-				<p style="float:left">On a:<br />
-					<input type="checkbox" checked> Mon  &nbsp;&nbsp;&nbsp;     <br>
-					<input type="checkbox" checked> Tues  &nbsp;&nbsp;&nbsp;    <br>
-					<input type="checkbox" checked> Weds  &nbsp;&nbsp;&nbsp;    <br>
-					<input type="checkbox" checked> Thurs  &nbsp;&nbsp;&nbsp; 
-				</p>
-				<p style="float:left">&nbsp;<br />
-				<input type="checkbox" checked> Fri  &nbsp;&nbsp;&nbsp;     <br>
-				<input type="checkbox" checked> Sat  &nbsp;&nbsp;&nbsp;     <br>
-				<input type="checkbox" checked> Sun  &nbsp;&nbsp;&nbsp;     
-				</p>
-				
-						<p style="float:left">In the:<br />
-						<input type="checkbox" checked> Morning  &nbsp;&nbsp;&nbsp;     <br>
-						<input type="checkbox" checked> Afternoon  &nbsp;&nbsp;&nbsp;     <br>
-						<input type="checkbox" checked> Evening  &nbsp;&nbsp;&nbsp;     <br>
-						<input type="checkbox" checked> Night  &nbsp;&nbsp;&nbsp;     
-						</p>
-				
+				<form action="/activities/<%=params[:activity_id]%>/time_spans" method="POST">
+					<p style="float:left">
+					Between:<br />
+					<%=text_field_tag "time_span[start]", "", :class => "date-pick" %>
+					and
+					<%=text_field_tag "time_span[finish]", "", :class => "date-pick" %> 
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<br>
+					<br>
+					<input type="submit" value="Choose">	</p>
+					<p style="float:left">On a:<br />
+						<input type="checkbox" name="time_span[day][1]" checked> Mon  &nbsp;&nbsp;&nbsp;     <br>
+						<input type="checkbox" name="time_span[day][2]" checked> Tues  &nbsp;&nbsp;&nbsp;    <br>
+						<input type="checkbox" name="time_span[day][3]" checked> Weds  &nbsp;&nbsp;&nbsp;    <br>
+						<input type="checkbox" name="time_span[day][4]" checked> Thurs  &nbsp;&nbsp;&nbsp; 
+					</p>
+					<p style="float:left">&nbsp;<br />
+						<input type="checkbox" name="time_span[day][5]" checked> Fri  &nbsp;&nbsp;&nbsp;     <br>
+						<input type="checkbox" name="time_span[day][6]" checked> Sat  &nbsp;&nbsp;&nbsp;     <br>
+						<input type="checkbox" name="time_span[day][0]" checked> Sun  &nbsp;&nbsp;&nbsp;     
+					</p>				
+					<p style="float:left">In the:<br />
+						<input type="checkbox" name="time_span[time][6-12]" checked> Morning  &nbsp;&nbsp;&nbsp;     <br>
+						<input type="checkbox" name="time_span[time][12-17]" checked> Afternoon  &nbsp;&nbsp;&nbsp;     <br>
+						<input type="checkbox" name="time_span[time][17-21]" checked> Evening  &nbsp;&nbsp;&nbsp;     <br>
+						<input type="checkbox" name="time_span[time][21-6]" checked> Night  &nbsp;&nbsp;&nbsp;     
+					</p>
+				</form>
 			</div>
 		</li>
 			

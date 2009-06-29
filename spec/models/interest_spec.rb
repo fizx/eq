@@ -15,18 +15,14 @@ describe Interest do
     end
     
     it "should create intervals for this weekend" do 
-      Interval.delete_all
       @interest.time_span = @this
       @interest.save!
-      @interest.reload
       @interest.intervals.length.should == 1
     end
     
     it "should create intervals for any weekend" do 
-      Interval.delete_all
       @interest.time_span = @any
       @interest.save!
-      @interest.reload
       @interest.intervals.length.should == TimeSpan::WEEKS_IN_FUTURE
     end
   end

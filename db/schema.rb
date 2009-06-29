@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090629190540) do
+ActiveRecord::Schema.define(:version => 20090629201248) do
 
   create_table "categories", :force => true do |t|
     t.string   "type"
@@ -18,6 +18,8 @@ ActiveRecord::Schema.define(:version => 20090629190540) do
     t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "private"
+    t.text     "data"
   end
 
   add_index "categories", ["name"], :name => "categories_name_trgm_idx"

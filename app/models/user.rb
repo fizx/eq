@@ -6,7 +6,6 @@ class User < ActiveRecord::Base
   include Authentication::ByCookieToken
 
   validates_presence_of     :login
-  validates_presence_of     :default_location_id
   validates_length_of       :login,    :within => 3..40
   validates_uniqueness_of   :login
   validates_format_of       :login,    :with => Authentication.login_regex, :message => Authentication.bad_login_message
@@ -19,7 +18,8 @@ class User < ActiveRecord::Base
   validates_uniqueness_of   :email
   validates_email           :email
 
-  validates_presence_of     :time_zone
+  # validates_presence_of     :time_zone
+  # validates_presence_of     :default_location_id
   
   has_many :web_calendars
   has_many :interests
