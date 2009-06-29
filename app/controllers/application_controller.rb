@@ -7,6 +7,11 @@ class ApplicationController < ActionController::Base
   include AuthenticatedSystem
   before_filter :login_required
   
+  before_filter :set_time_zone
+  def set_time_zone
+    Time.zone = current_user.time_zone if logged_in?
+  end
+  
   include CollapsedRoutes
   collapsed_routes :activities, :time_spans
     

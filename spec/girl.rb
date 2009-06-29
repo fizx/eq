@@ -14,6 +14,7 @@ Factory.define :user do |user|
   user.password "hiworld"
   user.password_confirmation "hiworld"
   user.default_location_id Factory(:location).id
+  user.time_zone TimeZone.us_zones.first
 end
 
 Factory.define :web_calendar do |cal|

@@ -18,6 +18,8 @@ class User < ActiveRecord::Base
   validates_length_of       :email,    :within => 6..100 #r@a.wk
   validates_uniqueness_of   :email
   validates_email           :email
+
+  validates_presence_of     :time_zone
   
   has_many :web_calendars
   has_many :interests

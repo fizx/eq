@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090628223252) do
+ActiveRecord::Schema.define(:version => 20090629190540) do
 
   create_table "categories", :force => true do |t|
     t.string   "type"
@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(:version => 20090628223252) do
     t.datetime "updated_at"
   end
 
-  add_index "categories", ["name"], :name => "categories_name_trgm_idx"
+  add_index "categories", ["name"], :name => "trgm_idx"
 
   create_table "comments", :force => true do |t|
     t.integer  "commentable_id"
@@ -172,6 +172,7 @@ ActiveRecord::Schema.define(:version => 20090628223252) do
     t.string   "type"
     t.integer  "default_location_id"
     t.integer  "profile_image_id"
+    t.string   "time_zone"
   end
 
   add_index "users", ["login"], :name => "index_users_on_login", :unique => true

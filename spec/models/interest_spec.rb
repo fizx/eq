@@ -8,6 +8,15 @@ describe Interest do
     @interest.save!
   end
   
+  describe "#create" do
+    before do
+      @time_span = TimeSpan.find
+    end
+    it "should create intervals for time span" do 
+      
+    end
+  end
+  
   describe "#interval_overlapping_with" do
     before do
       @interest.intervals << Interval.create(:start => Time.now, :finish => 1.week.from_now)
