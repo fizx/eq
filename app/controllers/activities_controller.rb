@@ -12,7 +12,7 @@ class ActivitiesController < ApplicationController
   end
   
   def create
-    activity = Activity.find_or_innitialize(params[:activity])
+    activity = Activity.find_or_initialize(params[:activity])
     if activity.new_record?
       activity.private = true
       activity.save!

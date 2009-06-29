@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090629201248) do
+ActiveRecord::Schema.define(:version => 20090629212926) do
 
   create_table "categories", :force => true do |t|
     t.string   "type"
@@ -20,9 +20,13 @@ ActiveRecord::Schema.define(:version => 20090629201248) do
     t.datetime "updated_at"
     t.boolean  "private"
     t.text     "data"
+    t.integer  "location_id"
+    t.float    "radius"
+    t.integer  "min"
+    t.integer  "max"
   end
 
-  add_index "categories", ["name"], :name => "categories_name_trgm_idx"
+  add_index "categories", ["name"], :name => "trgm_idx"
 
   create_table "comments", :force => true do |t|
     t.integer  "commentable_id"
@@ -115,6 +119,7 @@ ActiveRecord::Schema.define(:version => 20090629201248) do
     t.integer  "locatable_id"
     t.string   "locatable_type"
     t.string   "type"
+    t.integer  "radius"
   end
 
   add_index "locationings", ["locatable_id"], :name => "index_locationings_on_locatable_id"
