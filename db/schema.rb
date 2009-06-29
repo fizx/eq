@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(:version => 20090629190540) do
     t.datetime "updated_at"
   end
 
-  add_index "categories", ["name"], :name => "trgm_idx"
+  add_index "categories", ["name"], :name => "categories_name_trgm_idx"
 
   create_table "comments", :force => true do |t|
     t.integer  "commentable_id"

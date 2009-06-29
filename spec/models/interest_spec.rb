@@ -10,10 +10,24 @@ describe Interest do
   
   describe "#create" do
     before do
-      @time_span = TimeSpan.find
+      @this = TimeSpan::THIS_WEEKEND
+      @any = TimeSpan::ANY_WEEKEND
     end
-    it "should create intervals for time span" do 
-      
+    
+    it "should create intervals for this weekend" do 
+      Interval.delete_all
+      @interest.time_span = @this
+      @interest.save!
+      @interest.reload
+      @interest.intervals.length.should == 1
+    end
+    
+    it "should create intervals for any weekend" do 
+      Interval.delete_all
+      @interest.time_span = @any
+      @interest.save!
+      @interest.reload
+      @interest.intervals.length.should == TimeSpan::WEEKS_IN_FUTURE
     end
   end
   

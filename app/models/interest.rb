@@ -12,6 +12,15 @@ class Interest < ActiveRecord::Base
   
   after_save :create_intervals_from_time_span
   
+  def create_intervals_from_time_span
+    if time_span && intervals = time_span.intervals
+      intervals.each do |interval|
+        interval.intervalable = self
+        interval.save!
+      end
+    end
+  end
+  
   named_scope :of_friends_of, lambda{|user|
     {
       :joins => "INNER JOIN users AS friends ON interests.user_id=friends.id
