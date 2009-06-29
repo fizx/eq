@@ -1,3 +1,11 @@
-<h2>Page <%=@friends.current_page%> of <%=@friends.total_pages%></h2>
-<ul><%=render @friends%></ul>
-<%=will_paginate @friends%>
+<div class="yui-gc"> 
+	<div class="yui-u first"> 
+		<h2>Page <%=@friends.current_page%> of <%=@friends.total_pages%></h2>
+		<ul class="rows"><%=render @friends%></ul>
+		<%=will_paginate @friends%>
+	</div>
+	<div class="yui-u">
+		<h4><%=link_to "find friends", :action => "find"%></h4>
+		<h4><%=link_to "invite someone", new_invitation_url%></h4>		
+	</div>
+</div>

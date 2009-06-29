@@ -12,6 +12,9 @@
 		<li>
 		Within <input type="text" size=4 value=10> miles of 
 		<%=text_field_tag "other", "Me", :onfocus => "if(this.value == 'Me')this.value=''" %>
+		<script>
+			$("#other").autocomplete("/locations/ac");
+		</script>
 			<input type="submit" value="Choose">
 		</li>
 	</ul>

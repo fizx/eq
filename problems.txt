@@ -1,0 +1,11 @@
+- need to get "this weekend" pointing to an intervalset
+- wire "other" in the activity tree
+- mturk activities hierarchy
+- "that share this description"
+  - location
+  - activity hierarchy
+  - intervals
+- ticketmaster feed
+- opentable feed
+
+sf: http://api.openstreetmap.org/api/0.6/map?bbox=-122.52,37.82,-122.38,37.74
