@@ -44,19 +44,6 @@
 		<%=link_to "no", "/" %>
 		<div class="space"></div>
 		
-		<%=render "/calendars/calendar", :events => @events %>
-		Add: 
-		<%=link_to "event", new_event_url %> -
-		<%=link_to "web calendar", "/calendars#cal" %> -
-		<%=link_to "busy period", "/calendars#busy" %> -
-		<%=link_to "trip", "/calendars#trip" %>
-		<div class="space"></div>
-		<% unless @upcoming.blank? %>
-			<h3>Upcoming</h3>
-			<ul class="rows">
-				<li><b>7/27</b> Going with <%=link_to "6 people" %> to see Up</li>
-				<li><b>7/29</b> Going with <%=link_to "Suzy" %> to go hiking</li>
-			</ul>
-		<% end %>
+		<%= render :partial => 'calendar_column' %>
 	</div>
 </div>

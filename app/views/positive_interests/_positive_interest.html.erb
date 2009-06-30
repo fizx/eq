@@ -4,6 +4,6 @@
 		You want to <%=positive_interest.description%>
 	<% else %>
 		<a class="interested" href="#">I'm interested</a>
-		<%=link_to positive_interest.user.login, positive_interest.user %> wants to <%=link_to positive_interest.description, interest_path(positive_interest)%>
+		<%=link_to truncate(positive_interest.user.login, :length => 10), positive_interest.user %> wants to <%=link_to positive_interest.description, interest_path(positive_interest)%>
 	<% end %>
 </li>
