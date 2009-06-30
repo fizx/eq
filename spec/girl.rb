@@ -1,5 +1,6 @@
 require "rubygems"
 require "factory_girl"
+require "digest/md5"
 
 Factory.define :location do |loc|
   loc.name "100 spear st, sf ca"
@@ -7,20 +8,27 @@ Factory.define :location do |loc|
   loc.lat(37.79215)
 end
 
-$user_inc = 0
+def r
+  Digest::MD5.hexdigest(rand.to_s)
+end
+
 Factory.define :user do |user|
-  user.login { "joe_#{$user_inc += 1}" }
-  user.email { "joe_#{$user_inc += 1}@example.com" }
+  
+  user.login { "joe_#{r}" }
+  user.email { "joe_#{r}@example.com" }
   user.password "hiworld"
   user.password_confirmation "hiworld"
-  user.default_location_id Factory(:location).id
+  user.default_location_id {
+                            RAILS_ENV == "test" ? 
+                            Factory(:location).id : 
+                            Location.from("100 spear st, sf ca").id
+                          }
   user.time_zone ActiveSupport::TimeZone.us_zones.first
 end
 
 Factory.define :web_calendar do |cal|
   cal.url "http://www.google.com/calendar/ical/kyle.c.maxwell%40gmail.com/foo/basic.ics"
 end
-
 
 Factory.define :interval do |interval|
   interval.start Time.now

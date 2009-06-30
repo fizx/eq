@@ -1,4 +1,8 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :trips
+
+  map.resources :intervals
+
   map.resources :eventlets
 
   map.resources :categories

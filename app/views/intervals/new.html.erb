@@ -1,0 +1,27 @@
+<h1>New interval</h1>
+
+<% form_for(@interval) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :start %><br />
+    <%= f.datetime_select :start %>
+  </p>
+  <p>
+    <%= f.label :finish %><br />
+    <%= f.datetime_select :finish %>
+  </p>
+  <p>
+    <%= f.label :intervalable_type %><br />
+    <%= f.text_field :intervalable_type %>
+  </p>
+  <p>
+    <%= f.label :intervalable_id %><br />
+    <%= f.text_field :intervalable_id %>
+  </p>
+  <p>
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', intervals_path %>

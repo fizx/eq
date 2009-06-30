@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  start: 2009-06-30 12:59:47
+  finish: 2009-06-30 12:59:47
+  intervalable_type: MyString
+  intervalable_id: 1
+
+two:
+  start: 2009-06-30 12:59:47
+  finish: 2009-06-30 12:59:47
+  intervalable_type: MyString
+  intervalable_id: 1

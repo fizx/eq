@@ -1,0 +1,23 @@
+<p>
+  <b>Start:</b>
+  <%=h @interval.start %>
+</p>
+
+<p>
+  <b>Finish:</b>
+  <%=h @interval.finish %>
+</p>
+
+<p>
+  <b>Intervalable type:</b>
+  <%=h @interval.intervalable_type %>
+</p>
+
+<p>
+  <b>Intervalable:</b>
+  <%=h @interval.intervalable_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_interval_path(@interval) %> |
+<%= link_to 'Back', intervals_path %>
