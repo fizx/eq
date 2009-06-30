@@ -1,9 +1,8 @@
-- wire "other" in the activity tree
-- mturk activities hierarchy
 - "that share this description"
   - location
   - activity hierarchy
   - intervals
+- mturk activities hierarchy
 - ticketmaster feed
 - opentable feed
 

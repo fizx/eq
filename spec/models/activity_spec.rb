@@ -11,6 +11,18 @@ describe Activity do
     end
   end
   
+  describe "#activity_overlapping_with" do 
+    before do
+      @a = Factory(:activity)
+      @b = Factory(:activity, :parent => @a)
+      @c = Factory(:activity, :parent => @b)
+      @d = Factory(:activity, :parent => @c)
+      @e = Factory(:activity, :parent => @d)
+      @f = Factory(:activity)
+    end
+    
+  end
+  
   describe "#build" do
     it "should not start fresh" do
       a = Factory(:activity)

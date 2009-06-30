@@ -31,6 +31,21 @@ class Interest < ActiveRecord::Base
     }
   }
   
+  named_scope :activity_overlapping_with, lambda{|activity|
+    case activity
+    when Activity
+      # {
+      #   :joins => "INNER JOIN intervals ON intervals.intervalable_type='Interest' 
+      #                                  AND intervals.intervalable_id=interests.id 
+      #                                  AND intervals.start < '#{interval.finish.to_s(:db)}' 
+      #                                  AND intervals.finish > '#{interval.start.to_s(:db)}'",
+      #   :group => Interest.columns.map {|c| "interests.#{c.name}"}.join(", ")
+      # }
+    when Interest: raise "wtf"
+    when NilClass: {}
+    end
+  }
+  
   named_scope :interval_overlapping_with, lambda{|interval|
     case interval
     when Interval
