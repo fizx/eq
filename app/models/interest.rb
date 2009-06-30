@@ -88,12 +88,62 @@ class Interest < ActiveRecord::Base
   named_scope :proximity_overlapping_with, lambda{|location|
     
   }
+
+  # 
+  # Interest.of_friends_of(user).
+  #          interval_overlapping_with(self).
+  #          activity_overlapping_with(activity).
+  #          proximity_overlapping_with(proximity)  
+  named_scope :friendly_interests, lambda {|interest|
+    activity = interest.activity
+    proximity = interest.proximity
+    user = interest.user
+    
+    with = <<-SQL
+      RECURSIVE 
+      children(id) AS (
+          VALUES(#{activity.id})
+        UNION
+          SELECT categories.id FROM categories, children 
+                               WHERE categories.parent_id = children.id 
+                               AND categories.id IS NOT NULL
+      ),
+      ancestors(id) AS (
+          VALUES(#{activity.id})
+        UNION
+          SELECT categories.parent_id FROM categories, ancestors 
+                             WHERE categories.id = ancestors.id 
+                             AND categories.parent_id IS NOT NULL
+      )
+    SQL
+     
+    {
+      :with => with,
+      :select => "interests.*",
+      :from => "interests, 
+                users AS friends, 
+                followings, 
+                users AS current_users,
+                intervals AS other_intervals, 
+                intervals",
+      :conditions => "interests.activity_id IN (select id from children UNION select id from ancestors)
+                  AND interests.user_id=friends.id
+                  AND friends.id=followings.followee_id
+                  AND current_users.id=followings.follower_id
+                  AND current_users.id=#{user.id}
+                  AND intervals.intervalable_type='Interest' 
+                  AND intervals.intervalable_id=interests.id
+                  AND other_intervals.intervalable_type='Interest'
+                  AND other_intervals.intervalable_id = #{interest.id}
+                  AND intervals.start < other_intervals.finish 
+                  AND intervals.finish > other_intervals.start
+      "            ,
+                  :group => Interest.columns.map {|c| "interests.#{c.name}"}.join(", ")
+    }
+  }
   
   def friendly_interests
-    Interest.of_friends_of(user).
-             interval_overlapping_with(self).
-             activity_overlapping_with(activity).
-             proximity_overlapping_with(proximity)
+    Interest.friendly_interests(self)
   end
   
   def self.random_interest
