@@ -33,13 +33,14 @@
 		<% unless @stream.blank? %>
 			<h3>The stream</h3>
 			<ul class="rows"><%=render @stream%></ul>
+			<%=will_paginate @stream %>
 		<% end %>
   </div> 
 	<div class="yui-u"> 
 		<h3>Random idea</h3>
 		<p>Do you want to <%=@interest.description%>?</p>
 		<%=link_to "never", @interest.url_hash.merge(:negative => true), :class=> "right" %>
-		<%=link_to "yes", @interest.url_hash %> 
+		<%=link_to "yes", new_activity_time_span_proximity_path(@interest.activity, @interest.time_span) %> 
 		<%=link_to "no", "/" %>
 		<div class="space"></div>
 		

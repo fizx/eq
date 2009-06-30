@@ -6,8 +6,8 @@
 	<h4>You want to <%=@activity.name%> <%=@time_span.name%></h4>
 	<h2>Where? </h2>	
 	<ul>
-		<% @proximities.each do |prox| %>
-			<li><%=link_to prox.name, new_activity_time_span_proximity_group_size_url(@activity, @time_span, prox) %></li>
+		<% Proximity::DEFAULTS.each do |name, radius| %>
+			<li><%=link_to name, request.request_uri.gsub('/new', '') + "?proximity[location_string]=Me&proximity[radius]=#{radius}", :method => :post %></li>
 		<% end %>
 		<li>
 			<form action="<%=request.request_uri.gsub('/new', '')%>" method="POST">

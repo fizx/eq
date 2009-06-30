@@ -10,7 +10,19 @@ class CalendarsController < ApplicationController
     start = Chronic.parse("#{@date} at 0:00")
     finish = Chronic.parse("#{@date} at 24:00")
     interval = Interval.from(start, finish)
-    @interests = Interest.interval_overlapping_with(interval).paginate(:page => params[:page])
+    flash.now[:notice] = "You can't plan an event in the past, silly." if start < Time.now
+    @activity = Activity.find_by_name params[:activity]
+    unless params[:location].blank?
+      location = Location.from params[:location]
+      radius = params[:r].to_f
+      radius = [0.2, radius].min
+      @proximity = Proximity.new(:radius => radius, :location_id => location.id)
+    end
+    
+    @interests = Interest.interval_overlapping_with(interval)
+    @interests = @interests.activity_overlapping_with(@activity)    if @activity
+    @interests = @interests.proximity_overlapping_with(@proximity)  if @proximity
+    @interests = @interests.paginate(:page => params[:page])
   end
   
   def current_event

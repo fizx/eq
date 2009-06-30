@@ -1,13 +1,14 @@
 class Proximity < Category
+  DEFAULTS = [
+    ["in your neighborhood", 0.5],
+    ["in your city", 3],
+    ["in your county", 10],
+    ["in your state", 100]
+  ]
   belongs_to :location
   validates_presence_of :radius
   validates_presence_of :location
-  
-  NEIGHBORHOOD = Proximity.find_or_create :name => "in your neighborhood", :radius => 0.5
-  CITY = Proximity.find_or_create :name => "in your city", :radius => 3
-  COUNTY = Proximity.find_or_create :name => "in your county", :radius => 10
-  STATE = Proximity.find_or_create :name => "in your state", :radius => 100
-  
+    
   def location_string=(s)
     self.location = Location.from(s)
   end

@@ -8,7 +8,7 @@ $(function() {
 		var m = d.getMonth();
 		
 		function dateClicky(date) {
-			location.href = "/date/"+date.getMonth()+"/"+date.getDate()+"/"+date.getFullYear();
+			location.href = "/date/"+(date.getMonth()+1)+"/"+date.getDate()+"/"+date.getFullYear();
 		}
 		
 		function eventClicky(calEvent, jsEvent) {

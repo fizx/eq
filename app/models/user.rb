@@ -94,7 +94,7 @@ class User < ActiveRecord::Base
         interests.find(:all, :select => "activity_id, time_span_id").map{|i| [i.activity_id, i.time_span_id] }
     ).rand
     
-    return nil unless activity_id
+    return Interest.random_interest unless activity_id
     
     Interest.new(:activity_id => activity_id, :time_span_id => time_span_id)
   end

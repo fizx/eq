@@ -1,4 +1,24 @@
-<h2>Plan activities for <%=@date%>
+<h2>Plan activities for <%=@date%></h2>
+<div class="space"></div>
+<form>
+	<div class="yui-g"> 
+		<div class="yui-u first">
+			<h4>Refine by location:</h4>
+			Within <%=text_field_tag "r", params[:r], :size => 4%> miles of 
+			<%=text_field_tag "location", params[:location]%>
+			<input type="submit" value="Go">
+		</div>
+		<div class="yui-u">
+			<h4>Refine by activity:</h4>
+			<%=text_field_tag "activity", params[:activity]%>
+			<input type="submit" value="Go">
+		</div>
+	</div>
+	<script>
+		$("#activity").autocomplete("/ac");
+		$("#location").autocomplete("/location/ac");
+	</script>
+</form>
 <div class="space"></div>
 <h4 class="highlight"><%=@interests.total_entries%> things going on</h4>
 <ul class="rows"><%=render @interests%></ul>
