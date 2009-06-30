@@ -23,7 +23,7 @@ class InterestsController < ApplicationController
   
   def show
     @interest = Interest.find(params[:id])
-    @friends = @interest.friendly_interests.paginate(:page => params[:page])
+    @friends = @interest.friendly_interests(current_user).paginate(:page => params[:page])
     @similar = Interest.of_friends_of(current_user)
   end
   

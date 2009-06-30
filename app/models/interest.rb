@@ -101,10 +101,9 @@ class Interest < ActiveRecord::Base
   #          interval_overlapping_with(self).
   #          activity_overlapping_with(activity).
   #          proximity_overlapping_with(proximity)  
-  named_scope :friendly_interests, lambda {|interest|
+  named_scope :friendly_interests, lambda {|interest, user|
     activity = interest.activity
     proximity = interest.proximity
-    user = interest.user
     
     with = <<-SQL
       RECURSIVE 
@@ -166,8 +165,8 @@ class Interest < ActiveRecord::Base
     }
   }
   
-  def friendly_interests
-    Interest.friendly_interests(self)
+  def friendly_interests(user = self.user)
+    Interest.friendly_interests(self, user)
   end
   
   def self.random_interest
