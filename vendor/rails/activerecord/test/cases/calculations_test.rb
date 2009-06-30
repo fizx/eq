@@ -190,6 +190,10 @@ class CalculationsTest < ActiveRecord::TestCase
     assert_equal 2, c[companies(:rails_core)]
     assert_equal 1, c[companies(:first_client)]
   end
+  
+  def test_with_clause
+    Account.count("other.id", :with => "other AS (SELECT * FROM accounts)", :from => "other")
+  end
 
   def test_should_not_modify_options_when_using_includes
     options = {:conditions => 'companies.id > 1', :include => :firm}

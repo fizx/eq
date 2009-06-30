@@ -1,6 +1,6 @@
 module ActiveRecord
   module Calculations #:nodoc:
-    CALCULATIONS_OPTIONS = [:conditions, :joins, :order, :select, :group, :having, :distinct, :limit, :offset, :include, :from]
+    CALCULATIONS_OPTIONS = [:conditions, :joins, :order, :select, :group, :having, :distinct, :limit, :offset, :include, :from, :with]
     def self.included(base)
       base.extend(ClassMethods)
     end
@@ -202,6 +202,9 @@ module ActiveRecord
             sql << " FROM (SELECT #{distinct}#{column_name}" if use_workaround
             sql << " FROM #{connection.quote_table_name(table_name)} "
           end
+          
+          
+          add_withs!(sql, options[:with], scope)
 
           joins = ""
           add_joins!(joins, options[:joins], scope)
