@@ -196,8 +196,8 @@ module ActiveRecord
           sql = "SELECT COUNT(*) AS #{aggregate_alias}" if use_workaround
 
           sql << ", #{options[:group_field]} AS #{options[:group_alias]}" if options[:group]
-          if options[:from]
-            sql << " FROM #{options[:from]} "
+          if options[:from] || scope && scope[:from]
+            sql << " FROM #{options[:from] || scope[:from]} "
           else
             sql << " FROM (SELECT #{distinct}#{column_name}" if use_workaround
             sql << " FROM #{connection.quote_table_name(table_name)} "
