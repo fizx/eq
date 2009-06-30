@@ -13,6 +13,13 @@ vendor/plugins/attachment_fu:
   revision: fa08cb03914b02b66853b4615cd3eca768291ca7
   branch: master
   remote: braid/vendor/plugins/attachment-fu
+vendor/rails: 
+  squashed: true
+  url: git@github.com:fizx/rails.git
+  type: git
+  revision: 008429acef6dd9b3f1e2e6045ce28a3856dafd79
+  branch: 2.3-pg
+  remote: braid/vendor/rails
 vendor/plugins/gravatar-plugin: 
   squashed: true
   type: git
