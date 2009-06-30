@@ -18,7 +18,7 @@ vendor/rails:
   url: git@github.com:fizx/rails.git
   type: git
   revision: 5659d3bc09735295e03a53e1eec619288de7a8ea
-  branch: master
+  branch: 2.3-pg
   remote: braid/vendor/rails
 vendor/plugins/gravatar-plugin: 
   squashed: true
