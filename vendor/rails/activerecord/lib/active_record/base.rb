@@ -1714,9 +1714,10 @@ module ActiveRecord #:nodoc:
 
         def construct_finder_sql(options)
           scope = scope(:find)
-          sql  = "SELECT #{options[:select] || (scope && scope[:select]) || default_select(options[:joins] || (scope && scope[:joins]))} "
+          sql = "SELECT #{options[:select] || (scope && scope[:select]) || default_select(options[:joins] || (scope && scope[:joins]))} "
           sql << "FROM #{options[:from]  || (scope && scope[:from]) || quoted_table_name} "
-
+          
+          add_withs!(sql, options[:with], scope)
           add_joins!(sql, options[:joins], scope)
           add_conditions!(sql, options[:conditions], scope)
 
@@ -1809,6 +1810,13 @@ module ActiveRecord #:nodoc:
           scope = scope(:find) if :auto == scope
           options = options.reverse_merge(:lock => scope[:lock]) if scope
           connection.add_lock!(sql, options)
+        end
+        
+        def add_withs!(sql, options, scope = :auto)
+          scope = scope(:find) if :auto == scope
+          if string = (options || scope && scope[:with])
+            sql.replace("WITH #{string} #{sql}")
+          end
         end
 
         # The optional scope argument is for the current <tt>:find</tt> scope.
@@ -2430,7 +2438,7 @@ module ActiveRecord #:nodoc:
         end
 
         VALID_FIND_OPTIONS = [ :conditions, :include, :joins, :limit, :offset,
-                               :order, :select, :readonly, :group, :having, :from, :lock ]
+                               :order, :select, :readonly, :group, :having, :from, :lock, :with ]
 
         def validate_find_options(options) #:nodoc:
           options.assert_valid_keys(VALID_FIND_OPTIONS)

@@ -28,6 +28,13 @@ class NamedScopeTest < ActiveRecord::TestCase
       all_posts.collect
     end
   end
+  
+  def test_with_clause
+    topics = Topic.with_pointless_with.all
+    assert_equal(1, topics.size)
+    assert_equal(topics(:second).title, topics.first.title)
+  end
+  
 
   def test_reload_expires_cache_of_found_items
     all_posts = Topic.base

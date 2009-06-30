@@ -146,6 +146,16 @@ class FinderTest < ActiveRecord::TestCase
     last_devs = Developer.find devs.map(&:id), :limit => 3, :offset => 9
     assert_equal 2, last_devs.size
   end
+  
+  def test_find_with_with_clause
+    topics = Topic.find :all, 
+                        :with => "super_topics AS (SELECT * FROM topics)", 
+                        :conditions => ["super_topics.author_name = ?", "Mary"],
+                        :select => "super_topics.*",
+                        :from => "super_topics"
+    assert_equal(1, topics.size)
+    assert_equal(topics(:second).title, topics.first.title)
+  end
 
   def test_find_an_empty_array
     assert_equal [], Topic.find([])

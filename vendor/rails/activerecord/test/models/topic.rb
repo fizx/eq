@@ -1,5 +1,9 @@
 class Topic < ActiveRecord::Base
   named_scope :base
+  named_scope :with_pointless_with, :with => "super_topics AS (SELECT * FROM topics)", 
+                      :conditions => ["super_topics.author_name = ?", "Mary"],
+                      :select => "super_topics.*",
+                      :from => "super_topics"
   named_scope :written_before, lambda { |time|
     if time
       { :conditions => ['written_on < ?', time] }
