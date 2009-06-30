@@ -1,6 +1,7 @@
 class Proximity < Category
   belongs_to :location
   validates_presence_of :radius
+  validates_presence_of :location
   
   NEIGHBORHOOD = Proximity.find_or_create :name => "in your neighborhood", :radius => 0.5
   CITY = Proximity.find_or_create :name => "in your city", :radius => 3

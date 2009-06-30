@@ -3,11 +3,11 @@ namespace :friends do
   task :create_random do
     require "config/environment"
     require "spec/girl"
-    unless @user = User.find_by_login(ENV["USER"] || "kyle") 
-      puts "no user"
-      exit 1
-    end
-    20.times do 
+    User.delete_all
+    @user = Factory(:user, :login => "kyle", 
+                    :password => "hiworld", 
+                    :password_confirmation => "hiworld")
+    20.times do |k|
       u = Factory(:user)
       20.times do
         i = u.new_interest

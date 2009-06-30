@@ -6,6 +6,13 @@ class Interest < ActiveRecord::Base
   belongs_to :time_span
   belongs_to :activity
   
+  validates_presence_of :user
+  validates_presence_of :familiarity
+  validates_presence_of :group_size
+  validates_presence_of :proximity
+  validates_presence_of :time_span
+  validates_presence_of :activity
+  
   has_many :intervals, :as => :intervalable
   
   include ActionController::UrlWriter
@@ -125,7 +132,13 @@ class Interest < ActiveRecord::Base
                 followings, 
                 users AS current_users,
                 intervals AS other_intervals, 
-                intervals",
+                intervals,
+                categories AS proximities,
+                categories AS other_proximities,
+                locations,
+                locations AS other_locations,
+                interests AS other_interests
+                ",
       :conditions => "interests.activity_id IN (select id from children UNION select id from ancestors)
                   AND interests.user_id=friends.id
                   AND friends.id=followings.followee_id
@@ -135,8 +148,19 @@ class Interest < ActiveRecord::Base
                   AND intervals.intervalable_id=interests.id
                   AND other_intervals.intervalable_type='Interest'
                   AND other_intervals.intervalable_id = #{interest.id}
+                  AND other_interests.id = #{interest.id}
                   AND intervals.start < other_intervals.finish 
                   AND intervals.finish > other_intervals.start
+                  AND intervals.finish > NOW()
+                  AND other_intervals.finish > NOW()
+                  AND interests.proximity_id = proximities.id
+                  AND other_interests.proximity_id = other_proximities.id
+                  AND proximities.location_id = locations.id
+                  AND other_proximities.location_id = other_locations.id
+                  AND point(locations.lng, locations.lat) 
+                      <@> 
+                      point(other_locations.lng, other_locations.lat) 
+                          <= proximities.radius + other_proximities.radius
       "            ,
                   :group => Interest.columns.map {|c| "interests.#{c.name}"}.join(", ")
     }
