@@ -13,7 +13,9 @@ class Category < ActiveRecord::Base
       name = klass.to_s.underscore.pluralize
       puts "Building #{name}..."
       path = File.dirname(__FILE__) + "/../../config/categories/#{name}.yml"
-      klass.build(YAML.load(File.open(path)))
+      if File.exists?(path)
+        klass.build(YAML.load(File.open(path)))
+      end
     end
   end
   
