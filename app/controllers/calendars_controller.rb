@@ -5,6 +5,14 @@ class CalendarsController < ApplicationController
     @event ||= Interval.new
   end
   
+  def date
+    @date = "#{params[:month]}/#{params[:day]}/#{params[:year]}"
+    start = Chronic.parse("#{@date} at 0:00")
+    finish = Chronic.parse("#{@date} at 24:00")
+    interval = Interval.from(start, finish)
+    @interests = Interest.interval_overlapping_with(interval).paginate(:page => params[:page])
+  end
+  
   def current_event
     @event = current_user.intervals.find(params[:selected_id])
     case params[:button].strip.downcase

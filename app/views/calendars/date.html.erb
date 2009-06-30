@@ -1,0 +1,5 @@
+<h2>Plan activities for <%=@date%>
+<div class="space"></div>
+<h4 class="highlight"><%=@interests.total_entries%> things going on</h4>
+<ul class="rows"><%=render @interests%></ul>
+<%=will_paginate @interests%>
