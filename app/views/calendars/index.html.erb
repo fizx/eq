@@ -48,19 +48,18 @@
 		<% end %>
 		<div class="space"></div>
 		<div class="tgt" id="clicked">
-			<!-- <form method="POST" action="/current_event" id="selected_event"> -->
-			<% form_for @event do |f| %>
+			<% form_for @event, :url => "/current_event" do |f| %>
 				<a href="#" class="x">x</a>
-				<h3>Event Details&nbsp;&nbsp;&nbsp;<%=f.check_box :busy %> <label for="selected_busy">busy?</label></h3>	
+				<h3>Event Details&nbsp;&nbsp;&nbsp;<%=f.check_box :busy, :id => "interval_busy" %> <label for="selected_busy">busy?</label></h3>	
 				<div class="space"></div>
 				<h4>Where</h4>
-				<%=f.text_field :location_string%> 
+				<%=f.text_field :location_string, :id => "interval_location_string"%> 
 				<div class="space"></div>
 				<h4>When</h4>
-				<%=hidden_field_tag :selected_id, @event && @event.id %>
-				<%=f.text_field :start, :size => 20, :class=> "date-pick" %> 
+				<%=hidden_field_tag "interval[id]", @event && @event.id %>
+				<%=f.text_field :start, :size => 20, :class=> "date-pick", :id => "interval_start" %> 
 				to 
-				<%=f.text_field :finish, :size => 20, :class=> "date-pick" %>
+				<%=f.text_field :finish, :size => 20, :class=> "date-pick", :id => "interval_finish" %>
 				<div class="space"></div>
 			
 				<input type="submit" name="button" value="Update">

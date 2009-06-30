@@ -1,7 +1,10 @@
 <div class="yui-gc"> 
 	<div class="yui-u first"> 
-		
-		<h2>You <%="<em>do not</em>" if @interest.negative?%> want to...</h2>
+		<% if @interest.user == current_user %>
+			<h2>You <%="<em>do not</em>" if @interest.negative?%> want to...</h2>
+		<% else %>
+			<h2><%=link_to @interest.user.login, @interest.user %> <%="<em>do not</em>" if @interest.negative?%> wants to...</h2>
+		<% end %>
 		<h4><%=@interest.description%></h4>
 		<div class="space"></div>
 		<h4 class="highlight">Your friends are already interested in <%=@friends.total_entries %> things that share this description</h4>
@@ -11,7 +14,7 @@
 	<div class="yui-u">
 		<h2>Similar ideas</h2>
 		<% if @similar.blank? %>
-			<h4>We couldn't find any similar things in your friends interests.  Maybe you should <%=link_to "invite more people", new_invitation_url %>?</h4>
+			<h4>We couldn't find any similar things in your friends interests.  Maybe you should <%=link_to "invite more people", current_user.found_email_addresses? ? found_email_addresses_url : friends_url(:action => "find") %>?</h4>
 		<% else %>
 			<ul class="rows"><%=render @similar %></ul>
 		<% end %>

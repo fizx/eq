@@ -32,6 +32,9 @@ class Interest < ActiveRecord::Base
   }
   
   named_scope :activity_overlapping_with, lambda{|activity|
+    activity = activity.activity      if activity.is_a?(Interest)
+    return                            unless activity.is_a?(Activity)
+    
     with = <<-SQL
       RECURSIVE 
       children(id) AS (
@@ -49,15 +52,10 @@ class Interest < ActiveRecord::Base
                              AND categories.parent_id IS NOT NULL
       )
     SQL
-    case activity
-    when Activity:
-      {
-        :with => with,
-        :conditions => "interests.activity_id IN (select id from children UNION select id from ancestors)"
-      }
-    when Interest: raise "wtf"
-    when NilClass: {}
-    end
+    {
+      :with => with,
+      :conditions => "interests.activity_id IN (select id from children UNION select id from ancestors)"
+    }
   }
   
   named_scope :interval_overlapping_with, lambda{|interval|
@@ -70,23 +68,32 @@ class Interest < ActiveRecord::Base
                                        AND intervals.finish > '#{interval.start.to_s(:db)}'",
         :group => Interest.columns.map {|c| "interests.#{c.name}"}.join(", ")
       }
-    when Interest: raise "wtf"
+    when Interest: 
+      {
+        :from => "intervals AS other_intervals, intervals, interests",
+        :conditions => "
+          intervals.intervalable_type='Interest' 
+          AND intervals.intervalable_id=interests.id
+          AND other_intervals.intervalable_type='Interest'
+          AND other_intervals.intervalable_id = #{interval.id}
+          AND intervals.start < other_intervals.finish 
+          AND intervals.finish > other_intervals.start
+        ",
+        :group => Interest.columns.map {|c| "interests.#{c.name}"}.join(", ")
+      }
     when NilClass: {}
     end
   }
   
-  
-  
-  # Defined as interests that share:
-  # - user_id in this.user_id.followers.ids
-  # - time_span overlap
-  # - location overlap
-  # - activity in this interests self/parent set
-  def friendly_interests
-    sql = <<-SQL
+  named_scope :proximity_overlapping_with, lambda{|location|
     
-    SQL
-    # find_by_sql(sql)
+  }
+  
+  def friendly_interests
+    Interest.of_friends_of(user).
+             interval_overlapping_with(self).
+             activity_overlapping_with(activity).
+             proximity_overlapping_with(proximity)
   end
   
   def self.random_interest

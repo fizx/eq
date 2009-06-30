@@ -14,4 +14,15 @@ class Trip < Interval
   def location
     locations.first
   end
+  
+  def location_string=(s)
+    location = Location.from(s)
+    locations.clear
+    locations << location if location
+  end
+  
+  def location_string
+    locations.first.try(:name)
+  end
+  
 end

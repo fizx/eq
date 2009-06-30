@@ -1,23 +1,27 @@
 <div id="calendar"></div>
 <script>
 
-$(document).ready(function() {
+$(function() {
 
 		var d = new Date();
 		var y = d.getFullYear();
 		var m = d.getMonth();
 		
-		function clicky(calEvent, jsEvent) {
-			$("#selected_id").val(calEvent.id)
+		function dateClicky(date) {
+			location.href = "/date/"+date.getMonth()+"/"+date.getDate()+"/"+date.getFullYear();
+		}
+		
+		function eventClicky(calEvent, jsEvent) {
+			$("#interval_id").val(calEvent.id)
 			if(calEvent.title == "Busy") {
-				$("#selected_busy").attr("checked", "checked");
-				$("#selected_location").val("N/A");
+				$("#interval_busy").attr("checked", "checked");
+				$("#interval_location").val("N/A");
 			} else {
-				$("#selected_busy").removeAttr("checked");
-				$("#selected_location").val(calEvent.title);
+				$("#interval_busy").removeAttr("checked");
+				$("#interval_location_string").val(calEvent.title);
 			}
-			$("#selected_start").val(calEvent.start);
-			$("#selected_finish").val(calEvent.end);
+			$("#interval_start").val(calEvent.start);
+			$("#interval_finish").val(calEvent.end);
 			if(location.href.match("calendar")) {
 				location.href = "#clicked";	
 			} else {
@@ -29,7 +33,8 @@ $(document).ready(function() {
 
 		$('#calendar').fullCalendar({
 			// draggable: true,
-			"eventClick": clicky,
+			dayClick: dateClicky,
+			eventClick: eventClicky,
 			events: [<%=events.map {|e|
 				<<-STR
 				{

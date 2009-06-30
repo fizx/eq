@@ -13,12 +13,6 @@ class Interval < ActiveRecord::Base
     Interval.new(:start => start, :finish => finish)
   end
   
-  def location_string=(s)
-    location = Location.from(s)
-    locations.clear
-    locations << location if location
-  end
-  
   def busy
     nil
   end
@@ -30,8 +24,13 @@ class Interval < ActiveRecord::Base
   def finishms
     (finish.to_f * 1000).to_i
   end
+
+  def location_string=(s)
+    @s = s
+  end
   
   def location_string
-    locations.first.try(&:name)
+    @s
   end
+  
 end

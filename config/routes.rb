@@ -23,6 +23,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :interests
   map.resources :found_email_addresses
   map.resource :session
+  
+  map.calendar_date "/date/:month/:day/:year", :controller => "calendars", :action => "date"
 
   map.ac "/ac", :controller => "activities", :action => "ac"
   map.locations_ac "/locations/ac", :controller => "locations", :action => "ac"

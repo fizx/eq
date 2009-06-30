@@ -8,6 +8,9 @@ describe Interest do
     @interest.save!
   end
   
+  describe "#proximity_overlapping_with" do
+  end
+  
   describe "#activity_overlapping_with" do 
     before do
       @a = Factory(:activity)                     #         a    f

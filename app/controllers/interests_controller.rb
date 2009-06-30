@@ -23,10 +23,7 @@ class InterestsController < ApplicationController
   
   def show
     @interest = Interest.find(params[:id])
-    @friends = Interest.
-                    of_friends_of(current_user).
-                    interval_overlapping_with(@interest.intervals.first).
-                    paginate(:page => params[:page])
+    @friends = @interest.friendly_interests.paginate(:page => params[:page])
     @similar = Interest.of_friends_of(current_user)
   end
   
