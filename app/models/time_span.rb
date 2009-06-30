@@ -33,6 +33,7 @@ class TimeSpan < Category
   end
   
   def generate_intervals_from(data)
+    return unless data && data["time_span"]
     start = Chronic.parse(data["time_span"]["start"] + " at 0:00")
     finish = Chronic.parse(data["time_span"]["finish"] + " at 24:00")
     bounds = start..finish

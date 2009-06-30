@@ -32,15 +32,29 @@ class Interest < ActiveRecord::Base
   }
   
   named_scope :activity_overlapping_with, lambda{|activity|
+    with = <<-SQL
+      RECURSIVE 
+      children(id) AS (
+          VALUES(#{activity.id})
+        UNION
+          SELECT categories.id FROM categories, children 
+                               WHERE categories.parent_id = children.id 
+                               AND categories.id IS NOT NULL
+      ),
+      ancestors(id) AS (
+          VALUES(#{activity.id})
+        UNION
+          SELECT categories.parent_id FROM categories, ancestors 
+                             WHERE categories.id = ancestors.id 
+                             AND categories.parent_id IS NOT NULL
+      )
+    SQL
     case activity
-    when Activity
-      # {
-      #   :joins => "INNER JOIN intervals ON intervals.intervalable_type='Interest' 
-      #                                  AND intervals.intervalable_id=interests.id 
-      #                                  AND intervals.start < '#{interval.finish.to_s(:db)}' 
-      #                                  AND intervals.finish > '#{interval.start.to_s(:db)}'",
-      #   :group => Interest.columns.map {|c| "interests.#{c.name}"}.join(", ")
-      # }
+    when Activity:
+      {
+        :with => with,
+        :conditions => "interests.activity_id IN (select id from children UNION select id from ancestors)"
+      }
     when Interest: raise "wtf"
     when NilClass: {}
     end

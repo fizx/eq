@@ -8,6 +8,51 @@ describe Interest do
     @interest.save!
   end
   
+  describe "#activity_overlapping_with" do 
+    before do
+      @a = Factory(:activity)                     #         a    f
+      @b = Factory(:activity, :parent => @a)      #          \
+      @c = Factory(:activity, :parent => @b)      #           b
+      @d = Factory(:activity, :parent => @b)      #          / \
+      @e = Factory(:activity, :parent => @d)      #         c   d
+      @f = Factory(:activity)                     #            / 
+      @ia = Factory(:interest, :activity => @a)   #           e                   
+      @ib = Factory(:interest, :activity => @b)
+      @ic = Factory(:interest, :activity => @c)
+      @id = Factory(:interest, :activity => @d)
+      @ie = Factory(:interest, :activity => @e)
+      @if = Factory(:interest, :activity => @f)
+      # "a".upto("f") do |c|
+      #   puts "@#{c}: " + instance_variable_get("@#{c}").inspect
+      #   puts "@i#{c}: " + instance_variable_get("@i#{c}").inspect
+      # end
+    end                                           
+    
+    it "should return the ancestors and children" do
+      a = Interest.activity_overlapping_with(@a)
+      a.length.should == 5
+    end
+    
+    it "should exclude c from d" do
+      d = Interest.activity_overlapping_with(@d)
+      d.length.should == 4
+      d.should_not include(@ic)
+    end
+    
+    it "should exclude c from d" do
+      c = Interest.activity_overlapping_with(@c)
+      c.length.should == 3
+      c.should_not include(@id)
+      c.should_not include(@ie)
+    end
+    
+    it "should have f by itself" do
+      f = Interest.activity_overlapping_with(@f)
+      f.length.should == 1
+      f.should == [@if]
+    end
+  end
+  
   describe "#create" do
     before do
       @this = TimeSpan::THIS_WEEKEND
