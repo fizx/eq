@@ -9,7 +9,7 @@ module ApplicationHelper
     current = user == current_user
     
     link = current ? link_to("You", "/") : link_to(truncate(user.name), user)
-    link + current ? " want " : " wants "
+    link + (current ? " want " : " wants ")
   end
   
   def interest_link(interest)
@@ -17,10 +17,11 @@ module ApplicationHelper
   end
   
   def interesting_link(interest)
-    # if current_user.interesting?(interest)
-    # link = link_to "No, thanks", "#", :class => "interested"
-    # link += link_to "I'm interested", "#", :class => "interested" 
-    # link
+    link = link_to_remote "hide", hidings_path(:hiding => {:interest_id => interest.id}), :method => :post, :class => "interested" 
+    unless current_user.interesting?(interest)
+      link += link_to_remote "I'm interested", interestings_path(:interesting => {:interest_id => interest.id}), :method => :post, :class => "interested"  
+    end
+    link
   end
   
   def link_to_organize

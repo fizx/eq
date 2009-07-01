@@ -1,7 +1,6 @@
-<li>
-	<a class="interested" href="#">I'm interested</a>
-	
+<% content_tag_for(:li, positive_interest) do %>
+	<%=interesting_link(positive_interest)%>	
   <%=desire(positive_interest)%> 
   to 
   <%=interest_link(positive_interest)%>
-</li>
+<% end %>

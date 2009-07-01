@@ -1,0 +1,2 @@
+module InterestingsHelper
+end

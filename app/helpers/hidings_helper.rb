@@ -1,0 +1,2 @@
+module HidingsHelper
+end
