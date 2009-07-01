@@ -29,7 +29,7 @@ class Interest < ActiveRecord::Base
   named_scope :of_friends_of, lambda{|user|
     {
       :select => "interests.*",
-      :from => "interests, users AS friends, followings, users AS current_users",
+      :from => "users AS friends, followings, users AS current_users, interests",
       :conditions => "current_users.id=#{user.id}
                   AND interests.user_id=friends.id
                   AND friends.id=followings.followee_id
@@ -76,7 +76,7 @@ class Interest < ActiveRecord::Base
     when Interval:
       {
         :select => "interests.*",
-        :from => "interests, intervals",
+        :from => "intervals, interests",
         :conditions => "
           intervals.intervalable_type='Interest' 
           AND intervals.intervalable_id=interests.id
@@ -88,7 +88,7 @@ class Interest < ActiveRecord::Base
     when Interest:
       {
         :select => "interests.*",
-        :from => "interests, intervals, intervals AS other_intervals",
+        :from => "intervals, intervals AS other_intervals, interests",
         :conditions => "
           intervals.intervalable_type='Interest' 
           AND intervals.intervalable_id=interests.id
@@ -104,7 +104,7 @@ class Interest < ActiveRecord::Base
   
   named_scope :in_the_future, {
     :select => "interests.*",
-    :from => "interests, intervals",
+    :from => "intervals, interests",
     :conditions => "intervals.intervalable_type='Interest' 
                 AND intervals.intervalable_id=interests.id
                 AND intervals.finish > NOW()"
@@ -113,13 +113,12 @@ class Interest < ActiveRecord::Base
   named_scope :proximity_overlapping_with, lambda{ |interest|
     {
       :select => "interests.*",
-      :from => "interests, 
-                  interests AS other_interests,
+      :from => "interests AS other_interests,
                   categories AS proximities,
                   categories AS other_proximities,
                   locations,
-                  locations AS other_locations
-                  ",
+                  locations AS other_locations,
+                  interests",
       :conditions => "other_interests.id = #{interest.id}
                       AND interests.proximity_id = proximities.id
                       AND other_interests.proximity_id = other_proximities.id
