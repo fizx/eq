@@ -93,7 +93,7 @@ class Interest < ActiveRecord::Base
           intervals.intervalable_type='Interest' 
           AND intervals.intervalable_id=interests.id
           AND other_intervals.intervalable_type='Interest'
-          AND other_intervals.intervalable_id = #{interest.id}
+          AND other_intervals.intervalable_id = #{object.id}
           AND intervals.start < other_intervals.finish 
           AND intervals.finish > other_intervals.start
         ",
@@ -137,9 +137,9 @@ class Interest < ActiveRecord::Base
     Interest.of_friends_of(user).
               in_the_future.
               visible_to(user).
-              interval_overlapping_with(self).
-              activity_overlapping_with(self).
-              proximity_overlapping_with(self)
+              interval_overlapping_with(interest).
+              activity_overlapping_with(interest).
+              proximity_overlapping_with(interest)
   end
 
   def friendly_interests(user = self.user)

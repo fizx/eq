@@ -8,8 +8,11 @@ module ApplicationHelper
     user = interest.user
     current = user == current_user
     
-    link = current ? link_to("You", "/") : link_to(truncate(user.name), user)
-    link + (current ? " want " : " wants ")
+    link =  current ? link_to("You", "/") : link_to(truncate(user.login, :length => 12), user)
+    if interest.interestings_count > 0
+      link += " <span class=plus>+#{interest.interestings_count}</span> "
+    end
+    link += (current ? " want " : " wants ")
   end
   
   def interest_link(interest)
@@ -22,7 +25,10 @@ module ApplicationHelper
     else
       link = link_to_remote "hide", :url => hidings_path(:hiding => {:interest_id => interest.id}), :method => :post, :html => {:class => "interested" }
     end
-    unless current_user.interesting?(interest)
+    
+    if current_user.interesting?(interest)
+      link += link_to_remote "I'm not interested", :url => interestings_path(:interesting => {:interest_id => interest.id}, :uninterested => true), :method => :post, :html => {:class => "interested" }
+    else
       link += link_to_remote "I'm interested", :url => interestings_path(:interesting => {:interest_id => interest.id}), :method => :post, :html => {:class => "interested" }
     end
     link
