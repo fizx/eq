@@ -1,3 +1,4 @@
+
 class Interest < ActiveRecord::Base
   belongs_to :user
   belongs_to :familiarity
@@ -27,149 +28,123 @@ class Interest < ActiveRecord::Base
   
   named_scope :of_friends_of, lambda{|user|
     {
-      :joins => "INNER JOIN users AS friends ON interests.user_id=friends.id
-                 INNER JOIN followings ON friends.id=followings.followee_id
-                 INNER JOIN users AS current_users ON current_users.id=followings.follower_id",
-      :conditions => "current_users.id=#{user.id}"
+      :select => "interests.*",
+      :from => "interests, users AS friends, followings, users AS current_users",
+      :conditions => "current_users.id=#{user.id}
+                  AND interests.user_id=friends.id
+                  AND friends.id=followings.followee_id
+                  AND current_users.id=followings.follower_id"
+    }
+  }
+  
+  named_scope :visible_to, lambda{|user|
+    {
+      :conditions => "interests.id NOT IN (SELECT interest_id FROM hidings WHERE user_id=#{user.id})"
     }
   }
   
   named_scope :activity_overlapping_with, lambda{|activity|
-    activity = activity.activity      if activity.is_a?(Interest)
-    return                            unless activity.is_a?(Activity)
+    aid = activity.is_a?(Activity) ? activity.id : activity.activity_id
     
     with = <<-SQL
       RECURSIVE 
       children(id) AS (
-          VALUES(#{activity.id})
+          VALUES(#{aid})
         UNION
           SELECT categories.id FROM categories, children 
                                WHERE categories.parent_id = children.id 
                                AND categories.id IS NOT NULL
       ),
       ancestors(id) AS (
-          VALUES(#{activity.id})
+          VALUES(#{aid})
         UNION
           SELECT categories.parent_id FROM categories, ancestors 
                              WHERE categories.id = ancestors.id 
                              AND categories.parent_id IS NOT NULL
       )
     SQL
+    
+    
     {
       :with => with,
       :conditions => "interests.activity_id IN (select id from children UNION select id from ancestors)"
     }
   }
   
-  named_scope :interval_overlapping_with, lambda{|interval|
-    case interval
-    when Interval
+  named_scope :interval_overlapping_with, lambda{ |object|
+    case object
+    when Interval:
       {
-        :joins => "INNER JOIN intervals ON intervals.intervalable_type='Interest' 
-                                       AND intervals.intervalable_id=interests.id 
-                                       AND intervals.start < '#{interval.finish.to_s(:db)}' 
-                                       AND intervals.finish > '#{interval.start.to_s(:db)}'",
+        :select => "interests.*",
+        :from => "interests, intervals",
+        :conditions => "
+          intervals.intervalable_type='Interest' 
+          AND intervals.intervalable_id=interests.id
+          AND intervals.start < '#{object.finish.to_s(:db)}'
+          AND intervals.finish > '#{object.start.to_s(:db)}'
+        ",
         :group => Interest.columns.map {|c| "interests.#{c.name}"}.join(", ")
       }
-    when Interest: 
+    when Interest:
       {
-        :from => "intervals AS other_intervals, intervals, interests",
+        :select => "interests.*",
+        :from => "interests, intervals, intervals AS other_intervals",
         :conditions => "
           intervals.intervalable_type='Interest' 
           AND intervals.intervalable_id=interests.id
           AND other_intervals.intervalable_type='Interest'
-          AND other_intervals.intervalable_id = #{interval.id}
+          AND other_intervals.intervalable_id = #{interest.id}
           AND intervals.start < other_intervals.finish 
           AND intervals.finish > other_intervals.start
         ",
         :group => Interest.columns.map {|c| "interests.#{c.name}"}.join(", ")
       }
-    when NilClass: {}
     end
   }
   
-  named_scope :proximity_overlapping_with, lambda{|location|
-    
+  named_scope :in_the_future, {
+    :select => "interests.*",
+    :from => "interests, intervals",
+    :conditions => "intervals.intervalable_type='Interest' 
+                AND intervals.intervalable_id=interests.id
+                AND intervals.finish > NOW()"
   }
-
-  # 
-  # Interest.of_friends_of(user).
-  #          interval_overlapping_with(self).
-  #          activity_overlapping_with(activity).
-  #          proximity_overlapping_with(proximity)  
-  named_scope :friendly_interests, lambda {|interest, user|
-    activity = interest.activity
-    proximity = interest.proximity
-    
-    with = <<-SQL
-      RECURSIVE 
-      children(id) AS (
-          VALUES(#{activity.id})
-        UNION
-          SELECT categories.id FROM categories, children 
-                               WHERE categories.parent_id = children.id 
-                               AND categories.id IS NOT NULL
-      ),
-      ancestors(id) AS (
-          VALUES(#{activity.id})
-        UNION
-          SELECT categories.parent_id FROM categories, ancestors 
-                             WHERE categories.id = ancestors.id 
-                             AND categories.parent_id IS NOT NULL
-      )
-    SQL
-     
+  
+  named_scope :proximity_overlapping_with, lambda{ |interest|
     {
-      :with => with,
       :select => "interests.*",
       :from => "interests, 
-                users AS friends, 
-                followings, 
-                users AS current_users,
-                intervals AS other_intervals, 
-                intervals,
-                categories AS proximities,
-                categories AS other_proximities,
-                locations,
-                locations AS other_locations,
-                interests AS other_interests
-                ",
-      :conditions => "interests.activity_id IN (select id from children UNION select id from ancestors)
-                  AND interests.user_id=friends.id
-                  AND friends.id=followings.followee_id
-                  AND current_users.id=followings.follower_id
-                  AND current_users.id=#{user.id}
-                  AND intervals.intervalable_type='Interest' 
-                  AND intervals.intervalable_id=interests.id
-                  AND other_intervals.intervalable_type='Interest'
-                  AND other_intervals.intervalable_id = #{interest.id}
-                  AND other_interests.id = #{interest.id}
-                  AND intervals.start < other_intervals.finish 
-                  AND intervals.finish > other_intervals.start
-                  AND intervals.finish > NOW()
-                  AND other_intervals.finish > NOW()
-                  AND interests.proximity_id = proximities.id
-                  AND other_interests.proximity_id = other_proximities.id
-                  AND proximities.location_id = locations.id
-                  AND other_proximities.location_id = other_locations.id
-                  AND point(locations.lng, locations.lat) 
-                      <@> 
-                      point(other_locations.lng, other_locations.lat) 
-                          <= proximities.radius + other_proximities.radius
-      "            ,
-                  :group => Interest.columns.map {|c| "interests.#{c.name}"}.join(", ")
+                  interests AS other_interests,
+                  categories AS proximities,
+                  categories AS other_proximities,
+                  locations,
+                  locations AS other_locations
+                  ",
+      :conditions => "other_interests.id = #{interest.id}
+                      AND interests.proximity_id = proximities.id
+                      AND other_interests.proximity_id = other_proximities.id
+                      AND proximities.location_id = locations.id
+                      AND other_proximities.location_id = other_locations.id
+                      AND point(locations.lng, locations.lat) 
+                        <@> 
+                        point(other_locations.lng, other_locations.lat) 
+                            <= proximities.radius + other_proximities.radius
+                      ",
+      :group => Interest.columns.map {|c| "interests.#{c.name}"}.join(", ")
     }
   }
   
+  def self.friendly_interests(interest, user)
+    Interest.of_friends_of(user).
+              in_the_future.
+              visible_to(user).
+              interval_overlapping_with(self).
+              activity_overlapping_with(self).
+              proximity_overlapping_with(self)
+  end
+
   def friendly_interests(user = self.user)
     Interest.friendly_interests(self, user)
-  end
-  
-  def self.random_interest
-    i = Interest.new
-    i.time_span_id = TimeSpan.all.rand.id
-    i.activity_id = PositiveInterest.random.try(:activity_id) || Activity.all.rand.id
-    i
   end
   
   def negative?
@@ -178,23 +153,6 @@ class Interest < ActiveRecord::Base
   
   def score
     0
-  end
-  
-  def url_hash
-    interest = {
-      :type => self.class.to_s,
-      :familiarity_id => familiarity_id,
-      :group_size_id => group_size_id,
-      :proximity_id => proximity_id,
-      :time_span_id => time_span_id,
-      :activity_id => activity_id
-    }.hash_compact
-    
-    {
-      :controller => "interests",
-      :action => (new_record? ? "new" : "edit"),
-      :interest => interest
-    }
   end
   
   def description_segments

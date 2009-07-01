@@ -4,6 +4,7 @@ include ActionController::UrlWriter
 
 describe Interest do
   before do 
+    Interest.delete_all
     @interest = Factory(:interest)
   end
   
@@ -102,13 +103,8 @@ describe Interest do
       @suzy = Factory(:user, :login => "suzy")
       Following.create_friendship(@joe, @suzy)
       10.times do
-        i = Interest.random_interest
-        @joe.interests << i
-        i.save!
-        
-        i = Interest.random_interest
-        @suzy.interests << i
-        i.save! 
+        Factory(:interest, :user => @joe)
+        Factory(:interest, :user => @suzy)
       end
       @joe.save!
       @suzy.save!
@@ -120,17 +116,6 @@ describe Interest do
       @joe.interests.count.should == 10
       @suzy.interests.count.should == 10
       Interest.of_friends_of(@joe).should == @suzy.interests
-    end
-  end
-  
-  describe "#random" do
-    it "should be different each time-ish" do
-      interests = Array.new(10).map { Interest.random_interest }
-      equal_count = 0
-      10.times do 
-        equal_count += 1 if interests.rand.attributes == interests.rand.attributes
-      end
-      equal_count.should < 5
     end
   end
 end

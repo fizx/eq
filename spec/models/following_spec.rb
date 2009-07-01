@@ -71,10 +71,7 @@ describe Following do
   
   describe "two-way relationship" do
     before do 
-      @following = Following.create! :follower_id => @joe.id, :followee_id => @suzy.id
-      @reciprocal = Following.create! :follower_id => @suzy.id, :followee_id => @joe.id
-      @following.reload
-      @reciprocal.reload
+      Following.create_friendship(@joe, @suzy)
     end
 
     it "should has_many :through" do
@@ -84,21 +81,6 @@ describe Following do
       @suzy.followers.should == [@joe]
       @joe.followees.should == [@suzy]
       @suzy.followees.should == [@joe]      
-    end
-    
-    it "should set bidi" do
-      @following.bidi.should == true
-      @reciprocal.bidi.should == true
-    end
-    
-    it "should have the correct belongs_tos" do
-      @following.follower.should == @joe
-      @following.followee.should == @suzy
-    end
-    
-    it "should unset bidi on deletion" do
-      @reciprocal.destroy
-      @following.reload.bidi.should == false
     end
   end
   
