@@ -88,6 +88,16 @@ class User < ActiveRecord::Base
     busy_intervals + trips
   end
   
+  def interesting?(interest)
+    interest.user_id == id || 
+    Interesting.count(:conditions => {:user_id => id, :interest_id => interest.id}) > 0
+  end
+  
+  def is_interested_in(interest)
+    return true if interesting?(interest)
+    Interesting.create!(:user_id => id, :interest_id => interest.id)
+  end
+  
   def self.find_any_email(emails)
     find :all, :conditions => ["email IN(?)", emails] 
   end

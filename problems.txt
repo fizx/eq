@@ -1,7 +1,9 @@
-- "that share this description"
-  - location
-  - activity hierarchy
-  - intervals
+- limit individual user spamability of feed
+- What does "I'm interested" mean?
+- invitations
+- auto-planned events
+- location and activity refinements for date
+- event by best date for everyone
 - mturk activities hierarchy
 - ticketmaster feed
 - opentable feed

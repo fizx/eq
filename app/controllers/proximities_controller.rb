@@ -11,6 +11,7 @@ class ProximitiesController < ApplicationController
     params[:proximity].delete(:location_string)
     
     proximity = Proximity.find_or_initialize(params[:proximity])
+    proximity.location ||= current_user.default_location
     if proximity.new_record?
       proximity.private = true
       proximity.save!

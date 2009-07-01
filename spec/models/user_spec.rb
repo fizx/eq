@@ -14,6 +14,25 @@ describe User do
     @user = Factory(:user)
   end
   
+  describe "#interesting?" do
+    it "should match interests that belong to user" do
+      i = Factory(:interest, :user => @user)
+      @user.interesting?(i).should be_true
+    end
+    
+    it "should match interests tagged interesting" do
+      i = Factory(:interest)
+      @user.interesting?(i).should be_false
+      @user.is_interested_in(i)
+      @user.interesting?(i).should be_true
+    end
+    
+    it "should not match by default" do
+      i = Factory(:interest)
+      @user.interesting?(i).should be_false
+    end
+  end
+  
   describe "#find_any_email" do
     it "should find by emails" do
       users = Array.new(10).map { Factory.create(:user) }

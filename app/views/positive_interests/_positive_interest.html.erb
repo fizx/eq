@@ -1,9 +1,7 @@
 <li>
-	<% if positive_interest.user == current_user %>
-		<a class="interested" href="/destroy_interest/<%=positive_interest.id%>">never mind</a>
-		You want to <%=positive_interest.description%>
-	<% else %>
-		<a class="interested" href="#">I'm interested</a>
-		<%=link_to truncate(positive_interest.user.login, :length => 10), positive_interest.user %> wants to <%=link_to positive_interest.description, interest_path(positive_interest)%>
-	<% end %>
+	<a class="interested" href="#">I'm interested</a>
+	
+  <%=desire(positive_interest)%> 
+  to 
+  <%=interest_link(positive_interest)%>
 </li>
