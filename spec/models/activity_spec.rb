@@ -2,15 +2,6 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Activity do
   
-  describe "#interest_cache" do
-    it "should contain tuples" do
-      Activity.interest_cache.each do |item| 
-        item.length.should == 2
-        item.each {|i| i.should_not be_nil}
-      end
-    end
-  end
-  
   describe "#build" do
     it "should not start fresh" do
       a = Factory(:activity)

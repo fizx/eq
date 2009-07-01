@@ -4,8 +4,9 @@ ENV["RAILS_ENV"] ||= 'test'
 require File.dirname(__FILE__) + "/../config/environment" unless defined?(RAILS_ROOT)
 require 'spec/autorun'
 require 'spec/rails'
-
-class Location
+require "set"
+require "location"
+class Location < ActiveRecord::Base
   def auto_geocode_address
     true
   end

@@ -88,17 +88,6 @@ class User < ActiveRecord::Base
     busy_intervals + trips
   end
   
-  def new_interest
-    activity_id, time_span_id = (
-      Activity.interest_cache - 
-        interests.find(:all, :select => "activity_id, time_span_id").map{|i| [i.activity_id, i.time_span_id] }
-    ).rand
-    
-    return Interest.random_interest unless activity_id
-    
-    Interest.new(:activity_id => activity_id, :time_span_id => time_span_id)
-  end
-
   def self.find_any_email(emails)
     find :all, :conditions => ["email IN(?)", emails] 
   end

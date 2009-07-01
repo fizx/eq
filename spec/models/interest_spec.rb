@@ -4,8 +4,7 @@ include ActionController::UrlWriter
 
 describe Interest do
   before do 
-    @interest = Interest.random_interest
-    @interest.save!
+    @interest = Factory(:interest)
   end
   
   describe "#proximity_overlapping_with" do
@@ -104,12 +103,10 @@ describe Interest do
       Following.create_friendship(@joe, @suzy)
       10.times do
         i = Interest.random_interest
-        i.save!
         @joe.interests << i
         i.save!
         
         i = Interest.random_interest
-        i.save!
         @suzy.interests << i
         i.save! 
       end

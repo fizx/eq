@@ -14,31 +14,13 @@ describe User do
     @user = Factory(:user)
   end
   
-  describe "#new_interest" do
-    before do 
-      Interest.delete_all
-      Category.delete_all
-      @a = Factory(:activity)
-      @b = Factory(:activity)
-      @c = Factory(:activity)
-      @t = Factory(:time_span)
-      @i = Factory(:interest, :user => @user, :activity => @a, :time_span => @t)
-    end
-    
-    it "should generate a random interest that the user doesn't have" do
-      10.times do
-        @user.new_interest.should_not == @a
-        [@b, @c].should include(@user.new_interest.try(:activity))
-      end
-    end
-  end
-  
   describe "#find_any_email" do
     it "should find by emails" do
       users = Array.new(10).map { Factory.create(:user) }
       findable = users[2..4]
       emails = findable.map(&:email)
-      User.find_any_email(emails).should == findable
+      found = User.find_any_email(emails)
+      Set.new(found).should == Set.new(findable)
     end
   end
   

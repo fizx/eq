@@ -13,7 +13,6 @@ def r
 end
 
 Factory.define :user do |user|
-  
   user.login { "joe_#{r}" }
   user.email { "joe_#{r}@example.com" }
   user.password "hiworld"
@@ -46,6 +45,8 @@ Factory.define :activity do |act|
 end
 
 Factory.define :interest do |i|
+  i.user Factory(:user)
+  i.activity { Activity.all.rand }
 end
 
 Factory.define :time_span do |t|
