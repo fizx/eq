@@ -3,4 +3,12 @@
   <%=desire(positive_interest)%> 
   to 
   <%=interest_link(positive_interest)%>
+  <div class="child tgt" id="never_<%=positive_interest.id%>">
+    <a class="x" href="#">x</a>
+    <h4>I don't ever want to...</h4>
+    <ul>
+      <li><%=link_to "#{positive_interest.activity.name}"%></li>
+      <li><%=link_to "#{positive_interest.activity.name} with #{positive_interest.user.login}"%></li>
+    </ul>
+  </div>
 <% end %>

@@ -20,10 +20,11 @@ module ApplicationHelper
   end
   
   def interesting_link(interest)
+    link = link_to "never", "#never_#{interest.id}", :class => "interested"
     if current_user.hidden?(interest)
-      link = link_to_remote "unhide", :url => hidings_path(:hiding => {:interest_id => interest.id}, :unhide => true), :method => :post, :html => {:class => "interested" }
+      link += link_to_remote "unhide", :url => hidings_path(:hiding => {:interest_id => interest.id}, :unhide => true), :method => :post, :html => {:class => "interested" }
     else
-      link = link_to_remote "hide", :url => hidings_path(:hiding => {:interest_id => interest.id}), :method => :post, :html => {:class => "interested" }
+      link += link_to_remote "hide", :url => hidings_path(:hiding => {:interest_id => interest.id}), :method => :post, :html => {:class => "interested" }
     end
     
     if current_user.interesting?(interest)

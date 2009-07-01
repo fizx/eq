@@ -8,7 +8,7 @@ namespace :friends do
     @user = Factory(:user, :login => "kyle", 
                     :password => "hiworld", 
                     :password_confirmation => "hiworld")
-    20.times do |k|
+    200.times do |k|
       u = Factory(:user)
       20.times do
         i = PositiveInterest.new 
@@ -23,7 +23,7 @@ namespace :friends do
         STDOUT.flush
       end  
       u.save
-      Following.create_friendship(@user, u)
+      Following.create_friendship(@user, u) if k < 20
     end
   end
 end

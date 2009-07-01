@@ -4,6 +4,11 @@
   margin:10px;
   clear:both;
 }
+.child{
+  margin:8px;
+  background-color:white !important;
+}
+
 #tree {
   display:table;
 }
