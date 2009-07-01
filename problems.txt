@@ -1,5 +1,5 @@
+- never in interests
 - limit individual user spamability of feed
-- What does "I'm interested" mean?
 - invitations
 - auto-planned events
 - location and activity refinements for date
