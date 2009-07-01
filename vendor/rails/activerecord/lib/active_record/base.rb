@@ -1686,7 +1686,7 @@ module ActiveRecord #:nodoc:
         def construct_finder_sql(options)
           scope = scope(:find)
           sql = "SELECT #{options[:select] || (scope && scope[:select]) || default_select(options[:joins] || (scope && scope[:joins]))} "
-          sql << "FROM #{options[:from]  || (scope && scope[:from]) || quoted_table_name} "
+          sql << "FROM #{merge_froms(options[:from], scope && scope[:from])} "
           
           add_withs!(sql, options[:with], scope)
           add_joins!(sql, options[:joins], scope)
@@ -1698,6 +1698,22 @@ module ActiveRecord #:nodoc:
           add_lock!(sql, options, scope)
 
           sql
+        end
+        
+        def split_commas(string)
+          string.strip.split(/\s*,\s*/)
+        end
+        
+        def merge_froms(a, b)
+          if a && b
+            (split_commas(a) + split_commas(b)).uniq.join(", ")
+          elsif a
+            a
+          elsif b
+            b
+          else
+            quoted_table_name
+          end
         end
 
         # Merges includes so that the result is a valid +include+
@@ -2131,6 +2147,8 @@ module ActiveRecord #:nodoc:
                         end
                       elsif key == :include && merge
                         hash[method][key] = merge_includes(hash[method][key], params[key]).uniq
+                      elsif key == :from && merge
+                        hash[method][key] = merge_froms(params[key], hash[method][key])
                       elsif key == :joins && merge
                         hash[method][key] = merge_joins(params[key], hash[method][key])
                       else

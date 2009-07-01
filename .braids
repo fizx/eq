@@ -1,15 +1,15 @@
 --- 
 vendor/plugins/restful-authentication: 
   squashed: true
-  type: git
   url: git://github.com/technoweenie/restful-authentication.git
+  type: git
   revision: 7235d9150e8beb80a819923a4c871ef4069c6759
   branch: master
   remote: braid/vendor/plugins/restful-authentication
 vendor/plugins/attachment_fu: 
   squashed: true
-  type: git
   url: git://github.com/technoweenie/attachment_fu.git
+  type: git
   revision: fa08cb03914b02b66853b4615cd3eca768291ca7
   branch: master
   remote: braid/vendor/plugins/attachment-fu
@@ -17,20 +17,20 @@ vendor/rails:
   squashed: true
   url: git@github.com:fizx/rails.git
   type: git
-  revision: a8ff99c0106c76e48c4507318d7feb8e96559c0c
+  revision: b8b7d4c0d3af82294458697907299470c69fc302
   branch: 2.3-pg
   remote: braid/vendor/rails
 vendor/plugins/gravatar-plugin: 
   squashed: true
-  type: git
   url: git://github.com/woods/gravatar-plugin.git
+  type: git
   revision: e9e34ac98de79a6c525fe93d99bf60b21db92ccf
   branch: master
   remote: braid/vendor/plugins/gravatar-plugin
 vendor/plugins/geokit: 
   squashed: true
-  type: git
   url: git://github.com/ptb/geokit.git
+  type: git
   revision: e65a8ed1e7f7d72a6e075cc425defcca1e233c23
   branch: master
   remote: braid/vendor/plugins/geokit

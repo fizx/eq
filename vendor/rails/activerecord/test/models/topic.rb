@@ -41,6 +41,22 @@ class Topic < ActiveRecord::Base
   named_scope :multiple_extensions, :extend => [MultipleExtensionTwo, MultipleExtensionOne]
   
   named_scope :by_rejected_ids, lambda {{ :conditions => { :id => all(:conditions => {:approved => false}).map(&:id) } }}
+  
+  
+  named_scope :bar, lambda {
+    {
+      :from => "topics, topics AS bar_topics",
+      :conditions => "topics.id=bar_topics.id"
+    }
+  }
+  named_scope :baz, lambda {
+    {
+      :from => "topics, topics AS baz_topics",
+      :conditions => "topics.id=baz_topics.id"
+    }
+  }
+
+  
 
   has_many :replies, :dependent => :destroy, :foreign_key => "parent_id"
   serialize :content

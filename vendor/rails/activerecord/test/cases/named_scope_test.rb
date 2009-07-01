@@ -17,6 +17,10 @@ class NamedScopeTest < ActiveRecord::TestCase
     assert_equal Topic.find(:first), Topic.base.first
     assert_equal Topic.find(:all),   Topic.base.map { |i| i }
   end
+  
+  def test_froms_are_merged
+    assert_equal Topic.all, Topic.bar.baz.all
+  end
 
   def test_found_items_are_cached
     Topic.columns

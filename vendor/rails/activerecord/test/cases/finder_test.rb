@@ -24,6 +24,11 @@ class DynamicFinderMatchTest < ActiveRecord::TestCase
     assert_equal :first, match.finder
     assert_equal %w(age sex location), match.attribute_names
   end
+  
+  def test_with_named_scope_and_froms
+    assert_equal Topic.all, Topic.bar.find(:all, :from => "topics, topics AS baz_topics",
+                            :conditions => "topics.id=baz_topics.id")
+  end
 
   def find_by_bang
     match = ActiveRecord::DynamicFinderMatch.match("find_by_age_and_sex_and_location!")
@@ -1074,13 +1079,15 @@ class FinderTest < ActiveRecord::TestCase
     assert_equal [0, 1, 1], posts.map(&:author_id).sort
   end
 
-  def test_finder_with_scoped_from
-    all_topics = Topic.all
-
-    Topic.with_scope(:find => { :from => 'fake_topics' }) do
-      assert_equal all_topics, Topic.all(:from => 'topics')
-    end
-  end
+  # Kyle: I no longer want this behavior 
+  #
+  # def test_finder_with_scoped_from
+  #   all_topics = Topic.all
+  # 
+  #   Topic.with_scope(:find => { :from => 'fake_topics' }) do
+  #     assert_equal all_topics, Topic.all(:from => 'topics')
+  #   end
+  # end
 
   protected
     def bind(statement, *vars)
