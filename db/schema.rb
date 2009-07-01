@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090701184442) do
+ActiveRecord::Schema.define(:version => 20090701223754) do
 
   create_table "categories", :force => true do |t|
     t.string   "type"
@@ -26,6 +26,8 @@ ActiveRecord::Schema.define(:version => 20090701184442) do
     t.integer  "max"
   end
 
+  add_index "categories", ["id", "type"], :name => "index_categories_on_type_and_id"
+  add_index "categories", ["id"], :name => "index_categories_on_id"
   add_index "categories", ["name"], :name => "categories_name_trgm_idx"
 
   create_table "comments", :force => true do |t|
@@ -37,6 +39,9 @@ ActiveRecord::Schema.define(:version => 20090701184442) do
     t.datetime "updated_at"
   end
 
+  add_index "comments", ["commentable_id", "commentable_type"], :name => "index_comments_on_commentable_id_and_commentable_type"
+  add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
+
   create_table "email_addresses", :force => true do |t|
     t.integer  "user_id"
     t.string   "type"
@@ -44,6 +49,9 @@ ActiveRecord::Schema.define(:version => 20090701184442) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "email_addresses", ["id", "type"], :name => "index_email_addresses_on_type_and_id"
+  add_index "email_addresses", ["user_id"], :name => "index_email_addresses_on_user_id"
 
   create_table "eventlets", :force => true do |t|
     t.string   "matcher"
@@ -58,6 +66,8 @@ ActiveRecord::Schema.define(:version => 20090701184442) do
     t.datetime "updated_at"
   end
 
+  add_index "eventlets", ["matcher"], :name => "index_eventlets_on_matcher"
+
   create_table "events", :force => true do |t|
     t.string   "name"
     t.text     "description"
@@ -67,6 +77,8 @@ ActiveRecord::Schema.define(:version => 20090701184442) do
     t.datetime "updated_at"
   end
 
+  add_index "events", ["creator_id"], :name => "index_events_on_creator_id"
+
   create_table "followings", :force => true do |t|
     t.integer  "follower_id"
     t.integer  "followee_id"
@@ -75,6 +87,7 @@ ActiveRecord::Schema.define(:version => 20090701184442) do
     t.datetime "updated_at"
   end
 
+  add_index "followings", ["bidi", "followee_id", "follower_id"], :name => "index_followings_on_follower_id_and_followee_id_and_bidi"
   add_index "followings", ["followee_id"], :name => "index_followings_on_followee_id"
   add_index "followings", ["follower_id"], :name => "index_followings_on_follower_id"
 
@@ -85,12 +98,18 @@ ActiveRecord::Schema.define(:version => 20090701184442) do
     t.datetime "updated_at"
   end
 
+  add_index "hidings", ["interest_id"], :name => "index_hidings_on_interest_id"
+  add_index "hidings", ["user_id"], :name => "index_hidings_on_user_id"
+
   create_table "interestings", :force => true do |t|
     t.integer  "interest_id"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "interestings", ["interest_id"], :name => "index_interestings_on_interest_id"
+  add_index "interestings", ["user_id"], :name => "index_interestings_on_user_id"
 
   create_table "interests", :force => true do |t|
     t.integer  "user_id"
@@ -105,6 +124,14 @@ ActiveRecord::Schema.define(:version => 20090701184442) do
     t.integer  "interestings_count", :default => 0
   end
 
+  add_index "interests", ["activity_id"], :name => "index_interests_on_activity_id"
+  add_index "interests", ["familiarity_id"], :name => "index_interests_on_familiarity_id"
+  add_index "interests", ["group_size_id"], :name => "index_interests_on_group_size_id"
+  add_index "interests", ["id", "type"], :name => "index_interests_on_type_and_id"
+  add_index "interests", ["proximity_id"], :name => "index_interests_on_proximity_id"
+  add_index "interests", ["time_span_id"], :name => "index_interests_on_time_span_id"
+  add_index "interests", ["user_id"], :name => "index_interests_on_user_id"
+
   create_table "intervals", :force => true do |t|
     t.string   "type"
     t.datetime "start"
@@ -115,8 +142,10 @@ ActiveRecord::Schema.define(:version => 20090701184442) do
     t.integer  "intervalable_id"
   end
 
+  add_index "intervals", ["finish"], :name => "index_intervals_on_finish"
   add_index "intervals", ["intervalable_id"], :name => "index_intervals_on_intervalable_id"
   add_index "intervals", ["intervalable_type"], :name => "index_intervals_on_intervalable_type"
+  add_index "intervals", ["start"], :name => "index_intervals_on_start"
   add_index "intervals", ["type"], :name => "index_intervals_on_type"
 
   create_table "invitations", :force => true do |t|
@@ -126,6 +155,8 @@ ActiveRecord::Schema.define(:version => 20090701184442) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "invitations", ["user_id"], :name => "index_invitations_on_user_id"
 
   create_table "locationings", :force => true do |t|
     t.integer  "location_id"
