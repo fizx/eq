@@ -7,10 +7,6 @@ class Interest < ActiveRecord::Base
   belongs_to :activity
   
   validates_presence_of :user
-  validates_presence_of :familiarity
-  validates_presence_of :group_size
-  validates_presence_of :proximity
-  validates_presence_of :time_span
   validates_presence_of :activity
   
   has_many :intervals, :as => :intervalable

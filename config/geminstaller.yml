@@ -2,11 +2,17 @@
 defaults:
   install_options: --include-dependencies
 gems: 
-- name: rails
-  version: >= 2.3
 - name: braid
   version: "0.5"
 - name: thoughtbot-factory_girl
   version: "1.2.1"
 - name: gdata
+  version: "1.1.0"
+- name: rspec
+  version: "> 0"
+- name: rspec-rails
+  version: "> 0"
+- name: fizx-collapsed_routes
+  version: "> 0"
+- name: icalendar
   version: "> 0"

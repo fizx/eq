@@ -2,6 +2,7 @@
 require "collapsed_routes"
 module ApplicationHelper
   include CollapsedRoutes
+  collapsed_routes :activities, :time_spans
   
   def link_to_interest
     link = link_to "No, thanks", "#", :class => "interested"

@@ -13,7 +13,7 @@ class InterestsController < ApplicationController
     @interest = Interest.find(@interest.id)
 
     if @interest.negative?
-      flash[:unescaped_notice] = "We've recorded that you do not want to #{@interest.description}. " +
+      flash[:unescaped_notice] = "We've recorded that you do not want to #{@interest.activity.name}. " +
                       "<a href=\"/destroy_interest/#{@interest.id}\">undo</a>"
       redirect_to "/"
     else
