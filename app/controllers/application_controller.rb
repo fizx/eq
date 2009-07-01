@@ -15,10 +15,24 @@ class ApplicationController < ActionController::Base
   include CollapsedRoutes
   collapsed_routes :activities, :time_spans
     
-  filter_parameter_logging :password
+  # filter_parameter_logging :password
   layout "site"
   
   around_filter :user_scope
+  
+  def render_update_item(item)
+    name = item.class.to_s.underscore
+    render :update do |page|
+      page.replace "#{name}_#{item.id}", :partial => "/#{name.pluralize}/#{name}", :locals => {name.to_sym => item}
+    end
+  end
+
+  def render_update_hide_item(item)
+    name = item.class.to_s.underscore
+    render :update do |page|
+      page.visual_effect(:fade, "#{name}_#{item.id}")
+    end
+  end
   
   def user_scope
     user_create = {:create => {:user_id => current_user && current_user.id }}

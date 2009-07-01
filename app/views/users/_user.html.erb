@@ -1,4 +1,4 @@
-<li class="user">
+<% content_tag_for :li, user do %>
 	<% if current_user.follows?(user)%>
 		<%= gravatar_for user %> <span><%=link_to user.login, user%></span>
 		<span class="location"><%=user.location_string%>
@@ -7,4 +7,4 @@
 		<%= gravatar_for user %> <span><%=user.login%></span>
 		<span class="location"><%=user.location_string%>
 	<% end %>
-</li>
+<%end%>

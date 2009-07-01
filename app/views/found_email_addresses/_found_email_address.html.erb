@@ -1,1 +1,3 @@
-<li><%=link_to truncate(found_email_address.address), new_invitation_url(:invitation => {:email => found_email_address.address})%></li>
+<% content_tag_for :li, found_email_address do %>
+  <%=link_to truncate(found_email_address.address), new_invitation_url(:invitation => {:email => found_email_address.address})%>
+<% end %>

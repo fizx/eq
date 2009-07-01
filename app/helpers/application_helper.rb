@@ -17,11 +17,19 @@ module ApplicationHelper
   end
   
   def interesting_link(interest)
-    link = link_to_remote "hide", hidings_path(:hiding => {:interest_id => interest.id}), :method => :post, :class => "interested" 
+    if current_user.hidden?(interest)
+      link = link_to_remote "unhide", :url => hidings_path(:hiding => {:interest_id => interest.id}, :unhide => true), :method => :post, :html => {:class => "interested" }
+    else
+      link = link_to_remote "hide", :url => hidings_path(:hiding => {:interest_id => interest.id}), :method => :post, :html => {:class => "interested" }
+    end
     unless current_user.interesting?(interest)
-      link += link_to_remote "I'm interested", interestings_path(:interesting => {:interest_id => interest.id}), :method => :post, :class => "interested"  
+      link += link_to_remote "I'm interested", :url => interestings_path(:interesting => {:interest_id => interest.id}), :method => :post, :html => {:class => "interested" }
     end
     link
+  end
+  
+  def show_hidden_link
+    link_to "show hidden items", params.merge(:show_hidden => true), :class => "show_hidden"  unless params[:show_hidden]
   end
   
   def link_to_organize

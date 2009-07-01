@@ -1,4 +1,4 @@
-<li>
+<% content_tag_for :li, web_calendar do %>
 	[ <%=link_to "x", web_calendar_url(web_calendar), :method => :delete %> ]
 	<%=h truncate(web_calendar.url, :length => 60)%> 
-</li>
+<% end %>

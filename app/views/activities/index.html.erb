@@ -33,6 +33,7 @@
 		<% unless @stream.blank? %>
 			<h3>The stream</h3>
 			<ul class="rows"><%=render @stream%></ul>
+			<%=show_hidden_link %>
 			<%=will_paginate @stream %>
 		<% end %>
   </div> 

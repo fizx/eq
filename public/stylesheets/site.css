@@ -1,3 +1,9 @@
+.show_hidden{
+  display:table;
+  color:darkgreen;
+  margin:10px;
+  clear:both;
+}
 #tree {
   display:table;
 }

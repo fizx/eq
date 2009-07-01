@@ -1,7 +1,9 @@
 class ActivitiesController < ApplicationController
   def index
     @activity = Activity.all.rand
-    @stream = Interest.of_friends_of(current_user).paginate(:page => params[:page], :order => "interests.id DESC", :include => [:user, :activity])
+    interests = Interest.of_friends_of(current_user)
+    interests = Interest.visible_to(current_user) unless params[:show_hidden]
+    @stream = interests.paginate(:page => params[:page], :order => "interests.id DESC", :include => [:user, :activity])
     @activities = Category.find(:all, :conditions => {:private => false, :type => "Activity", :parent_id => params[:parent]}, :limit =>6)
   end
   
