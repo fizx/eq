@@ -88,6 +88,15 @@ class User < ActiveRecord::Base
     busy_intervals + trips
   end
   
+  def hides_interest(interest)
+    return true if hidden?(interest)
+    Hiding.create!(:user_id => id, :interest_id => interest.id)
+  end
+  
+  def hidden?(interest)
+    Hiding.count(:conditions => {:user_id => id, :interest_id => interest.id}) > 0
+  end
+  
   def interesting?(interest)
     interest.user_id == id || 
     Interesting.count(:conditions => {:user_id => id, :interest_id => interest.id}) > 0

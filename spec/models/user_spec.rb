@@ -14,6 +14,17 @@ describe User do
     @user = Factory(:user)
   end
   
+  describe "#hides_interest" do
+    it "should set hidden on the interest" do
+      i = Factory(:interest, :user => @user)
+      @user.hidden?(i).should be_false
+      @user.hides_interest(i)
+      @user.hidden?(i).should be_true
+    end
+    
+  end
+  
+  
   describe "#interesting?" do
     it "should match interests that belong to user" do
       i = Factory(:interest, :user => @user)
