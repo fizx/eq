@@ -11,8 +11,9 @@ namespace :friends do
     20.times do |k|
       u = Factory(:user)
       20.times do
-        i = u.new_interest
-        i.type = "PositiveInterest"
+        i = PositiveInterest.new 
+        i.activity = Activity.all.rand
+        i.time_span = TimeSpan.all.rand
         i.familiarity = Familiarity.all.rand
         i.group_size = GroupSize.all.rand
         i.proximity = Proximity.find_or_create!(:location_id => u.default_location.id, :radius => 10)

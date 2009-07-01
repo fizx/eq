@@ -36,10 +36,10 @@ private
     [data].flatten.each do |entry|
       case entry
       when String:
-        klass.find_or_create! :parent_id => parent_id, :name => entry, :type => klass.to_s
+        klass.find_or_create! :parent_id => parent_id, :name => entry, :type => klass.to_s, :private => false
       when Hash:
         entry.each do |k, v|
-          inst = klass.find_or_create! :parent_id => parent_id, :name => k, :type => klass.to_s
+          inst = klass.find_or_create! :parent_id => parent_id, :name => k, :type => klass.to_s, :private => false
           _build(v, inst.id, klass)
         end
       when YAML::DomainType:
