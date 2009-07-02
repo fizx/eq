@@ -20,6 +20,26 @@ class Interest < ActiveRecord::Base
   
   after_save :create_intervals_from_time_span
   
+  def self.activity_with_sql(aid)
+    with = <<-SQL
+      RECURSIVE 
+      children(id) AS (
+          VALUES(#{aid})
+        UNION
+          SELECT categories.id FROM categories, children 
+                               WHERE categories.parent_id = children.id 
+                               AND categories.id IS NOT NULL
+      ),
+      ancestors(id) AS (
+          VALUES(#{aid})
+        UNION
+          SELECT categories.parent_id FROM categories, ancestors 
+                             WHERE categories.id = ancestors.id 
+                             AND categories.parent_id IS NOT NULL
+      )
+    SQL
+  end
+  
   def create_intervals_from_time_span
     Interval.delete_all "intervalable_id=#{self.id} AND intervalable_type='Interest'"
     if time_span && intervals = time_span.intervals
@@ -49,28 +69,8 @@ class Interest < ActiveRecord::Base
   
   named_scope :activity_overlapping_with, lambda{|activity|
     aid = activity.is_a?(Activity) ? activity.id : activity.activity_id
-    
-    with = <<-SQL
-      RECURSIVE 
-      children(id) AS (
-          VALUES(#{aid})
-        UNION
-          SELECT categories.id FROM categories, children 
-                               WHERE categories.parent_id = children.id 
-                               AND categories.id IS NOT NULL
-      ),
-      ancestors(id) AS (
-          VALUES(#{aid})
-        UNION
-          SELECT categories.parent_id FROM categories, ancestors 
-                             WHERE categories.id = ancestors.id 
-                             AND categories.parent_id IS NOT NULL
-      )
-    SQL
-    
-    
     {
-      :with => with,
+      :with => activity_with_sql(aid),
       :conditions => "interests.activity_id IN (select id from children UNION select id from ancestors)"
     }
   }

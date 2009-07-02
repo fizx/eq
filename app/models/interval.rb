@@ -10,7 +10,7 @@ class Interval < ActiveRecord::Base
   end
   
   def self.from(start, finish)
-    Interval.new(:start => start, :finish => finish)
+    new(:start => start, :finish => finish)
   end
   
   def busy

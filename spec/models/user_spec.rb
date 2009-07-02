@@ -20,10 +20,43 @@ describe User do
       @user.hidden?(i).should be_false
       @user.hides_interest(i)
       @user.hidden?(i).should be_true
-    end
-    
+    end    
   end
   
+  describe "#interested_in_attending" do
+    before do
+      User.delete_all
+      @a = Factory(:user)
+      @b = Factory(:user)
+    end
+    
+    it "should match interest creator" do
+      interest = Factory(:interest, :user => @a)
+      User.interested_in_attending(interest).should == [@a]
+    end
+    
+    it "should match interestings" do
+      interest = Factory(:interest, :user => @a)
+      @b.is_interested_in(interest)
+      User.interested_in_attending(interest).length.should == 2
+    end
+  end
+  
+  describe "#available_at" do
+    before do
+      User.delete_all
+      @a = Factory(:user)
+      @b = Factory(:user)
+      bi = BusyInterval.from(1.day.from_now, 1.week.from_now)
+      @a.busy_intervals << bi
+      bi.save!
+    end
+    
+    it "should match available users" do
+      User.available_at(Time.now).length.should == 2
+      User.available_at(2.days.from_now).length.should == 1
+    end
+  end
   
   describe "#interesting?" do
     it "should match interests that belong to user" do

@@ -51,6 +51,41 @@ class User < ActiveRecord::Base
   # attr_accessible :login, :email, :name, :password, :password_confirmation, :location_string
   attr_protected :type
   
+  named_scope :available_at, lambda {|time|
+    {
+      :select => "DISTINCT users.*",
+      :joins => "LEFT JOIN intervals AS busy_intervals ON 
+                      busy_intervals.intervalable_type='User'
+                  AND busy_intervals.intervalable_id=users.id
+                  AND busy_intervals.start < '#{time.to_s(:db)}'
+                  AND busy_intervals.finish > '#{time.to_s(:db)}'",
+      :group => User.columns.map {|c| "users.#{c.name}"}.join(", "),
+      :having => "max(busy_intervals.id) IS NULL"
+    }
+  }
+  
+  named_scope :interested_in_attending, lambda{|interest|
+    {
+      :with => Interest.activity_with_sql(interest.activity_id),
+      :select => "users.*",
+      :from => "interests, 
+                intervals, 
+                intervals AS this_intervals, 
+                users",
+      :joins => "LEFT JOIN interestings ON interestings.user_id=users.id",
+      :conditions => "(interests.user_id = users.id OR interests.id=interestings.interest_id)
+                  AND interests.activity_id IN (select id from children UNION select id from ancestors)
+                  AND intervals.intervalable_id=interests.id
+                  AND intervals.intervalable_type='Interest'
+                  AND intervals.start < this_intervals.finish
+                  AND intervals.finish > this_intervals.start
+                  AND this_intervals.intervalable_id = #{interest.id} 
+                  AND this_intervals.intervalable_type = 'Interest'
+                  ",
+      :group => User.columns.map {|c| "users.#{c.name}"}.join(", "),
+    }
+  }
+  
   def location_string
     default_location.try(:name)
   end
