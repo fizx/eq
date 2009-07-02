@@ -11,7 +11,7 @@ namespace :friends do
     200.times do |k|
       u = Factory(:user)
       20.times do
-        i = PositiveInterest.new 
+        i = Interest.new 
         i.activity = Activity.all.rand
         i.time_span = TimeSpan.all.rand
         i.familiarity = Familiarity.all.rand

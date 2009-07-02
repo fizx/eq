@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe TimeSpan do
   before do 
-    @ts = Factory(:time_span)
+    @ts = Factory(:time_span, :name => "random")
   end
   
   describe "#intervals" do

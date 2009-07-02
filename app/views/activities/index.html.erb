@@ -40,7 +40,7 @@
 	<div class="yui-u"> 
 		<h3>Random idea</h3>
 		<p>Do you want to <%=@activity.name %>?</p>
-		<%=link_to "never", new_interest_path(:interest => {:activity_id => @activity.id}, :negative => true), :class=> "right" %>
+		<%=link_to "never", new_never_path(:never => {:activity_id => @activity.id}), :class=> "right" %>
 		<%=link_to "yes", new_activity_time_span_path(@activity) %> 
 		<%=link_to "no", "/" %>
 		<div class="space"></div>

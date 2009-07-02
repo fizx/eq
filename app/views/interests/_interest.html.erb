@@ -1,1 +1,14 @@
-<% content_tag_for :li, interest do %><%=h interest.inspect%><%end%>
+<% content_tag_for(:li, interest) do %>
+	<%=interesting_link(interest)%>	
+  <%=desire(interest)%> 
+  to 
+  <%=interest_link(interest)%>
+  <div class="child tgt" id="never_<%=interest.id%>">
+    <a class="x" href="#">x</a>
+    <h4>I don't ever want to...</h4>
+    <ul>
+      <li><%=link_to "#{interest.activity.name}"%></li>
+      <li><%=link_to "#{interest.activity.name} with #{interest.user.login}"%></li>
+    </ul>
+  </div>
+<% end %>

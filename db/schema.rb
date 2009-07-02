@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090701223754) do
+ActiveRecord::Schema.define(:version => 20090702053342) do
 
   create_table "categories", :force => true do |t|
     t.string   "type"
@@ -120,14 +120,12 @@ ActiveRecord::Schema.define(:version => 20090701223754) do
     t.integer  "familiarity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "type"
     t.integer  "interestings_count", :default => 0
   end
 
   add_index "interests", ["activity_id"], :name => "index_interests_on_activity_id"
   add_index "interests", ["familiarity_id"], :name => "index_interests_on_familiarity_id"
   add_index "interests", ["group_size_id"], :name => "index_interests_on_group_size_id"
-  add_index "interests", ["id", "type"], :name => "index_interests_on_type_and_id"
   add_index "interests", ["proximity_id"], :name => "index_interests_on_proximity_id"
   add_index "interests", ["time_span_id"], :name => "index_interests_on_time_span_id"
   add_index "interests", ["user_id"], :name => "index_interests_on_user_id"
@@ -183,6 +181,18 @@ ActiveRecord::Schema.define(:version => 20090701223754) do
   end
 
   add_index "locations", ["name"], :name => "locations_name_trgm_idx"
+
+  create_table "nevers", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "with_user_id"
+    t.integer  "activity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "nevers", ["activity_id"], :name => "index_nevers_on_activity_id"
+  add_index "nevers", ["user_id"], :name => "index_nevers_on_user_id"
+  add_index "nevers", ["with_user_id"], :name => "index_nevers_on_with_user_id"
 
   create_table "resources", :force => true do |t|
     t.string   "type"

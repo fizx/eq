@@ -5,4 +5,4 @@
 <h4><%=@user.location_string%></h4>
 <div class="space"></div>
 <h3>Likes</h3>
-<ul><%=render @user.positive_interests.find(:all, :limit => 10)%></ul>
+<ul><%=render @user.interests.find(:all, :limit => 10)%></ul>

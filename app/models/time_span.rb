@@ -12,20 +12,20 @@ class TimeSpan < Category
   serialize :data
   
   def intervals
-    case self
-    when THIS_WEEKEND:
+    case self.name
+    when THIS_WEEKEND.name:
       start = Chronic.parse("this friday at 6pm")
       finish = start + 2.25.days
       [Interval.from(start, finish)]
-    when ANY_WEEKEND:      
+    when ANY_WEEKEND.name:      
       start = Chronic.parse("this friday at 6pm")
       finish = start + 2.25.days
       weekly(start..finish)
-    when MIDWEEK:       
+    when MIDWEEK.name:
       start = Chronic.parse("this monday")
       finish = start + 5.days
       weekly(start..finish)
-    when WHENEVER:
+    when WHENEVER.name:
       [Interval.from(Time.now, 10.years.from_now)]
     else
       generate_intervals_from(data)

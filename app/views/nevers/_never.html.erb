@@ -1,0 +1,6 @@
+<% if never.user == current_user %>
+  <% content_tag_for :li, never do %>
+		<a class="interested" href="/destroy_interest/<%=never.id%>">never mind</a>
+		<%=never.description%>
+  <% end %>
+<% end %>

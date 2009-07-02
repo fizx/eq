@@ -6,6 +6,10 @@ class Interest < ActiveRecord::Base
   belongs_to :proximity
   belongs_to :time_span
   belongs_to :activity
+  validates_presence_of :familiarity
+  validates_presence_of :group_size
+  validates_presence_of :proximity
+  validates_presence_of :time_span
   
   validates_presence_of :user
   validates_presence_of :activity
@@ -146,16 +150,8 @@ class Interest < ActiveRecord::Base
     Interest.friendly_interests(self, user)
   end
   
-  def negative?
-    score < 0
-  end
-  
-  def score
-    0
-  end
-  
   def description_segments
-    [activity.name, time_span.name]#, proximity.name, "with #{group_size.name}", "that #{familiarity.name}"]
+    [activity.name, time_span.name] #, proximity.name, "with #{group_size.name}", "that #{familiarity.name}"]
   end
   
   def description

@@ -1,24 +1,15 @@
 class InterestsController < ApplicationController
   
   def index
-    @positives = current_user.positive_interests.paginate :page => params[:positive_page]
-    @negatives = current_user.negative_interests.paginate :page => params[:negative_page]
+    @positives = current_user.interests.paginate :page => params[:page]
+    @nevers = current_user.nevers.all(:limit => 10)
   end
   
   def new
-    @klass = params[:negative] ? NegativeInterest : PositiveInterest
-    params[:interest].delete(:type)
-    @interest = Interest.find_or_create!(params[:interest].update(:user_id => current_user.id))
+    @interest = Interest.find_or_create!(params[:interest])
     @interest.update_attribute :type, @klass.to_s
     @interest = Interest.find(@interest.id)
-
-    if @interest.negative?
-      flash[:unescaped_notice] = "We've recorded that you do not want to #{@interest.activity.name}. " +
-                      "<a href=\"/destroy_interest/#{@interest.id}\">undo</a>"
-      redirect_to "/"
-    else
-      redirect_to interest_path(@interest)
-    end
+    redirect_to interest_path(@interest)
   end
   
   def show

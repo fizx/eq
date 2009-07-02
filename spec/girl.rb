@@ -12,16 +12,18 @@ def r
   Digest::MD5.hexdigest(rand.to_s)
 end
 
+def generate_location
+  RAILS_ENV == "test" ? 
+  Factory(:location).id : 
+  Location.from("100 spear st, sf ca").id
+end
+
 Factory.define :user do |user|
   user.login { "joe_#{r}" }
   user.email { "joe_#{r}@example.com" }
   user.password "hiworld"
   user.password_confirmation "hiworld"
-  user.default_location_id {
-                            RAILS_ENV == "test" ? 
-                            Factory(:location).id : 
-                            Location.from("100 spear st, sf ca").id
-                          }
+  user.default_location_id { generate_location  }
   user.time_zone ActiveSupport::TimeZone.us_zones.first
 end
 
@@ -46,10 +48,30 @@ end
 
 Factory.define :interest do |i|
   i.user Factory(:user)
-  i.activity { Activity.all.rand }
+  i.activity { Factory(:activity) }
+  i.time_span { Factory(:time_span) }
+  i.familiarity { Factory(:familiarity) }
+  i.group_size { Factory(:group_size) }
+  i.proximity { Factory(:proximity) }
 end
 
 Factory.define :time_span do |t|
+  t.name "this weekend"
+end
+
+Factory.define :familiarity do |f|
+  f.name "you are friends with"
+end
+
+Factory.define :group_size do |g|
+  g.name "a small group"
+  g.min 2
+  g.max 5
+end
+
+Factory.define :proximity do |p|
+  p.location_id { generate_location }
+  p.radius 10
 end
 
 Factory.define :eventlet do |e|

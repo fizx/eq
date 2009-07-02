@@ -1,5 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :trips
+  map.resources :nevers
   map.resources :intervals
   map.resources :eventlets
   map.resources :hidings
@@ -37,6 +38,7 @@ ActionController::Routing::Routes.draw do |map|
   map.bookmarklet_target '/bookmarklet', :controller => 'bookmarklet', :action => "target"
 
   map.connect '/destroy_interest/:id', :controller => 'interests', :action => "destroy"
+  map.connect '/destroy_never/:id', :controller => 'never', :action => "destroy"
   map.connect "/invitations_autocomplete", :controller => "invitations", :action => "autocomplete"
   map.current_event '/current_event', :controller => 'calendars', :action => "current_event"
   map.friends '/friends/:action', :controller => 'friends'

@@ -1,10 +1,6 @@
 <div class="yui-gc"> 
 	<div class="yui-u first"> 
-		<% if @interest.user == current_user %>
-			<h2>You <%="<em>do not</em>" if @interest.negative?%> want to...</h2>
-		<% else %>
-			<h2><%=link_to @interest.user.login, @interest.user %> <%="<em>do not</em>" if @interest.negative?%> wants to...</h2>
-		<% end %>
+		<h2><%=desire(@interest)%> </h2>
 		<h4><%=@interest.description%></h4>
 		<div class="space"></div>
 		<h4 class="highlight">Your friends are already interested in <%=@friends.total_entries %> things that share this description</h4>

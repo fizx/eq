@@ -46,10 +46,14 @@ class ApplicationController < ActionController::Base
     Invitation.send :with_scope, user do
       WebCalendar.send :with_scope, user do
         Hiding.send :with_scope, user_create do
-          Interesting.send :with_scope, user_create do
-            BusyInterval.send :with_scope, interval do
-              Trip.send :with_scope, interval do
-                yield
+          Interest.send :with_scope, user_create do
+            Never.send :with_scope, user_create do
+              Interesting.send :with_scope, user_create do
+                BusyInterval.send :with_scope, interval do
+                  Trip.send :with_scope, interval do
+                    yield
+                  end
+                end
               end
             end
           end
