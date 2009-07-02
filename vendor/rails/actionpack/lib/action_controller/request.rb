@@ -80,6 +80,10 @@ module ActionController
     def content_length
       super.to_i
     end
+    
+    def media_type
+      content_type.to_s
+    end
 
     # The MIME type of the HTTP request, such as Mime::XML.
     #
