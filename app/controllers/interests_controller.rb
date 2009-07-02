@@ -7,14 +7,13 @@ class InterestsController < ApplicationController
   
   def new
     @interest = Interest.find_or_create!(params[:interest])
-    @interest.update_attribute :type, @klass.to_s
-    @interest = Interest.find(@interest.id)
-    redirect_to interest_path(@interest)
+    @interest.friendly_interests(current_user).map{|i| current_user.is_interested_in(i)}
+    redirect_to @interest
   end
   
   def show
     @interest = Interest.find(params[:id])
-    @friends = @interest.friendly_interests(current_user).paginate(:page => params[:page])
+    @friends = @interest.friendly_interests(current_user).paginate(:page => params[:page], :order => "interestings_count DESC")
   end
   
   def destroy

@@ -114,6 +114,16 @@ class Interest < ActiveRecord::Base
                 AND intervals.finish > NOW()"
   }
   
+  named_scope :with_critical_mass, lambda {|multiplier|
+    multiplier = " * #{multiplier}" if multiplier
+    {
+      :select => "interests.*",
+      :from => "categories AS group_sizes, interests",
+      :conditions => "group_sizes.id = interests.group_size_id 
+                  AND interests.interestings_count >= group_sizes.min #{multiplier}"
+    }
+  }
+  
   named_scope :proximity_overlapping_with, lambda{ |interest|
     {
       :select => "interests.*",
@@ -148,6 +158,10 @@ class Interest < ActiveRecord::Base
 
   def friendly_interests(user = self.user)
     Interest.friendly_interests(self, user)
+  end
+  
+  def has_critical_mass?(multiplier = 1.0)    
+    group_size && interestings >= group_size.min * multiplier
   end
   
   def description_segments

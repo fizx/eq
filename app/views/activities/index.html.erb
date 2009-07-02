@@ -12,10 +12,7 @@
 		<% end %>
 		<% unless @mass.blank? %>
 			<h3>Critical mass</h3>
-			<ul class="rows">
-				<li><%=link_to_organize%> <%=link_to "Jeff" %> <span class="plus">+6</span> wants to see Up this weekend </li>
-				<li><%=link_to_organize%> <%=link_to "Suzy" %> <span class="plus">+2</span> wants to go hiking this summer</li>
-			</ul>
+			<ul class="rows"><%=render @mass%></ul>			
 			<div class="space"></div>
 		<% end %>
 		<% unless @stream.blank? %>

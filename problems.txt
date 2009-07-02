@@ -1,3 +1,8 @@
+- given some interest...
+  - 17 of your friends (joe, suzy, etc...) are also interested
+  - best timespans to schedule an event, on a calendar
+- given some date
+  - best things to do on that date
 - never in interests
 - limit individual user spamability of feed
 - invitations
