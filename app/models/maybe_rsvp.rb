@@ -1,0 +1,2 @@
+class MaybeRsvp < Rsvp
+end

@@ -4,6 +4,6 @@ class Availability < Struct.new(:id, :label, :startms, :finishms)
     self.label = people == 1 ? "1 person" : "#{people} people"
     self.id = "#{interest.id}-interest"
     self.startms = date.to_time.to_i * 1000
-    self.finishms = (date + 1).to_time.to_i * 1000 - 1
+    self.finishms = (date + 1).to_time.to_i * 1000
   end
 end

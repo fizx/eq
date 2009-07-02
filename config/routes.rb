@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :rsvps
+
   map.resources :trips
   map.resources :nevers
   map.resources :intervals

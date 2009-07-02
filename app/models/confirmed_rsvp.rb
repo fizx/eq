@@ -1,0 +1,2 @@
+class ConfirmedRsvp < Rsvp
+end

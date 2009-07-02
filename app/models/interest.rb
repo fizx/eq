@@ -160,8 +160,6 @@ class Interest < ActiveRecord::Base
   def friend_availability_for(user, count = 10)
     days = RangeSet.new(intervals.map(&:to_date_range)).entries.first(count)
     days.map do |day|
-      # require "ruby-debug"
-      # debugger
       user_count = User.friends_of(user).available_at(day).interested_in_attending(self).count("users.id", :distinct => true)
       Availability.new(self, day, user_count)
     end

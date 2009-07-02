@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090702053342) do
+ActiveRecord::Schema.define(:version => 20090702215526) do
 
   create_table "categories", :force => true do |t|
     t.string   "type"
@@ -205,6 +205,18 @@ ActiveRecord::Schema.define(:version => 20090702053342) do
 
   add_index "resources", ["type"], :name => "index_resources_on_type"
   add_index "resources", ["user_id"], :name => "index_resources_on_user_id"
+
+  create_table "rsvps", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "event_id"
+    t.string   "type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "rsvps", ["event_id"], :name => "index_rsvps_on_event_id"
+  add_index "rsvps", ["type"], :name => "index_rsvps_on_type"
+  add_index "rsvps", ["user_id"], :name => "index_rsvps_on_user_id"
 
   create_table "uploads", :force => true do |t|
     t.integer  "uploadable_id"

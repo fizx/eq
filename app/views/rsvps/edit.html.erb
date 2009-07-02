@@ -1,0 +1,24 @@
+<h1>Editing rsvp</h1>
+
+<% form_for(@rsvp) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :user_id %><br />
+    <%= f.text_field :user_id %>
+  </p>
+  <p>
+    <%= f.label :event_id %><br />
+    <%= f.text_field :event_id %>
+  </p>
+  <p>
+    <%= f.label :type %><br />
+    <%= f.text_field :type %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @rsvp %> |
+<%= link_to 'Back', rsvps_path %>

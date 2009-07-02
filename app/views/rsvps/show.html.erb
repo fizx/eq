@@ -1,0 +1,18 @@
+<p>
+  <b>User:</b>
+  <%=h @rsvp.user_id %>
+</p>
+
+<p>
+  <b>Event:</b>
+  <%=h @rsvp.event_id %>
+</p>
+
+<p>
+  <b>Type:</b>
+  <%=h @rsvp.type %>
+</p>
+
+
+<%= link_to 'Edit', edit_rsvp_path(@rsvp) %> |
+<%= link_to 'Back', rsvps_path %>
