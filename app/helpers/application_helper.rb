@@ -20,11 +20,17 @@ module ApplicationHelper
   end
   
   def interesting_link(interest)
-    link = link_to "never", "#never_#{interest.id}", :class => "interested"
-    if current_user.hidden?(interest)
-      link += link_to_remote "unhide", :url => hidings_path(:hiding => {:interest_id => interest.id}, :unhide => true), :method => :post, :html => {:class => "interested" }
+    if never = current_user.never(interest)
+      link = link_to_remote "unblock", :url => never_path(never, :interest_id => interest.id), :method => :delete, :html => {:class => "interested"}
     else
-      link += link_to_remote "hide", :url => hidings_path(:hiding => {:interest_id => interest.id}), :method => :post, :html => {:class => "interested" }
+      link = link_to_remote "block activity", :url => nevers_path(:interest_id => interest.id, :never => {:activity_id => interest.activity_id}), :html => {:class => "interested"}
+      
+      if current_user.hidden?(interest)
+        link += link_to_remote "unhide", :url => hidings_path(:hiding => {:interest_id => interest.id}, :unhide => true), :method => :post, :html => {:class => "interested" }
+      else
+        link += link_to_remote "hide", :url => hidings_path(:hiding => {:interest_id => interest.id}), :method => :post, :html => {:class => "interested" }
+      end
+      
     end
     
     if current_user.interesting?(interest)
@@ -36,7 +42,7 @@ module ApplicationHelper
   end
   
   def show_hidden_link
-    link_to "show hidden items", params.merge(:show_hidden => true), :class => "show_hidden"  unless params[:show_hidden]
+    link_to "show hidden/blocked items", params.merge(:show_hidden => true), :class => "show_hidden"  unless params[:show_hidden]
   end
   
   def link_to_organize

@@ -5,22 +5,30 @@
 		<form>
 			<table cellpadding="0" cellspacing="0" border="0" width="100%">
 				<tr>
-					<td>
+					<td valign="top">
 						<h4>Refine by location:</h4>
 						Within <%=text_field_tag "r", params[:r], :size => 4%> miles of 
 						<%=text_field_tag "location", params[:location]%>
 						<input type="submit" value="Go">
+						<%=link_to "cancel", params.merge(:r => nil, :location => nil) if params[:r] && params[:location]%>
 					</td>
 					<td>
 						<h4>Refine by activity:</h4>
 						<%=text_field_tag "activity", params[:activity]%>
 						<input type="submit" value="Go">
+						<%=link_to "cancel", params.merge(:activity => nil) if params[:activity] %>
+						
+						<% if @did_you_mean %>
+							<div class="space"></div>
+							<h4>Did you mean <%=link_to @did_you_mean, params.merge(:activity => @did_you_mean)%>?</h4>
+						<% end %>
+						
 					</td>
 				</tr>
 			</table>
 			<script>
 				$("#activity").autocomplete("/ac");
-				$("#location").autocomplete("/location/ac");
+				$("#location").autocomplete("/locations/ac");
 			</script>
 		</form>
 		<div class="space"></div>

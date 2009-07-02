@@ -29,14 +29,18 @@ a.selected {
 }
 
 a.interested {
+  margin-bottom:2px;
   color: #36f;
 }
+
 a.interested:hover {
   color: #009;
 }
 
 .interested {
   float:right;
+  clear:right;
+
   margin-left: 8px;
 }
 
@@ -49,6 +53,7 @@ ul.rows>li{
   background-color:#eee;
   border-top: 1px #ccc solid;
   margin-top:2px;
+    overflow:hidden;
 }
 
 ul.big {

@@ -1,10 +1,10 @@
 class Never < ActiveRecord::Base
   belongs_to :user
   belongs_to :activity
-  belongs_to :with_user, :class_name => "User"
+  validates_presence_of :user
+  validates_presence_of :activity
   
   def description
-    (activity ? activity.name : "do anything") + " with " +
-    (with_user ? with_user.login : "anyone")
+    activity.try(:name)
   end
 end

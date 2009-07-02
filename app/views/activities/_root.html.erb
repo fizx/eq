@@ -8,11 +8,12 @@
 				<% end %>
 			</li>
 		<% end %>
-		
-		<li><%=link_to "Any of these", new_time_span_url(@parent) %></li>
+		<% if @parent%>
+			<li><%=link_to "Any of these", new_time_span_url(@parent) %></li>
+		<% end %>
 		<form method="post" action="/activities">
 			<%=hidden_field_tag "activity[parent_id]", params[:parent] if params[:parent] %>
-			<li><%=text_field_tag "activity[name]", "Other", :onfocus => "if(this.value == 'Other')this.value=''" %>
+			<li><%=text_field_tag "activity[name]", "Something else", :onfocus => "if(this.value == 'Something else')this.value=''" %>
 				<input type="submit" value="Go">
 			</li>
 		</form>

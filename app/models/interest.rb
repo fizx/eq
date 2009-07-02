@@ -61,11 +61,15 @@ class Interest < ActiveRecord::Base
     }
   }
   
-  named_scope :visible_to, lambda{|user|
+  named_scope :not_hidden_to, lambda{|user|
     {
-      :conditions => "interests.id NOT IN (SELECT interest_id FROM hidings WHERE user_id=#{user.id})"
+      # :conditions => "interests.id NOT IN (SELECT interest_id FROM hidings WHERE user_id=#{user.id})"
     }
   }
+  
+  def self.visible_to(user)
+    not_hidden_to(user).excluding_nevers_for(user)
+  end
   
   named_scope :activity_overlapping_with, lambda{|activity|
     aid = activity.is_a?(Activity) ? activity.id : activity.activity_id
@@ -124,27 +128,56 @@ class Interest < ActiveRecord::Base
     }
   }
   
-  named_scope :proximity_overlapping_with, lambda{ |interest|
+  named_scope :excluding_nevers_for, lambda {|user|
     {
-      :select => "interests.*",
-      :from => "interests AS other_interests,
-                  categories AS proximities,
+      :conditions => 
+        "interests.activity_id NOT IN (SELECT activity_id FROM nevers WHERE user_id=#{user.id})"
+    }
+  }
+  
+  named_scope :proximity_overlapping_with, lambda{ |object|
+    case object
+    when Interest:
+      {
+        :select => "interests.*",
+        :from => "interests AS other_interests,
+                    categories AS proximities,
+                    categories AS other_proximities,
+                    locations,
+                    locations AS other_locations,
+                    interests",
+        :conditions => "other_interests.id = #{object.id}
+                        AND interests.proximity_id = proximities.id
+                        AND other_interests.proximity_id = other_proximities.id
+                        AND proximities.location_id = locations.id
+                        AND other_proximities.location_id = other_locations.id
+                        AND point(locations.lng, locations.lat) 
+                          <@> 
+                          point(other_locations.lng, other_locations.lat) 
+                              <= proximities.radius + other_proximities.radius
+                        ",
+        :group => Interest.columns.map {|c| "interests.#{c.name}"}.join(", ")
+      }
+    when Proximity:
+      {
+        :select => "interests.*",
+        :from => "categories AS proximities,
                   categories AS other_proximities,
                   locations,
                   locations AS other_locations,
                   interests",
-      :conditions => "other_interests.id = #{interest.id}
-                      AND interests.proximity_id = proximities.id
-                      AND other_interests.proximity_id = other_proximities.id
-                      AND proximities.location_id = locations.id
-                      AND other_proximities.location_id = other_locations.id
-                      AND point(locations.lng, locations.lat) 
-                        <@> 
-                        point(other_locations.lng, other_locations.lat) 
-                            <= proximities.radius + other_proximities.radius
-                      ",
-      :group => Interest.columns.map {|c| "interests.#{c.name}"}.join(", ")
-    }
+        :conditions => "    other_proximities.id = #{object.id}
+                        AND interests.proximity_id = proximities.id
+                        AND proximities.location_id = locations.id
+                        AND other_proximities.location_id = other_locations.id
+                        AND point(locations.lng, locations.lat) 
+                          <@> 
+                          point(other_locations.lng, other_locations.lat) 
+                              <= proximities.radius + other_proximities.radius
+                        ",
+        :group => Interest.columns.map {|c| "interests.#{c.name}"}.join(", ")
+      }
+    end
   }
   
   def self.friendly_interests(interest, user)

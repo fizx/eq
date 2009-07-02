@@ -3,8 +3,8 @@ class ActivitiesController < ApplicationController
     @activity = Activity.all.rand
     interests = Interest.of_friends_of(current_user)
     interests = Interest.visible_to(current_user) unless params[:show_hidden]
-    @stream = interests.paginate(:page => params[:page], :order => "interests.id DESC", :include => [:user, :activity])
-    @mass = interests.with_critical_mass(1).paginate(:page => params[:page], :order => "interests.id DESC", :include => [:user, :activity])
+    @stream = interests.paginate(:page => params[:page], :order => "interests.id DESC")
+    @mass = interests.with_critical_mass(0.1).paginate(:page => params[:page], :order => "interests.id DESC")
     @activities = Category.find(:all, :conditions => {:private => false, :type => "Activity", :parent_id => params[:parent]}, :limit =>6)
   end
   

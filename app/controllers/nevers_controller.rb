@@ -1,17 +1,16 @@
 class NeversController < ApplicationController
   
-  def new
+  def create
+    @interest = Interest.find(params[:interest_id])
     @never = Never.find_or_create!(params[:never])
-    flash[:unescaped_notice] = "We've recorded that you do not want to #{@never.description}. " +
-                      "<a href=\"/destroy_never/#{@never.id}\">undo</a>"
-    redirect_to "/"
+    render_update_hide_item @interest
   end
   
   def destroy
+    @interest = Interest.find(params[:interest_id])
     @never = Never.find(params[:id])
     @never.destroy
-    flash[:notice] = "We've ignored your previous statement about #{@never.description}"
-    redirect_to "/"
+    render_update_item @interest
   end
   
 end

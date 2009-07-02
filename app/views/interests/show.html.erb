@@ -8,7 +8,10 @@
 		<%=will_paginate @friends%>
 	</div>
 	<div class="yui-u">
-		<h2>Availability</h2>
+		<h3>Interested and available friends</h3>
+		<div class="space"></div>
 		<%=render "/calendars/calendar", :events => @availabilities %>
+		<div class="space"></div>
+		<h4>Click one of the days above to create an invitation.</h4>
 	</div>
 </div>

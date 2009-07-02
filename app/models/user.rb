@@ -182,6 +182,10 @@ class User < ActiveRecord::Base
     []
   end
   
+  def never(interest)
+    Never.find_by_user_id_and_activity_id id, interest.activity_id
+  end
+  
   def desired_events
     []
   end

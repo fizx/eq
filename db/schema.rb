@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090702215526) do
+ActiveRecord::Schema.define(:version => 20090702221158) do
 
   create_table "categories", :force => true do |t|
     t.string   "type"
@@ -184,7 +184,6 @@ ActiveRecord::Schema.define(:version => 20090702215526) do
 
   create_table "nevers", :force => true do |t|
     t.integer  "user_id"
-    t.integer  "with_user_id"
     t.integer  "activity_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -192,7 +191,6 @@ ActiveRecord::Schema.define(:version => 20090702215526) do
 
   add_index "nevers", ["activity_id"], :name => "index_nevers_on_activity_id"
   add_index "nevers", ["user_id"], :name => "index_nevers_on_user_id"
-  add_index "nevers", ["with_user_id"], :name => "index_nevers_on_with_user_id"
 
   create_table "resources", :force => true do |t|
     t.string   "type"

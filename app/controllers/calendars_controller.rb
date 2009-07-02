@@ -11,12 +11,15 @@ class CalendarsController < ApplicationController
     finish = Chronic.parse("#{@date} at 24:00")
     interval = Interval.from(start, finish)
     flash.now[:notice] = "You can't plan an event in the past, silly." if start < Time.now
-    @activity = Activity.find_by_name params[:activity]
+    @activity = Activity.find_by_type_and_name "Activity", params[:activity]
+    if !@activity && params[:activity]
+      @did_you_mean = Activity.name_similar_to(params[:activity]).first.try :name
+    end
     unless params[:location].blank?
       location = Location.from params[:location]
       radius = params[:r].to_f
       radius = [0.2, radius].min
-      @proximity = Proximity.new(:radius => radius, :location_id => location.id)
+      @proximity = Proximity.find_or_create!(:radius => radius, :location_id => location.id)
     end
     
     @interests = Interest.interval_overlapping_with(interval)
