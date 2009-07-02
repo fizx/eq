@@ -1,12 +1,22 @@
 <div class="yui-gc"> 
 	<div class="yui-u first"> 
 		<h2>Loves</h2>
-		<ul class="rows"><%=render @positives%></ul>
-		<%=will_paginate @positives%>
+		<% if @positives.blank? %>
+			<div class="highlight">
+				<h4>You haven't listed anything yet.</h4>
+			</div>
+			<div class="space"></div>
+			<%=render "/activities/blank"%>
+		<% else %>
+			<ul class="rows"><%=render @positives%></ul>
+			<%=will_paginate @positives%>
+		<% end %>
 	</div>
 	<div class="yui-u">
-		<h2>Hates</h2>
-		<ul class="rows"><%=render @nevers%></ul>
-		<%=will_paginate @nevers %>
+		<% unless @nevers.blank? %>
+			<h2>Hates</h2>
+			<ul class="rows"><%=render @nevers%></ul>
+			<%=link_to "more", nevers_url %>
+		<% end %>
 	</div>
 </div>

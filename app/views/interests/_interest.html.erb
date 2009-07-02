@@ -7,8 +7,8 @@
     <a class="x" href="#">x</a>
     <h4>I don't ever want to...</h4>
     <ul>
-      <li><%=link_to "#{interest.activity.name}"%></li>
-      <li><%=link_to "#{interest.activity.name} with #{interest.user.login}"%></li>
+      <li><%=link_to "#{interest.activity.name}", new_never_path(:never => {:activity_id => interest.activity_id})%></li>
+      <li><%=link_to "#{interest.activity.name} with #{interest.user.login}", new_never_path(:never => {:activity_id => interest.activity_id, :with_user_id => interest.user.id})%></li>
     </ul>
   </div>
 <% end %>
