@@ -155,6 +155,17 @@ class Interest < ActiveRecord::Base
               activity_overlapping_with(interest).
               proximity_overlapping_with(interest)
   end
+  
+  
+  def friend_availability_for(user, count = 10)
+    days = RangeSet.new(intervals.map(&:to_date_range)).entries.first(count)
+    days.map do |day|
+      # require "ruby-debug"
+      # debugger
+      user_count = User.friends_of(user).available_at(day).interested_in_attending(self).count("users.id", :distinct => true)
+      Availability.new(self, day, user_count)
+    end
+  end
 
   def friendly_interests(user = self.user)
     Interest.friendly_interests(self, user)

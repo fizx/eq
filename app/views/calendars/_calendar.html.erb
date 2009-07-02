@@ -12,6 +12,10 @@ $(function() {
 		}
 		
 		function eventClicky(calEvent, jsEvent) {
+			if(calEvent.id.match("interest")) {
+				location.href = "/events/new?interest_id="+calEvent.id+"&startms="+calEvent.start.getTime()+"&finishms="+calEvent.end.getTime();
+				return false;
+			}
 			$("#interval_id").val(calEvent.id)
 			if(calEvent.title == "Busy") {
 				$("#interval_busy").attr("checked", "checked");
@@ -38,7 +42,7 @@ $(function() {
 			events: [<%=events.map {|e|
 				<<-STR
 				{
-					"id": #{e.id},
+					"id": "#{e.id}",
 					"title":  "#{h e.label}",
 					"start": new Date(#{e.startms}),
 					"end": new Date(#{e.finishms}),

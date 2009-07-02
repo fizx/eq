@@ -14,6 +14,7 @@ class InterestsController < ApplicationController
   def show
     @interest = Interest.find(params[:id])
     @friends = @interest.friendly_interests(current_user).paginate(:page => params[:page], :order => "interestings_count DESC")
+    @availabilities = @interest.friend_availability_for(current_user)
   end
   
   def destroy

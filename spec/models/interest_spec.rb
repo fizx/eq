@@ -56,6 +56,14 @@ describe Interest do
     end
   end
   
+  describe "#friend_availbility_for" do
+    before do 
+    end
+    
+    it "should return a hash of days to friends" do
+    end
+  end
+  
   describe "#create" do
     before do
       @this = TimeSpan::THIS_WEEKEND

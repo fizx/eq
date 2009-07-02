@@ -51,6 +51,10 @@ class User < ActiveRecord::Base
   # attr_accessible :login, :email, :name, :password, :password_confirmation, :location_string
   attr_protected :type
   
+  named_scope :friends_of, lambda {|user|
+    #TODo
+  }
+  
   named_scope :available_at, lambda {|time|
     {
       :select => "DISTINCT users.*",

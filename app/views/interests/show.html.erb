@@ -8,11 +8,7 @@
 		<%=will_paginate @friends%>
 	</div>
 	<div class="yui-u">
-		<h2>Similar ideas</h2>
-		<% if @similar.blank? %>
-			<h4>We couldn't find any similar things in your friends interests.  Maybe you should <%=link_to "invite more people", current_user.found_email_addresses? ? found_email_addresses_url : friends_url(:action => "find") %>?</h4>
-		<% else %>
-			<ul class="rows"><%=render @similar %></ul>
-		<% end %>
+		<h2>Availability</h2>
+		<%=render "/calendars/calendar", :events => @availabilities %>
 	</div>
 </div>

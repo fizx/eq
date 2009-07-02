@@ -9,8 +9,28 @@ class Interval < ActiveRecord::Base
     end
   end
   
+  named_scope :inside_range, lambda { |range|
+    {
+      :conditions => ["start > ? AND finish < ?", range.first, range.last]
+    }
+  }
+
+  named_scope :overlapping_range, lambda {|range| 
+    {
+      :conditions => ["finish > ? AND start < ?", range.first, range.last]
+    }
+  }
+  
   def self.from(start, finish)
     new(:start => start, :finish => finish)
+  end
+  
+  def to_range
+    start..finish
+  end
+  
+  def to_date_range
+    (start.to_date)..(finish.to_date)
   end
   
   def busy
