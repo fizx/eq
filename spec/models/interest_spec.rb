@@ -115,7 +115,7 @@ describe Interest do
     it "should scope to the interests shared by friends" do
       @joe.interests.count.should == 10
       @suzy.interests.count.should == 10
-      Interest.of_friends_of(@joe).should == @suzy.interests
+      Set.new(Interest.of_friends_of(@joe)).should == Set.new(@suzy.interests)
     end
   end
 end
