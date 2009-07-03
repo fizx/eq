@@ -7,8 +7,5 @@ Add:
 <div class="space"></div>
 <% unless @upcoming.blank? %>
 	<h3>Upcoming</h3>
-	<ul class="rows">
-		<li><b>7/27</b> Going with <%=link_to "6 people" %> to see Up</li>
-		<li><b>7/29</b> Going with <%=link_to "Suzy" %> to go hiking</li>
-	</ul>
+	<ul class="rows"><%=render @upcoming%></ul>
 <% end %>

@@ -25,7 +25,15 @@ class User < ActiveRecord::Base
   has_many :interests
   has_many :interests
   has_many :nevers
-
+  has_many :events, :foreign_key => "creator_id"
+  
+  
+  has_many :confirmed_rsvps
+  has_many :confirmed_rsvp_events, :through => :confirmed_rsvps, :source => :event
+  
+  has_many :unresponded_rsvps, :conditions => "rsvps.type IS NULL", :class_name => "Rsvp"
+  has_many :unresponded_rsvp_events, :through => :unresponded_rsvps, :source => :event
+  
   has_many :friendings_as_followee, :foreign_key => "followee_id", :class_name => "Following", 
                                     :conditions => {:bidi => true}
   has_many :followings_as_followee, :foreign_key => "followee_id", :class_name => "Following"
@@ -123,8 +131,8 @@ class User < ActiveRecord::Base
     "#{id}-#{login}"
   end
   
-  def events
-    busy_intervals + trips
+  def events_and_rsvps
+    events + confirmed_rsvp_events
   end
   
   def hides_interest(interest)

@@ -10,6 +10,11 @@
 			</div>
 			<div class="space"></div> 
 		<% end %>
+		<% unless @invitations.blank? %>
+			<h3>Unresponded to invitations</h3>
+			<ul class="rows"><%=render @invitations%></ul>			
+			<div class="space"></div>
+		<% end %>
 		<% unless @mass.blank? %>
 			<h3>Critical mass</h3>
 			<ul class="rows"><%=render @mass%></ul>			
