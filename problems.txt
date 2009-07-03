@@ -1,3 +1,4 @@
+- friend requests
 - invitations
 - mturk activities hierarchy
 - ticketmaster feed

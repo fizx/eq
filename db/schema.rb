@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090703040950) do
+ActiveRecord::Schema.define(:version => 20090703050234) do
 
   create_table "categories", :force => true do |t|
     t.string   "type"
@@ -94,11 +94,13 @@ ActiveRecord::Schema.define(:version => 20090703040950) do
     t.boolean  "bidi"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "responded",   :default => false
   end
 
   add_index "followings", ["bidi", "followee_id", "follower_id"], :name => "index_followings_on_follower_id_and_followee_id_and_bidi"
   add_index "followings", ["followee_id"], :name => "index_followings_on_followee_id"
   add_index "followings", ["follower_id"], :name => "index_followings_on_follower_id"
+  add_index "followings", ["responded"], :name => "index_followings_on_responded"
 
   create_table "hidings", :force => true do |t|
     t.integer  "interest_id"
