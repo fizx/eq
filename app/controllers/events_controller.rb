@@ -19,9 +19,23 @@ class EventsController < ApplicationController
                             interested_in_attending(interest).
                             all(:select => "users.login").
                             map(&:login).join(", ")
-      
     end
-
+  end
+  
+  def create
+    @event = Event.new(params[:event])
+    if @event.save
+      @invitees = User.find_all_by_login(params[:event][:invited].split(/\s*[;,\s]\s*/))
+      @invitees.map{|i| Rsvp.create :user_id => i, :event_id => @event }
+      flash[:notice] = "Your event was created"
+      redirect_to @event
+    else
+      render :action => "new"
+    end
+  end
+  
+  def show
+    @event = Event.find(params[:id])
   end
   
   def index
