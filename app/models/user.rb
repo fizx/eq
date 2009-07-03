@@ -182,6 +182,17 @@ class User < ActiveRecord::Base
     []
   end
   
+  def event_status(event)
+    case Rsvp.find_by_event_id_and_user_id(event.id, self.id)
+    when NilClass: "welcome to come"
+    when DeclinedRsvp: "not coming"
+    when ConfirmedRsvp: "coming"
+    when MaybeRsvp: "on the fence"
+    else
+      "invited"
+    end
+  end
+  
   def never(interest)
     Never.find_by_user_id_and_activity_id id, interest.activity_id
   end

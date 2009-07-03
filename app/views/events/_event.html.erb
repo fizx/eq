@@ -1,0 +1,16 @@
+<% content_tag_for :li, event do %>
+	<h4><%=link_to event.name, event %> <span class="subtle"><%=event.creator.try(:login)%></span></h4>
+	<h4>You are <%=current_user.event_status(event)%></h4>
+	<h4>Rsvp:  
+			<%=rsvp_link(event, :yes) %> |
+			<%=rsvp_link(event, :no) %> |
+			<%=rsvp_link(event, :maybe) %> 
+	</h4>
+	
+	<ul>
+		<li>Coming: <%=event.confirmed_rsvps.count%></li>
+		<li>Maybe: <%=event.maybe_rsvps.count%></li>
+		<li>No: <%=event.declined_rsvps.count%></li>
+		<li>Not responded: <%=event.unresponded_rsvps.count%></li>
+	</ul>
+<% end %>

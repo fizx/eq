@@ -15,6 +15,10 @@ module ApplicationHelper
     link += (current ? " want " : " wants ")
   end
   
+  def rsvp_link(event, status)
+    link_to status.to_s, "/rsvp/#{event.id}/#{status}"
+  end
+  
   def interest_link(interest)
     link_to interest.description, interest_path(interest)
   end

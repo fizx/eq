@@ -38,6 +38,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.bookmarklet '/bookmarklet.js', :controller => 'bookmarklet', :action => "bookmarklet"
   map.bookmarklet_target '/bookmarklet', :controller => 'bookmarklet', :action => "target"
+  
+  map.rsvp '/rsvp/:event_id/:status', :controller => 'rsvps', :action => "update"
 
   map.connect '/destroy_interest/:id', :controller => 'interests', :action => "destroy"
   map.connect '/destroy_never/:id', :controller => 'nevers', :action => "destroy"

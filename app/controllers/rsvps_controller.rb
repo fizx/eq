@@ -57,18 +57,16 @@ class RsvpsController < ApplicationController
   # PUT /rsvps/1
   # PUT /rsvps/1.xml
   def update
-    @rsvp = Rsvp.find(params[:id])
-
-    respond_to do |format|
-      if @rsvp.update_attributes(params[:rsvp])
-        flash[:notice] = 'Rsvp was successfully updated.'
-        format.html { redirect_to(@rsvp) }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @rsvp.errors, :status => :unprocessable_entity }
-      end
+    @event = Event.find(params[:event_id])
+    @rsvp = Rsvp.find_or_initialize(:user_id => current_user.id, :event_id => @event.id)
+    @rsvp.type = case params[:status]
+      when "yes": "ConfirmedRsvp"
+      when "no": "DeclinedRsvp"
+      when "maybe": "MaybeRsvp"
     end
+    @rsvp.save
+
+    redirect_to @event
   end
 
   # DELETE /rsvps/1

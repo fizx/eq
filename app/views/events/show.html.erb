@@ -6,3 +6,7 @@
 <p>Maybe: <%=@event.maybe_rsvps.count%></p>
 <p>No: <%=@event.declined_rsvps.count%></p>
 <p>Not responded: <%=@event.rsvps.count%></p>
+<p>
+	Your status: <%=current_user.event_status(@event)%>
+</p>
+
