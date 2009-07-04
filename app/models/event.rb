@@ -6,5 +6,5 @@ class Event < ActiveRecord::Base
   has_many :declined_rsvps
   has_many :maybe_rsvps
   belongs_to :creator, :class_name => "User"
-  attr_accessor :invited
+  attr_accessor :invited, :category
 end
