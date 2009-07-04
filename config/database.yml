@@ -12,7 +12,7 @@ test:
   user: <%=ENV["USER"] %>
   password:
     
-development:
+production:
   adapter: postgresql
   database: eq_production
   user: <%=ENV["USER"] %>
