@@ -4,7 +4,6 @@ class UsersController < ApplicationController
   before_filter :admin_or_current, :only => %w[edit update]
   # before_filter :show_friend_request, :only => "show"
   
-
   # render new.rhtml
   def new
     @user = User.new
@@ -26,6 +25,11 @@ class UsersController < ApplicationController
   end
  
   def create
+    if params[:invite_code] != "monkeys"
+      flash[:notice] = "invalid invite code"
+      redirect_to "/"
+      return
+    end
     logout_keeping_session!
     @user = User.new(params[:user])
     success = @user && @user.save

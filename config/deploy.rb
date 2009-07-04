@@ -20,4 +20,9 @@ namespace :deploy do
   task :restart do 
     run "touch #{current_path}/tmp/restart.txt"
   end
+  
+  task :migrate do 
+    run "cd #{current_path} && rake db:migrate RAILS_ENV=production"
+  end
+  
 end

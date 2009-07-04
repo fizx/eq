@@ -15,6 +15,10 @@
 	<%= f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones %>
 </p>
 
+<p>Invite code:<br>
+<input type="text" name="invite_code">
+</p>
+
 <script>
 	$("#user_location_string").autocomplete("/locations/ac");
 </script>
