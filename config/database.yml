@@ -17,3 +17,4 @@ production:
   database: eq_production
   user: <%=ENV["USER"] %>
   password:
+    
