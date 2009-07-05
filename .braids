@@ -6,6 +6,13 @@ vendor/plugins/restful-authentication:
   revision: 7235d9150e8beb80a819923a4c871ef4069c6759
   branch: master
   remote: braid/vendor/plugins/restful-authentication
+vendor/plugins/hoptoad_notifier: 
+  squashed: true
+  url: git://github.com/thoughtbot/hoptoad_notifier.git
+  type: git
+  revision: b4bb5d79f5b24ab441ab68568e03bc88c503f96c
+  branch: master
+  remote: braid/vendor/plugins/hoptoad-notifier
 vendor/plugins/attachment_fu: 
   squashed: true
   type: git
