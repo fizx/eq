@@ -30,6 +30,6 @@ end
 
 namespace :dev do
   task :tail do
-    run "cd #{current_path} && tail -f log/production.log"
+    run "cd #{current_path} && tail -fn1000 log/production.log"
   end
 end
