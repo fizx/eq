@@ -31,6 +31,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :found_email_addresses
   map.resource :session
   
+  map.facebook "/facebook/:action", :controller => "facebook"
+  
   map.calendar_date "/date/:month/:day/:year", :controller => "calendars", :action => "date"
 
   map.ac "/ac", :controller => "activities", :action => "ac"

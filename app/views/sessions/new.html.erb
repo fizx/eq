@@ -1,16 +1,36 @@
-<h1>Log In <%= link_to "or Sign Up", signup_url %></h1>
+<div class="yui-g"> 
+	<div class="yui-u first"> 
 
-<% form_tag session_path do -%>
-<p><%= label_tag 'login' %><br />
-<%= text_field_tag 'login', @login %></p>
+		<h2>Log In </h2>
 
-<p><%= label_tag 'password' %><br/>
-<%= password_field_tag 'password', nil %></p>
+		<% form_tag session_path do -%>
+		<p><%= label_tag 'login' %><br />
+		<%= text_field_tag 'login', @login %></p>
 
-<!-- Uncomment this if you want this functionality
-<p><%= label_tag 'remember_me', 'Remember me' %>
-<%= check_box_tag 'remember_me', '1', @remember_me %></p>
--->
+		<p><%= label_tag 'password' %><br/>
+		<%= password_field_tag 'password', nil %></p>
 
-<p><%= submit_tag 'Log in' %></p>
-<% end -%>
+		<!-- Uncomment this if you want this functionality
+		<p><%= label_tag 'remember_me', 'Remember me' %>
+		<%= check_box_tag 'remember_me', '1', @remember_me %></p>
+		-->
+
+		<p><%= submit_tag 'Log in' %></p>
+
+		<% end -%>
+	</div>
+	<div class="yui-u" xmlns:fb="http://www.facebook.com/2008/fbml"> 
+		<h2><%=link_to "Sign up", signup_url%></h2>
+		<div class="space"></div>
+		You may also use your facebook account to log in.
+		<div class="space"></div>
+		
+		<fb:login-button></fb:login-button>
+
+		<script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php" type="text/javascript"></script>
+
+		<script type="text/javascript">
+		    FB.init("<%=FB_API_KEY%>", "/xd_receiver.htm");
+		</script>
+	</div>
+</div>
