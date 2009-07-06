@@ -2,15 +2,9 @@ class FacebookController < ApplicationController
   skip_before_filter :login_required
   
   def authenticate
-    if linked_account_ids = params[:fb_sig_linked_account_ids].to_s.gsub(/\[|\]/,'').split(',')
-      linked_account_ids.each do |user_id|
-        if user = User.find_by_id(user_id)
-          user.update_attribute(:fb_uid, params[:fb_sig_user])
-        end
-      end
-    end
-
-    render :nothing => true
+    @facebook_session = Facebooker::Session.create(Facebooker.api_key, Facebooker.secret_key)
+    logger.debug "facebook session in authenticate: #{facebook_session.inspect}"
+    redirect_to @facebook_session.login_url
   end
   
   def preview
@@ -23,6 +17,15 @@ class FacebookController < ApplicationController
   end
   
   def post_authorize
+    if linked_account_ids = params[:fb_sig_linked_account_ids].to_s.gsub(/\[|\]/,'').split(',')
+      linked_account_ids.each do |user_id|
+        if user = User.find_by_id(user_id)
+          user.update_attribute(:fb_uid, params[:fb_sig_user])
+        end
+      end
+    end
+
+    render :nothing => true
   end
 
 end
