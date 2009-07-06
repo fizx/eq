@@ -40,8 +40,5 @@ Rails::Initializer.run do |config|
   # config.i18n.default_locale = :de
 end
 
-FB_APP_ID = "06588289154"	
-FB_API_KEY = "a370c21127fd9846a1f5e36de4c17889"
-FB_SECRET = "778154a790843719b127dcfa60d78f85"
-
 require "will_paginate"
+require "facebooker"

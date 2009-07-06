@@ -28,8 +28,6 @@ namespace :deploy do
   
 end
 
-namespace :dev do
-  task :tail do
-    run "cd #{current_path} && tail -fn1000 log/production.log"
-  end
+task :tail do
+  run "cd #{current_path} && tail -fn1000 log/production.log"
 end
