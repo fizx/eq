@@ -1,0 +1,15 @@
+development:
+  api_key: a370c21127fd9846a1f5e36de4c17889
+  secret_key: 778154a790843719b127dcfa60d78f85
+  canvas_page_name: equeue
+  callback_url: http://eq.kylemaxwell.com/
+  pretty_errors: true
+  set_asset_host_to_callback_url: false
+production:
+  api_key: a370c21127fd9846a1f5e36de4c17889
+  secret_key: 778154a790843719b127dcfa60d78f85
+  canvas_page_name: equeue
+  callback_url: http://eq.kylemaxwell.com/
+  pretty_errors: true
+  set_asset_host_to_callback_url: false
+  
