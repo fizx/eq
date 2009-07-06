@@ -8,7 +8,7 @@ module ApplicationHelper
     user = interest.user
     current = user == current_user
     
-    link = current ? link_to("You", "/") : link_to(truncate(user.short_name, :length => 12), user)
+    link = current ? link_to("You", "/") : link_to(truncate(user.try(:short_name), :length => 12), user)
     if interest.interestings_count > 0
       link += " <span class=plus>+#{interest.interestings_count}</span> "
     end

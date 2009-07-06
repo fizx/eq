@@ -1,10 +1,15 @@
 class FbConnectController < ApplicationController
-  skip_before_filter :login_required
+  skip_before_filter :login_required, :except => "update"
 
   def authenticate
     @facebook_session = Facebooker::Session.create(Facebooker.api_key, Facebooker.secret_key)
     logger.debug "facebook session in authenticate: #{facebook_session.inspect}"
     redirect_to @facebook_session.login_url
+  end
+  
+  def update
+    update_current_user_data
+    redirect_to "/"
   end
 
   def connect
@@ -16,6 +21,7 @@ class FbConnectController < ApplicationController
       if facebook_user
         if user = User.find_by_fb_uid(facebook_user.uid)
           self.current_user = user
+          update_current_user_data
           return redirect_to('/')
         end
 

@@ -4,6 +4,8 @@ class User < ActiveRecord::Base
   include Authentication
   include Authentication::ByPassword
   include Authentication::ByCookieToken
+  
+  serialize :facebook_data
 
   validates_format_of       :name,     :with => Authentication.name_regex,  :message => Authentication.bad_name_message, :allow_nil => true
   validates_length_of       :name,     :maximum => 100
@@ -212,6 +214,18 @@ class User < ActiveRecord::Base
     emails.each do |e|
       FoundEmailAddress.find_or_create_by_user_id_and_address(self.id, e)
     end
+  end
+  
+  def has_permissions?
+    facebook_data && facebook_data[:create_event] && facebook_data[:rsvp_event] && facebook_data[:offline_access]
+  end
+  
+  def needs_permissions?
+    uses_facebook? && !has_permissions?
+  end
+  
+  def uses_facebook?
+    !!fb_uid
   end
   
   def admin?

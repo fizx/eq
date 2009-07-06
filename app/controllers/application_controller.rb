@@ -20,10 +20,25 @@ class ApplicationController < ActionController::Base
     (session[:facebook_session] && session[:facebook_session].session_key) ? session[:facebook_session].user : nil
   end
   
+  def update_current_user_data
+    if facebook_user && current_user == User.find_by_fb_uid(facebook_user.uid)
+      facebook_user.populate(*Facebooker::User::FIELDS)
+      data = {
+        :user => facebook_user,
+        :create_event => facebook_user.has_permission?("create_event"),
+        :rsvp_event => facebook_user.has_permission?("rsvp_event"),
+        :offline_access => facebook_user.has_permission?("offline_access"),
+        :events => facebook_user.events
+      }      
+      Event.populate(data[:eventss])
+      current_user.update_attribute :facebook_data, data
+    end
+  end
+  
   include CollapsedRoutes
   collapsed_routes :activities, :time_spans
     
-  # filter_parameter_logging :password
+  filter_parameter_logging :password
   layout "site"
   
   around_filter :user_scope

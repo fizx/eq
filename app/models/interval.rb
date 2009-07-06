@@ -22,7 +22,7 @@ class Interval < ActiveRecord::Base
   }
   
   def self.from(start, finish)
-    new(:start => start, :finish => finish)
+    create(:start => start, :finish => finish)
   end
   
   def to_range

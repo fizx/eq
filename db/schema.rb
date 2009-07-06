@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090706012901) do
+ActiveRecord::Schema.define(:version => 20090706230841) do
 
   create_table "categories", :force => true do |t|
     t.string   "type"
@@ -78,10 +78,12 @@ ActiveRecord::Schema.define(:version => 20090706012901) do
     t.integer  "location_id"
     t.integer  "activity_id"
     t.text     "venue"
+    t.integer  "fb_eid",      :limit => 8
   end
 
   add_index "events", ["activity_id"], :name => "index_events_on_activity_id"
   add_index "events", ["creator_id"], :name => "index_events_on_creator_id"
+  add_index "events", ["fb_eid"], :name => "index_events_on_fb_eid"
   add_index "events", ["location_id"], :name => "index_events_on_location_id"
 
   create_table "followings", :force => true do |t|
@@ -248,8 +250,9 @@ ActiveRecord::Schema.define(:version => 20090706012901) do
     t.integer  "default_location_id"
     t.integer  "profile_image_id"
     t.string   "time_zone"
-    t.integer  "fb_uid"
+    t.integer  "fb_uid",                    :limit => 8
     t.string   "email_hash"
+    t.text     "facebook_data"
   end
 
   add_index "users", ["email_hash"], :name => "index_users_on_email_hash"

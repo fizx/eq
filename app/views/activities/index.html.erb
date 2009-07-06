@@ -28,6 +28,9 @@
 		<% end %>
   </div> 
 	<div class="yui-u"> 
+		<% if current_user.needs_permissions? %>
+			<fb:prompt-permission perms="create_event,rsvp_event,offline_access" next_fbjs="document.setLocation('http://eq.kylemaxwell.com/fb/update')">We need to be able to set up events for you in Facebook.</fb:prompt-permission>
+		<% end %>
 		<h3>Random idea</h3>
 		<p>Do you want to <%=@activity.name %>?</p>
 		<%=link_to "never", new_never_path(:never => {:activity_id => @activity.id}), :class=> "right" %>
