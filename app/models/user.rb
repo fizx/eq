@@ -5,11 +5,6 @@ class User < ActiveRecord::Base
   include Authentication::ByPassword
   include Authentication::ByCookieToken
 
-  validates_presence_of     :login
-  validates_length_of       :login,    :within => 3..40
-  validates_uniqueness_of   :login
-  validates_format_of       :login,    :with => Authentication.login_regex, :message => Authentication.bad_login_message
-
   validates_format_of       :name,     :with => Authentication.name_regex,  :message => Authentication.bad_name_message, :allow_nil => true
   validates_length_of       :name,     :maximum => 100
 
@@ -127,9 +122,9 @@ class User < ActiveRecord::Base
     self.profile_image = img
   end
   
-  def to_param
-    "#{id}-#{login}"
-  end
+  # def to_param
+  #   "#{id}-#{login}"
+  # end
   
   def events_and_rsvps
     events + confirmed_rsvp_events
