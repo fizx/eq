@@ -1,4 +1,4 @@
-<html>
+<html xmlns:fb="http://www.facebook.com/2008/fbml">
 	<head>
 		<%=stylesheet_link_tag "reset-fonts-grids" %>
 		<%=stylesheet_link_tag "jquery-ui-1.7.2.custom" %>
@@ -17,6 +17,7 @@
 		<%=javascript_include_tag "fullcalendar.min" %>
 		<%=javascript_include_tag "facebox" %>
 		<%=javascript_include_tag "application" %>
+	  <%= javascript_include_tag 'http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php' %>
 	</head>
 	<body>
 		<div id="doc4"> 
@@ -49,5 +50,10 @@
 				</div>  
 			</div>
 		</div>
+		
+		<%= javascript_tag "window.api_key = '#{Facebooker.api_key}';" %>
+	  <%= javascript_tag "window.xd_receiver_location = '/xd_receiver.htm';" %>
+	  <%= javascript_tag "window.facebook_authenticate_location = '/facebook/authenticate';" %>
+	  <%= javascript_include_tag 'facebook_require' %>
 	</body>
 </html>
