@@ -5,6 +5,11 @@
 <p><%= label_tag 'Username' %><br/>
 <%= f.text_field :login %></p>
 
+
+<% if params[:fb_user] %>
+  <%= hidden_field_tag(:fb_user, 1) %>
+<% end %>
+
 <p><%= label_tag 'Email' %><br/>
 <%= f.text_field :email %></p>
 

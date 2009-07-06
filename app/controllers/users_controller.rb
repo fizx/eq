@@ -25,13 +25,16 @@ class UsersController < ApplicationController
   end
  
   def create
-    if params[:invite_code] != "monkeys"
+    @user = User.new(params[:user])
+    if params[:fb_user]
+      user.fb_uid = facebook_user.uid
+      user.password = user.password_confirmation = rand.to_s
+    elsif params[:invite_code] != "monkeys"
       flash[:notice] = "invalid invite code"
       redirect_to "/"
       return
     end
     logout_keeping_session!
-    @user = User.new(params[:user])
     success = @user && @user.save
     if success && @user.errors.empty?
             # Protects against session fixation attacks, causes request forgery

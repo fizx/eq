@@ -21,12 +21,16 @@
 	</div>
 	<div class="yui-u" xmlns:fb="http://www.facebook.com/2008/fbml"> 
 		<h2><%=link_to "Sign up", signup_url%></h2>
-		<div class="space"></div>
-		You may also use your facebook account to log in.
-		<div class="space"></div>
-		
-		<fb:login-button></fb:login-button>
+	  <% unless params[:fb_user] %>
+			<div class="space"></div>
+			<h3>Do you use Facebook?</h3>
+			Use Facebook to register for <b>eq</b>
+				<div class="space"></div>
+			<fb:login-button onclick='facebook_button_onclick()'></fb:login-button>
+	  <% end %>
 
+		<div class="space"></div>
+    
 		<script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php" type="text/javascript"></script>
 
 		<script type="text/javascript">
