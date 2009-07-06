@@ -129,7 +129,7 @@ class User < ActiveRecord::Base
   end
   
   def events_and_rsvps
-    events + confirmed_rsvp_events
+    events.in_the_future + confirmed_rsvp_events.in_the_future
   end
   
   def hides_interest(interest)

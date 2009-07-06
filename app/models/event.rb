@@ -9,6 +9,23 @@ class Event < ActiveRecord::Base
   belongs_to :creator, :class_name => "User"
   attr_accessor :invited, :category
   
+  def label
+    name
+  end
+  
+  named_scope :in_the_future, {
+    :joins => "INNER JOIN intervals ON intervalable_type='Event' AND intervalable_id=events.id",
+    :conditions => "intervals.start > NOW()"
+  }
+  
+  def startms
+    interval.startms
+  end
+  
+  def finishms
+    interval.finishms
+  end
+  
   def self.populate(fb_events)
     fb_events.map do |fb_event|
       event = find_or_initialize_by_fb_eid(fb_event.eid)
