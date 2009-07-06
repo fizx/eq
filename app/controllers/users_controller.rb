@@ -33,7 +33,7 @@ class UsersController < ApplicationController
     end
     if params[:fb_user]
       @user.fb_uid = facebook_user.uid
-      @user.password = user.password_confirmation = rand.to_s
+      @user.password = @user.password_confirmation = rand.to_s
     end
     logout_keeping_session!
     success = @user && @user.save
