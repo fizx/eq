@@ -6,6 +6,13 @@ vendor/plugins/restful-authentication:
   revision: 7235d9150e8beb80a819923a4c871ef4069c6759
   branch: master
   remote: braid/vendor/plugins/restful-authentication
+vendor/plugins/facebooker: 
+  squashed: true
+  url: git://github.com/mmangino/facebooker.git
+  type: git
+  revision: 352543d331adf5046ea8ecd28353505d7c40daec
+  branch: master
+  remote: braid/vendor/plugins/facebooker
 vendor/plugins/hoptoad_notifier: 
   squashed: true
   url: git://github.com/thoughtbot/hoptoad_notifier.git
