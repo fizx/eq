@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe Following do
   before do 
     @joe = Factory(:user)
-    @suzy = Factory(:user, :login => "suzy")
+    @suzy = Factory(:user, :name => "suzy")
   end
   
   describe "#create_friendship" do

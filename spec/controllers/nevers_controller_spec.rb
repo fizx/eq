@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe Type do
+describe NeversController do
   
 end

@@ -17,15 +17,15 @@ class EventsController < ApplicationController
       @event.invited = User.friends_of(current_user).
                             available_at(@event.start).
                             interested_in_attending(interest).
-                            all(:select => "users.login").
-                            map(&:login).join(", ")
+                            all(:select => "users.name").
+                            map(&:name).join(", ")
     end
   end
   
   def create
     @event = Event.new(params[:event])
     if @event.save
-      @invitees = User.find_all_by_login(params[:event][:invited].split(/\s*[;,\s]\s*/))
+      @invitees = User.find_all_by_email(params[:event][:invited].split(/\s*[;,\s]\s*/))
       @invitees.map{|i| Rsvp.create :user_id => i, :event_id => @event }
       flash[:notice] = "Your event was created"
       redirect_to @event

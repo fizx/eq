@@ -107,8 +107,8 @@ describe Interest do
   
   describe "#of_friends_of" do
     before do
-      @joe = Factory(:user, :login => "joe")
-      @suzy = Factory(:user, :login => "suzy")
+      @joe = Factory(:user, :name => "joe")
+      @suzy = Factory(:user, :name => "suzy")
       Following.create_friendship(@joe, @suzy)
       10.times do
         Factory(:interest, :user => @joe)

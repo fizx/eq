@@ -60,7 +60,7 @@ describe WebCalendarsController do
     it "redirects to the web_calendars list" do
       WebCalendar.stub!(:find).and_return(mock_web_calendar(:destroy => true))
       delete :destroy, :id => "1"
-      response.should redirect_to(web_calendars_url)
+      response.should redirect_to(web_calendars_path)
     end
   end
 

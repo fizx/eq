@@ -19,7 +19,7 @@ def generate_location
 end
 
 Factory.define :user do |user|
-  user.login { "joe_#{r}" }
+  user.name { "Joe #{r}" }
   user.email { "joe_#{r}@example.com" }
   user.password "hiworld"
   user.password_confirmation "hiworld"

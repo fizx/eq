@@ -122,9 +122,9 @@ class User < ActiveRecord::Base
     self.profile_image = img
   end
   
-  # def to_param
-  #   "#{id}-#{login}"
-  # end
+  def short_name
+    name
+  end
   
   def events_and_rsvps
     events + confirmed_rsvp_events
@@ -161,12 +161,8 @@ class User < ActiveRecord::Base
   #
   def self.authenticate(email, password)
     return nil if email.blank? || password.blank?
-    u = find_by_login(email.downcase) # need to get the salt
+    u = find_by_email(email.downcase) # need to get the salt
     u && u.authenticated?(password) ? u : nil
-  end
-
-  def login=(value)
-    write_attribute :login, (value ? value.downcase : nil)
   end
 
   def email=(value)

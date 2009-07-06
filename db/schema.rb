@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090703050234) do
+ActiveRecord::Schema.define(:version => 20090706012901) do
 
   create_table "categories", :force => true do |t|
     t.string   "type"
@@ -78,15 +78,11 @@ ActiveRecord::Schema.define(:version => 20090703050234) do
     t.integer  "location_id"
     t.integer  "activity_id"
     t.text     "venue"
-    t.datetime "start"
-    t.datetime "finish"
   end
 
   add_index "events", ["activity_id"], :name => "index_events_on_activity_id"
   add_index "events", ["creator_id"], :name => "index_events_on_creator_id"
-  add_index "events", ["finish"], :name => "index_events_on_finish"
   add_index "events", ["location_id"], :name => "index_events_on_location_id"
-  add_index "events", ["start"], :name => "index_events_on_start"
 
   create_table "followings", :force => true do |t|
     t.integer  "follower_id"
@@ -223,10 +219,6 @@ ActiveRecord::Schema.define(:version => 20090703050234) do
     t.datetime "updated_at"
   end
 
-  add_index "rsvps", ["event_id"], :name => "index_rsvps_on_event_id"
-  add_index "rsvps", ["type"], :name => "index_rsvps_on_type"
-  add_index "rsvps", ["user_id"], :name => "index_rsvps_on_user_id"
-
   create_table "uploads", :force => true do |t|
     t.integer  "uploadable_id"
     t.string   "uploadable_type"
@@ -244,7 +236,6 @@ ActiveRecord::Schema.define(:version => 20090703050234) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "login",                     :limit => 40
     t.string   "name",                      :limit => 100, :default => ""
     t.string   "email",                     :limit => 100
     t.string   "crypted_password",          :limit => 40
@@ -257,8 +248,11 @@ ActiveRecord::Schema.define(:version => 20090703050234) do
     t.integer  "default_location_id"
     t.integer  "profile_image_id"
     t.string   "time_zone"
+    t.integer  "fb_uid"
+    t.string   "email_hash"
   end
 
-  add_index "users", ["login"], :name => "index_users_on_login", :unique => true
+  add_index "users", ["email_hash"], :name => "index_users_on_email_hash"
+  add_index "users", ["fb_uid"], :name => "index_users_on_fb_uid"
 
 end

@@ -28,6 +28,11 @@ namespace :deploy do
     run "cd #{current_path} && rake db:migrate RAILS_ENV=production"
   end
   
+  task :reset do 
+    # run "cd #{current_path} && rake db:drop RAILS_ENV=production"
+    # run "cd #{current_path} && rake db:create RAILS_ENV=production"
+  end
+  
 end
 
 task :tail do
