@@ -1,3 +1,4 @@
+require "facebooker"
 class FbConnectController < ApplicationController
   skip_before_filter :login_required
   include Facebooker::Rails::Controller
