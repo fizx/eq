@@ -2,25 +2,22 @@
 	<div class="yui-u first"> 
 
 		<h2>Log In </h2>
+		<div class="space"></div>
 
 		<% form_tag session_path do -%>
-		<p><%= label_tag 'login' %><br />
-		<%= text_field_tag 'login', @login %></p>
+		<p><%= label_tag 'Email address' %><br />
+		<%= text_field_tag 'email', @email %></p>
 
 		<p><%= label_tag 'password' %><br/>
-		<%= password_field_tag 'password', nil %></p>
-
-		<!-- Uncomment this if you want this functionality
-		<p><%= label_tag 'remember_me', 'Remember me' %>
-		<%= check_box_tag 'remember_me', '1', @remember_me %></p>
-		-->
-
-		<p><%= submit_tag 'Log in' %></p>
+		<%= password_field_tag 'password', nil %> <%= submit_tag 'Log in' %></p>
+	
 
 		<% end -%>
+		<div class="space"></div>
+		<h4>Or, login with Facebook:</h4>
+		<fb:login-button onclick='facebook_button_onclick()'></fb:login-button>
 	</div>
 	<div class="yui-u" xmlns:fb="http://www.facebook.com/2008/fbml"> 
-		<h2><%=link_to "Sign up", signup_url%></h2>
 	  <% unless params[:fb_user] %>
 			<div class="space"></div>
 			<h3>Do you use Facebook?</h3>

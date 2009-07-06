@@ -2,13 +2,6 @@ class FacebookController < ApplicationController
   skip_before_filter :login_required
   
   def authenticate
-    if current_user = User.find_or_create_by_fb_uid(facebook_user.uid)
-      flash[:notice] = "You have logged in via Facebook."
-    else
-      flash[:notice] = "Something went wrong."
-    end  
-    redirect_to "/"
-    
   end
   
   def preview
