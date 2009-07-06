@@ -19,6 +19,7 @@ role :app, "kylemaxwell.com"
 # role :db,  "your db-server here", :primary => true
 
 namespace :deploy do
+  
   task :restart do 
     run "touch #{current_path}/tmp/restart.txt"
   end

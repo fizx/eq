@@ -26,13 +26,14 @@ class UsersController < ApplicationController
  
   def create
     @user = User.new(params[:user])
-    if params[:fb_user]
-      user.fb_uid = facebook_user.uid
-      user.password = user.password_confirmation = rand.to_s
-    elsif params[:invite_code] != "monkeys"
+    if params[:invite_code] != "monkeys"
       flash[:notice] = "invalid invite code"
       redirect_to "/"
       return
+    end
+    if params[:fb_user]
+      user.fb_uid = facebook_user.uid
+      user.password = user.password_confirmation = rand.to_s
     end
     logout_keeping_session!
     success = @user && @user.save

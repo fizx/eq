@@ -15,7 +15,7 @@ class FbConnectController < ApplicationController
 
       if facebook_user
         if user = User.find_by_fb_uid(facebook_user.uid)
-          login_user(user)
+          self.current_user = user
           return redirect_to('/')
         end
 
@@ -23,13 +23,13 @@ class FbConnectController < ApplicationController
         facebook_user.email_hashes.each do |hash|
           if user = User.find_by_email_hash(hash)
             user.update_attribute(:fb_uid, facebook_user.uid)
-            login_user(user)
+            self.current_user = user
             return redirect_to('/')
           end
         end
 
         # joining facebook user, send to fill in username/email
-        return redirect_to(:controller => 'login', :action => 'register', :fb_user => 1)
+        return redirect_to signup_url(:fb_user => 1)
       end
 
     # facebook quite often craps out and gives us no data
