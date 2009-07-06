@@ -40,5 +40,8 @@ Rails::Initializer.run do |config|
   # config.i18n.default_locale = :de
 end
 
+ENV['FACEBOOK_API_KEY'] = "a370c21127fd9846a1f5e36de4c17889"
+ENV["FACEBOOK_SECRET_KEY"] = "778154a790843719b127dcfa60d78f85"
+
 require "will_paginate"
 require "facebooker"
