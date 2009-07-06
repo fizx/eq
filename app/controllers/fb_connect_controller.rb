@@ -1,7 +1,5 @@
-require "facebooker"
 class FbConnectController < ApplicationController
   skip_before_filter :login_required
-  include Facebooker::Rails::Controller
 
   def authenticate
     @facebook_session = Facebooker::Session.create(Facebooker.api_key, Facebooker.secret_key)
