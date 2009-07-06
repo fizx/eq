@@ -2,9 +2,10 @@
 
 <%= error_messages_for :user %>
 <% form_for @user, :html => {:multipart => true} do |f| -%>
-<p><%= label_tag 'Username' %><br/>
-<%= f.text_field :login %></p>
 
+<p>Invite code:<br>
+<input type="text" name="invite_code">
+</p>
 
 <% if params[:fb_user] %>
   <%= hidden_field_tag(:fb_user, 1) %>
@@ -13,26 +14,27 @@
 <p><%= label_tag 'Email' %><br/>
 <%= f.text_field :email %></p>
 
-<p><%= label_tag 'Location' %><br/>
-<%= f.text_field :location_string %></p>
+<% if !params[:fb_user] %>
 
-<p><%= label_tag 'Time zone' %><br/>
-	<%= f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones %>
-</p>
+	<p><%= label_tag 'Location' %><br/>
+	<%= f.text_field :location_string %></p>
 
-<p>Invite code:<br>
-<input type="text" name="invite_code">
-</p>
+	<p><%= label_tag 'Time zone' %><br/>
+		<%= f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones %>
+	</p>
 
-<script>
-	$("#user_location_string").autocomplete("/locations/ac");
-</script>
+	<script>
+		$("#user_location_string").autocomplete("/locations/ac");
+	</script>
 
-<p><%= label_tag 'password' %><br/>
-<%= f.password_field :password %></p>
+	<p><%= label_tag 'password' %><br/>
+	<%= f.password_field :password %></p>
 
-<p><%= label_tag 'password_confirmation', 'Confirm Password' %><br/>
-<%= f.password_field :password_confirmation %></p>
+	<p><%= label_tag 'password_confirmation', 'Confirm Password' %><br/>
+	<%= f.password_field :password_confirmation %></p>
+	
+<% end %>
+
 <div class="space"></div>
 <p><%= submit_tag @user.new_record? ? 'Sign up' : "Update profile" %></p>
 <% end -%>
