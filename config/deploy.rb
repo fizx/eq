@@ -3,6 +3,7 @@ set :scm, "git"
 set :repository,  "git@github.com:fizx/eq.git"
 set :user, "www-data"
 set :use_sudo, false
+set :deploy_via, :remote_cache
 
 # If you aren't deploying to /u/apps/#{application} on the target
 # servers (which is the default), you can specify the actual location

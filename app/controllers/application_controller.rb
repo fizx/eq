@@ -12,6 +12,14 @@ class ApplicationController < ActionController::Base
     Time.zone = current_user.time_zone if logged_in?
   end
   
+  def facebook_session
+    session[:facebook_session]
+  end
+
+  def facebook_user
+    (session[:facebook_session] && session[:facebook_session].session_key) ? session[:facebook_session].user : nil
+  end
+  
   include CollapsedRoutes
   collapsed_routes :activities, :time_spans
     
