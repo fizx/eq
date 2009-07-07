@@ -39,7 +39,9 @@ class EventsController < ApplicationController
   end
   
   def index
-    @events = Event.paginate :page => params[:page]
+    klass = Event
+    klass = klass.future unless params[:show_hidden]
+    @events = klass.paginate :page => params[:page]
   end
 
 end

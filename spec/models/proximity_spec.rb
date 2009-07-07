@@ -4,7 +4,7 @@ describe Proximity do
   describe "#create" do
     before do
       @prox = Proximity.new
-      @loc = Factory(:location)
+      @loc = factory_location()
     end
     
     it "should take a location" do

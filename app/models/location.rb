@@ -1,6 +1,6 @@
 class Location < ActiveRecord::Base
   trgm_index :name
-  validates_uniqueness_of :name unless RAILS_ENV == "test"
+  validates_uniqueness_of :name
   acts_as_mappable :auto_geocode=>{ :field=>:name, :error_message=>'bad address'},
                    :distance_column_name => "radius"
                    

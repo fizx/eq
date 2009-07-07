@@ -3,12 +3,8 @@ namespace :friends do
   task :create_random do
     require "config/environment"
     require "spec/girl"
-    User.delete_all
-    Location.delete_all
-    @user = Factory(:user,
-                    :password => "hiworld", 
-                    :password_confirmation => "hiworld")
-    200.times do |k|
+    @user = User.find(1)
+    20.times do |k|
       u = Factory(:user)
       20.times do
         i = Interest.new 

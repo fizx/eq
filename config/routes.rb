@@ -46,6 +46,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.ac "/ac", :controller => "activities", :action => "ac"
   map.locations_ac "/locations/ac", :controller => "locations", :action => "ac"
+  map.dates_ac "/dates/ac", :controller => "dates", :action => "ac"
 
   map.bookmarklet '/bookmarklet.js', :controller => 'bookmarklet', :action => "bookmarklet"
   map.bookmarklet_target '/bookmarklet', :controller => 'bookmarklet', :action => "target"
