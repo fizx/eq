@@ -23,8 +23,9 @@ describe WebCalendar do
       @cal.data.should == File.read(@cal_path)
     end
     
-    it "should add busy intervals to user" do
-      @user.busy_intervals.should_not be_empty
+    it "should add events to user" do
+      @user.busy_intervals.should be_empty
+      @user.events.should_not be_empty
     end
   end
 end

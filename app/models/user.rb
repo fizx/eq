@@ -111,6 +111,10 @@ class User < ActiveRecord::Base
     profile_image && profile_image.public_filename(:thumb)
   end
   
+  def self.from_email(email)
+    email && User.find_or_create_by_email(email)
+  end
+  
   def profile_image_file
     
   end

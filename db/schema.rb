@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090706230841) do
+ActiveRecord::Schema.define(:version => 20090707050542) do
 
   create_table "categories", :force => true do |t|
     t.string   "type"
@@ -41,6 +41,19 @@ ActiveRecord::Schema.define(:version => 20090706230841) do
 
   add_index "comments", ["commentable_id", "commentable_type"], :name => "index_comments_on_commentable_id_and_commentable_type"
   add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
+
+  create_table "delayed_jobs", :force => true do |t|
+    t.integer  "priority",   :default => 0
+    t.integer  "attempts",   :default => 0
+    t.text     "handler"
+    t.string   "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "email_addresses", :force => true do |t|
     t.integer  "user_id"
@@ -78,13 +91,17 @@ ActiveRecord::Schema.define(:version => 20090706230841) do
     t.integer  "location_id"
     t.integer  "activity_id"
     t.text     "venue"
-    t.integer  "fb_eid",      :limit => 8
+    t.datetime "start"
+    t.datetime "finish"
+    t.string   "guid"
   end
 
   add_index "events", ["activity_id"], :name => "index_events_on_activity_id"
   add_index "events", ["creator_id"], :name => "index_events_on_creator_id"
-  add_index "events", ["fb_eid"], :name => "index_events_on_fb_eid"
+  add_index "events", ["finish"], :name => "index_events_on_finish"
+  add_index "events", ["guid"], :name => "index_events_on_guid"
   add_index "events", ["location_id"], :name => "index_events_on_location_id"
+  add_index "events", ["start"], :name => "index_events_on_start"
 
   create_table "followings", :force => true do |t|
     t.integer  "follower_id"
@@ -220,6 +237,10 @@ ActiveRecord::Schema.define(:version => 20090706230841) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "rsvps", ["event_id"], :name => "index_rsvps_on_event_id"
+  add_index "rsvps", ["type"], :name => "index_rsvps_on_type"
+  add_index "rsvps", ["user_id"], :name => "index_rsvps_on_user_id"
 
   create_table "uploads", :force => true do |t|
     t.integer  "uploadable_id"

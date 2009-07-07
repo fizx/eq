@@ -26,9 +26,13 @@ class Event < ActiveRecord::Base
     interval.finishms
   end
   
-  def self.populate(fb_events)
+  def self.populate_ical(string)
+    
+  end
+  
+  def self.populate_facebook(fb_events)
     fb_events.map do |fb_event|
-      event = find_or_initialize_by_fb_eid(fb_event.eid)
+      event = find_or_initialize_by_guid("#{fb_event.eid}@facebook.com")
       event.name = fb_event.name
       event.interval = Interval.from(Time.at(fb_event.start_time.to_i), Time.at(fb_event.end_time.to_i))
       event.description = fb_event.description

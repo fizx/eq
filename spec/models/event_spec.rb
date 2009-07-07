@@ -5,7 +5,7 @@ describe Event do
     @fb = Marshal.load(File.read(File.dirname(__FILE__) + "/../fixtures/facebook_data.dump"))
   end
   
-  describe "#populate" do
+  describe "#populate_facebook" do
     it "should create events" do
       @fb[:events].should be_an(Array)
       @events = Event.populate(@fb[:events])
