@@ -1,8 +1,8 @@
 <h2><%=@event.name%></h2>
 <p><%=@event.description%></p>
 <p>At <%=@event.venue%> in <%=@event.location.try(:name) %></p>
-<p>From <%=@event.start%> to <%=@event.finish%></p>
-<%= render :partial => 'status' %>
+<p>From <%=@event.human_range%></p>
+<%= render 'status', :event => @event %>
 <p>
 	Your status: <%=current_user.event_status(@event)%>
 </p>

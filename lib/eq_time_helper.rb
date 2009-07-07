@@ -8,17 +8,19 @@ module EqTimeHelper
   end
   
   def human_range
-    DateRange.new(start..finish).to_s
-    
-    # start_year = start.year == finish.year ? "" : " %G"
-    # finish_year = (start.year == finish.year && start.year == Time.now.year) ? "" : " %G"
-    # 
-    # if start.month == finish.month
-    # else
-    #   start
-    # end
-    # 
-    # "#{start_month}#{start_day}#{start_time}#{start_year}-#{finish_month}#{finish_day}#{finish_time}#{finish_year}"
+    if start && finish
+      DateRange.new(start, finish).to_s
+    else
+      nil
+    end
+  end
+  
+  def human_range=(str)
+    range = DateRange.parse(str)
+    self.start = range.first
+    self.finish = range.last
+  rescue DateRangeError
+    self.errors.add(:date, "was not a valid range")
   end
 
 end

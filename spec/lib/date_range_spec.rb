@@ -8,17 +8,26 @@ describe DateRange do
       range.last.should == Chronic.parse("dec 12 2009", :guess => false).last
     end
     
+    it "should parse a date as a range" do
+      range = DateRange.parse("jan 1 2009")
+      range.first.should == Chronic.parse("jan 1 2009", :guess => false).first
+      range.last.should == Chronic.parse("jan 1 2009", :guess => false).last
+    end
+    
     it "should parse the second in the context of the first" do
       range = DateRange.parse("jan 1 2009 8am-5pm")
       range.first.should == Chronic.parse("jan 1 2009 8am", :guess => false).first
       range.last.should == Chronic.parse("jan 1 2009 5pm", :guess => false).last
     end
-  end
-  
-  describe "#strftime" do
-    it "should allow both" do
-      range = DateRange.parse("jan 1 2009-jan 1 2015")
-      range.strftime("%1Y %2Y").should == "2009 2015"
+    
+    it "should handle odd am/pm" do
+      range = DateRange.parse("jan 1 2009 8-11pm")
+      range.first.should == Chronic.parse("jan 1 2009 8pm", :guess => false).first
+      range.last.should == Chronic.parse("jan 1 2009 11pm", :guess => false).last
+    end
+    
+    it "should raise on odd input" do
+      lambda { DateRange.parse("dsafasdfas") }.should raise_error(DateRangeError)
     end
   end
   
@@ -27,6 +36,7 @@ describe DateRange do
       DateRange.parse("jan 1 8am-5pm").to_s.should == "Jan  1 8am-5pm"
       DateRange.parse("jan 1 8am-10am").to_s.should == "Jan  1 8-10am"
       DateRange.parse("jan 1 2015 8am-10am").to_s.should == "Jan  1 2015 8-10am"
+      DateRange.parse("jan 1 - jan 1").to_s.should == "Jan  1"
     end
     
     it "should handle cross days" do
