@@ -1,6 +1,9 @@
 $(function(){
   $(function() {
-	  $('.date-pick').datepicker();
+	  $('.date-pick').autocomplete("/dates/ac");
+	  $('.location-pick').autocomplete("/locations/ac");
+	  $('.activity-pick').autocomplete("/activities/ac");
+	  $('.invitation-pick').autocomplete("/invitations/ac");
   });
 });
 

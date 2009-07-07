@@ -29,9 +29,35 @@ describe DateRange do
     it "should raise on odd input" do
       lambda { DateRange.parse("dsafasdfas") }.should raise_error(DateRangeError)
     end
+    
+    it "should parse something chronic can't get" do
+      range = DateRange.parse("9/17 8am - 7pm")
+      range.first.should == Chronic.parse("9/17/2009 8am", :guess => false).first
+      range.last.should == Chronic.parse("9/17/2009 7pm", :guess => false).last      
+      
+      range = DateRange.parse("jan 1 8am-5pm 2009")
+      range.first.should == Chronic.parse("jan 1 2009 8am", :guess => false).first
+      range.last.should == Chronic.parse("jan 1 2009 5pm", :guess => false).last
+    end
+    
+    it "should parse dates only" do 
+      range = DateRange.parse("9/17-28")
+      range.first.should == Chronic.parse("9/17/2009", :guess => false).first
+      range.last.should == Chronic.parse("9/28/2009", :guess => false).last      
+      
+      range = DateRange.parse("Sept 17-28")
+      range.first.should == Chronic.parse("9/17/2009", :guess => false).first
+      range.last.should == Chronic.parse("9/28/2009", :guess => false).last      
+      
+      range = DateRange.parse("Sept 17-28 2009")
+      range.first.should == Chronic.parse("9/17/2009", :guess => false).first
+      range.last.should == Chronic.parse("9/28/2009", :guess => false).last      
+      
+    end
   end
   
   describe "#to_s" do
+    
     it "should handle same day" do
       DateRange.parse("jan 1 8am-5pm").to_s.should == "Jan  1 8am-5pm"
       DateRange.parse("jan 1 8am-10am").to_s.should == "Jan  1 8-10am"

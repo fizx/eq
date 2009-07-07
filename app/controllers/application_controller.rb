@@ -62,19 +62,16 @@ class ApplicationController < ActionController::Base
     user = { 
               :find => { :conditions => { :user_id => current_user && current_user.id } },
            }.merge(user_create)
-    interval = { 
-              :find => { :conditions => { :intervalable_id => current_user && current_user.id, :intervalable_type => "User" } },
-             :create => { :intervalable_id => current_user && current_user.id, :intervalable_type => "User" }
-          }
+    user_creator = {:create => {:creator_id => current_user && current_user.id }}
     Invitation.send :with_scope, user do
-      Event.send :with_scope, {:create => {:creator_id => current_user && current_user.id }} do
+      Event.send :with_scope, user_creator do
         WebCalendar.send :with_scope, user do
           Hiding.send :with_scope, user_create do
             Interest.send :with_scope, user_create do
               Never.send :with_scope, user_create do
                 Interesting.send :with_scope, user_create do
-                  BusyInterval.send :with_scope, interval do
-                    Trip.send :with_scope, interval do
+                  BusyEvent.send :with_scope, user_creator do
+                    Trip.send :with_scope, user_creator do
                       yield
                     end
                   end

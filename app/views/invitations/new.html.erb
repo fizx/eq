@@ -5,7 +5,7 @@
 
   <p>
     <%= f.label :email %><br />
-    <%= f.text_field :email %>
+    <%= f.text_field :email, :class => "invitation-pick" %>
   </p>
   <p>
     <%= f.label :message %><br />
@@ -15,11 +15,5 @@
     <%= f.submit 'Send!' %>
   </p>
 <% end %>
-
-<script>
-	$(function(){
-		$("#invitation_email").autocomplete("/invitations_autocomplete");
-	});
-</script>
 
 <%= link_to 'Back', root_path %>

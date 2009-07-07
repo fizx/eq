@@ -13,7 +13,7 @@ class InvitationsController < ApplicationController
     end
   end
   
-  def autocomplete
+  def ac
     render :text => current_user.
                     found_email_addresses.
                     find(:all, 

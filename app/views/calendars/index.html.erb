@@ -25,12 +25,11 @@
 			</div>
 		<% end %>
 		<div class="space"></div>
-		<% form_for BusyInterval.new(params[:busy_interval]) do |f| %>
+		<% form_for BusyEvent.new(params[:busy_event]) do |f| %>
 			<h3><%=link_to "Add a busy period", "#busy" %></h3>
 			<div class="tgt" id="busy">
-				<%=f.text_field :start, :size => 20, :class=> "date-pick" %> 
-				to 
-				<%=f.text_field :finish, :size => 20, :class=> "date-pick" %> 
+				When: <br />
+				<%=f.text_field :human_range, :size => 20, :class=> "date-pick" %>  
 				<input type="submit" value="Add">
 			</div>
 		<% end %>
@@ -38,11 +37,11 @@
 		<% form_for Trip.new do |f| %>
 			<h3><%=link_to "Add a trip", "#trip" %></h3>
 			<div class="tgt" id="trip">
-				I'm going to:<br/> <%=f.text_field :location_string, :size => 20 %> from
+				I'm going to:<br/> <%=f.text_field :location_string, :size => 20, :class => "location-pick" %>
 				<div class="space"></div>
-				<%=f.text_field :start, :size => 20, :class=> "date-pick" %> 
-				to 
-				<%=f.text_field :finish, :size => 20, :class=> "date-pick" %> 
+				
+				When: <br />
+				<%=f.text_field :human_range, :size => 20, :class=> "date-pick" %>  
 				<input type="submit" value="Add">
 			</div>
 		<% end %>

@@ -1,8 +1,8 @@
 class DatesController < ApplicationController
   def ac
-    DateRange.parse(params[:q])
-    render :text => "ok"
+    range = DateRange.parse(params[:q]) unless params[:q].blank?
+    render :text => range.to_s
   rescue
-    render :text => "fail"
+    render :text => "don't understand"
   end
 end

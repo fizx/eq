@@ -12,10 +12,7 @@
 		<li>
 			<form action="<%=request.request_uri.gsub('/new', '')%>" method="POST">
 				Within <%=text_field_tag "proximity[radius]", "10", :size => 4 %> miles of 
-				<%=text_field_tag "proximity[location_string]", "Me", :onfocus => "if(this.value == 'Me')this.value=''" %>
-				<script>
-					$("#other").autocomplete("/locations/ac");
-				</script>
+				<%=text_field_tag "proximity[location_string]", "Me", :onfocus => "if(this.value == 'Me')this.value=''", :class => "location-pick" %>
 				<input type="submit" value="Choose">
 			</form>
 		</li>

@@ -1,24 +1,20 @@
-	<ul class="big">
-		<% @activities.each do |act| %>
-			<li>
-				<% if act.children? %>
-					<%=link_to act.name, new_activity_url(:parent => act.id)%> ...
-				<% else %>
-					<%=link_to act.name, new_time_span_url(act) %>
-				<% end %>
-			</li>
-		<% end %>
-		<% if @parent%>
-			<li><%=link_to "Any of these", new_time_span_url(@parent) %></li>
-		<% end %>
-		<form method="post" action="/activities">
-			<%=hidden_field_tag "activity[parent_id]", params[:parent] if params[:parent] %>
-			<li><%=text_field_tag "activity[name]", "Something else", :onfocus => "if(this.value == 'Something else')this.value=''" %>
-				<input type="submit" value="Go">
-			</li>
-		</form>
-	</ul>
-
-	<script>
-	$("#activity_name").autocomplete("/ac")
-	</script>
+<ul class="big">
+	<% @activities.each do |act| %>
+		<li>
+			<% if act.children? %>
+				<%=link_to act.name, new_activity_url(:parent => act.id)%> ...
+			<% else %>
+				<%=link_to act.name, new_time_span_url(act) %>
+			<% end %>
+		</li>
+	<% end %>
+	<% if @parent%>
+		<li><%=link_to "Any of these", new_time_span_url(@parent) %></li>
+	<% end %>
+	<form method="post" action="/activities">
+		<%=hidden_field_tag "activity[parent_id]", params[:parent] if params[:parent] %>
+		<li><%=text_field_tag "activity[name]", "Something else", :onfocus => "if(this.value == 'Something else')this.value=''", :class => "activity-pick" %>
+			<input type="submit" value="Go">
+		</li>
+	</form>
+</ul>

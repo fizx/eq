@@ -5,6 +5,15 @@ class Activity < Category
   
   has_many :interests, :dependent => :destroy
   
+  def self.from(str)
+    a = Activity.find_or_initialize :type => "Activity", :name => str
+    if a.new_record?
+      a.private = true
+      a.save!
+    end
+    a
+  end
+  
   def self.movie_list
     doc = Nokogiri::HTML(open("http://www.apple.com/trailers"))
     

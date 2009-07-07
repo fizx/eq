@@ -1,25 +1,54 @@
 require "chronic"
 class DateRangeError < RuntimeError; end
 class DateRange < Range
-  DELIMITER = /\-|until|to/i
+  DELIMITER = /\-|\buntil\b|\bto\b/i
   AMPM = /\d\s*(am|pm)/i
+  NUMERIC = /\A\s*\d+\s*\Z/
+  ENDS_NUMERIC = /(\s*)(\d+)(\s*)\Z/
   
   def self.parse(string)
-    string.gsub!(/,/, ' ')
+    
+    # range = DateRange.parse("9/17-28")
+    # range.first.should == Chronic.parse("9/17/2009", :guess => false).first
+    # range.last.should == Chronic.parse("9/28/2009", :guess => false).last      
+    # 
+    
+    # "Sept 17-28 2009" => "Sept 17 2009 - Sept 28 2009"
+    string.gsub!(/([a-z]+)\s+(\d+)\s*\-\s*(\d+)\s+(\d{4})/i, '\1 \2 \4 - \1 \3 \4')
+    
+    # "Sept 17-28" => "Sept 17 - Sept 28"
+    string.gsub!(/([a-z]+)\s+(\d+)\s*\-\s*(\d+)/i, '\1 \2 - \1 \3')
+    
+    # "9/17-28" => "9/17/year - 9/28/year"
+    year = Time.now.year
+    string.gsub!(/(^|\s)(\d+)\/(\d+)\-(\d+)(\s|$)/, "\\1\\2/\\3/#{year} - \\1\\2/\\4/#{year}\\5")
+    
+    # "9/17" => "9/17/year"
+    string.gsub!(/(^|\s)(\d+)\/(\d+)(\s|$)/, "\\1\\2/\\3/#{year}\\4")
+    
+    # "jan 1 8am-5pm 2009" => "jan 1 2009 8am - 5pm"
+    string.gsub!(/(.*)\b([a-z0-9:]+)\s*-\s*(\d[a-z0-9:]*)\s+(.*)/, "\\1 \\4 \\2 - \\3")
+    
+    # STDERR.puts "preparsed: #{string.inspect}"
+    
     first_string, last_string = string.split(DELIMITER)
+    
+    if last_string && last_string =~ NUMERIC
+      last_string = first_string.sub(ENDS_NUMERIC, "\\1#{last_string}\\3")
+    end
     
     if last_string && last_string =~ AMPM && !(first_string =~ AMPM)
       first_string += last_string[AMPM, 1]
     end
     
     first_range = Chronic.parse(first_string, :guess => false)
-    first_date = first_range.first
+    first_date = first_range && first_range.first || Time.parse(first_string)
     last_date = last_string ? 
                   Chronic.parse(last_string, :guess => false, :now => first_date).last :
                   first_range.last                
     new(first_date, last_date)
-  rescue
-    raise DateRangeError.new
+  rescue => e
+    raise DateRangeError.new(e)
   end
   
   def to_s

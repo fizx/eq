@@ -8,13 +8,13 @@
 					<td valign="top">
 						<h4>Refine by location:</h4>
 						Within <%=text_field_tag "r", params[:r], :size => 4%> miles of 
-						<%=text_field_tag "location", params[:location]%>
+						<%=text_field_tag "location", params[:location], :class => "location-pick"%>
 						<input type="submit" value="Go">
 						<%=link_to "cancel", params.merge(:r => nil, :location => nil) if params[:r] && params[:location]%>
 					</td>
 					<td>
 						<h4>Refine by activity:</h4>
-						<%=text_field_tag "activity", params[:activity]%>
+						<%=text_field_tag "activity", params[:activity], :class => "activity-pick"%>
 						<input type="submit" value="Go">
 						<%=link_to "cancel", params.merge(:activity => nil) if params[:activity] %>
 						
@@ -26,10 +26,6 @@
 					</td>
 				</tr>
 			</table>
-			<script>
-				$("#activity").autocomplete("/ac");
-				$("#location").autocomplete("/locations/ac");
-			</script>
 		</form>
 		<div class="space"></div>
 		<h4 class="highlight"><%=@interests.total_entries%> things going on</h4>

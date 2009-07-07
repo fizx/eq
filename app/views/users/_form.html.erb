@@ -19,15 +19,11 @@
 
 
 	<p><%= label_tag 'Location' %><br/>
-	<%= f.text_field :location_string %></p>
+	<%= f.text_field :location_string, :class=> "location-pick"%></p>
 
 	<p><%= label_tag 'Time zone' %><br/>
 		<%= f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones %>
 	</p>
-
-	<script>
-		$("#user_location_string").autocomplete("/locations/ac");
-	</script>
 
 <% if !params[:fb_user] %>
 	<p><%= label_tag 'password' %><br/>

@@ -15,11 +15,8 @@
 
 			<p>
 				Activity: <br/>
-				<%=f.text_field :category%>
+				<%=f.text_field :category, :class => "activity_pick"%>
 			</p>
-			<script>
-				$("#event_category").autocomplete("/ac");
-			</script>
 	
 			<p>
 				Description (optional): <br/>
@@ -33,12 +30,12 @@
 	
 			<p>
 				Location: <br/>
-				<%=f.text_field :location%>
+				<%=f.text_field :location, :class => "location-pick" %>
 			</p>
 	
 			<p>
 				When: <br/>
-				<%=f.text_field :human_range %>
+				<%=f.text_field :human_range, :class => "date-pick" %>
 			</p>
 	
 			<p>

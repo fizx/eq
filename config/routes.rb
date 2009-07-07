@@ -14,7 +14,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :categories
   map.resources :invitations
   map.resources :events
-  map.resources :busy_intervals
+  map.resources :busy_events
   map.resources :web_calendars
   map.resources :activities do |a|
     a.resources :time_spans do |t|
@@ -44,9 +44,10 @@ ActionController::Routing::Routes.draw do |map|
   
   map.calendar_date "/date/:month/:day/:year", :controller => "calendars", :action => "date"
 
-  map.ac "/ac", :controller => "activities", :action => "ac"
+  map.ac "activities/ac", :controller => "activities", :action => "ac"
   map.locations_ac "/locations/ac", :controller => "locations", :action => "ac"
   map.dates_ac "/dates/ac", :controller => "dates", :action => "ac"
+  map.connect "/invitations/ac", :controller => "invitations", :action => "ac"
 
   map.bookmarklet '/bookmarklet.js', :controller => 'bookmarklet', :action => "bookmarklet"
   map.bookmarklet_target '/bookmarklet', :controller => 'bookmarklet', :action => "target"
@@ -55,7 +56,6 @@ ActionController::Routing::Routes.draw do |map|
 
   map.connect '/destroy_interest/:id', :controller => 'interests', :action => "destroy"
   map.connect '/destroy_never/:id', :controller => 'nevers', :action => "destroy"
-  map.connect "/invitations_autocomplete", :controller => "invitations", :action => "autocomplete"
   map.current_event '/current_event', :controller => 'calendars', :action => "current_event"
   map.friends '/friends/:action', :controller => 'friends'
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'

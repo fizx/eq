@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090707183053) do
+ActiveRecord::Schema.define(:version => 20090707221211) do
 
   create_table "categories", :force => true do |t|
     t.string   "type"
@@ -91,9 +91,10 @@ ActiveRecord::Schema.define(:version => 20090707183053) do
     t.integer  "location_id"
     t.integer  "activity_id"
     t.text     "venue"
-    t.string   "guid"
     t.datetime "start"
     t.datetime "finish"
+    t.string   "guid"
+    t.string   "type"
   end
 
   add_index "events", ["activity_id"], :name => "index_events_on_activity_id"
@@ -102,6 +103,7 @@ ActiveRecord::Schema.define(:version => 20090707183053) do
   add_index "events", ["guid"], :name => "index_events_on_guid"
   add_index "events", ["location_id"], :name => "index_events_on_location_id"
   add_index "events", ["start"], :name => "index_events_on_start"
+  add_index "events", ["type"], :name => "index_events_on_type"
 
   create_table "followings", :force => true do |t|
     t.integer  "follower_id"
@@ -159,7 +161,6 @@ ActiveRecord::Schema.define(:version => 20090707183053) do
   add_index "interests", ["user_id"], :name => "index_interests_on_user_id"
 
   create_table "intervals", :force => true do |t|
-    t.string   "type"
     t.datetime "start"
     t.datetime "finish"
     t.datetime "created_at"
@@ -172,7 +173,6 @@ ActiveRecord::Schema.define(:version => 20090707183053) do
   add_index "intervals", ["intervalable_id"], :name => "index_intervals_on_intervalable_id"
   add_index "intervals", ["intervalable_type"], :name => "index_intervals_on_intervalable_type"
   add_index "intervals", ["start"], :name => "index_intervals_on_start"
-  add_index "intervals", ["type"], :name => "index_intervals_on_type"
 
   create_table "invitations", :force => true do |t|
     t.integer  "user_id"
@@ -240,6 +240,10 @@ ActiveRecord::Schema.define(:version => 20090707183053) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "rsvps", ["event_id"], :name => "index_rsvps_on_event_id"
+  add_index "rsvps", ["type"], :name => "index_rsvps_on_type"
+  add_index "rsvps", ["user_id"], :name => "index_rsvps_on_user_id"
 
   create_table "uploads", :force => true do |t|
     t.integer  "uploadable_id"

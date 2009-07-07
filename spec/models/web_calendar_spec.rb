@@ -24,7 +24,7 @@ describe WebCalendar do
     end
     
     it "should add events to user" do
-      @user.busy_intervals.should be_empty
+      @user.busy_events.should be_empty
       @user.events.should_not be_empty
     end
   end

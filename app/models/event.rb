@@ -1,13 +1,23 @@
 class Event < ActiveRecord::Base
   include EqTimeHelper
+  include Locatable
   
   belongs_to :location
+  belongs_to :activity
   has_many :rsvps
   belongs_to :creator, :class_name => "User"
-  attr_accessor :invited, :category
+  attr_accessor :invited
   
   def label
     name
+  end
+  
+  def category
+    activity.try :name
+  end
+  
+  def category=(str)
+    self.activity = Activity.from(str)
   end
   
   named_scope :future, {

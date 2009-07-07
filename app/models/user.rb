@@ -40,7 +40,7 @@ class User < ActiveRecord::Base
   belongs_to :profile_image, :class_name => "UploadedImage"
   
   has_many :intervals, :as => :intervalable
-  has_many :busy_intervals, :as => :intervalable
+  has_many :busy_events, :as => :intervalable
   has_many :trips, :as => :intervalable
   
   has_many :uploaded_images, :foreign_key => :uploaded_by_id
@@ -58,13 +58,13 @@ class User < ActiveRecord::Base
   named_scope :available_at, lambda {|time|
     {
       :select => "DISTINCT users.*",
-      :joins => "LEFT JOIN intervals AS busy_intervals ON 
-                      busy_intervals.intervalable_type='User'
-                  AND busy_intervals.intervalable_id=users.id
-                  AND busy_intervals.start < '#{time.to_s(:db)}'
-                  AND busy_intervals.finish > '#{time.to_s(:db)}'",
+      :joins => "LEFT JOIN intervals AS busy_events ON 
+                      busy_events.intervalable_type='User'
+                  AND busy_events.intervalable_id=users.id
+                  AND busy_events.start < '#{time.to_s(:db)}'
+                  AND busy_events.finish > '#{time.to_s(:db)}'",
       :group => User.columns.map {|c| "users.#{c.name}"}.join(", "),
-      :having => "max(busy_intervals.id) IS NULL"
+      :having => "max(busy_events.id) IS NULL"
     }
   }
   

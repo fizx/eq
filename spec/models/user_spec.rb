@@ -61,8 +61,8 @@ describe User do
       User.delete_all
       @a = Factory(:user)
       @b = Factory(:user)
-      bi = BusyInterval.from(1.day.from_now, 1.week.from_now)
-      @a.busy_intervals << bi
+      bi = BusyEvent.from(1.day.from_now, 1.week.from_now)
+      @a.busy_events << bi
       bi.save!
     end
     

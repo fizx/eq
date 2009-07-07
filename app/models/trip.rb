@@ -1,28 +1,12 @@
-class Trip < Interval
+class Trip < Event
   
-  has_many :locations, :through => :locationings
-  has_many :locationings, :as => :locatable
+  before_save :update_self
   
-  validates_each(:locations) do |r,a,v|
-    r.errors.add(a, "should exist") unless v.length == 1
+  def update_self
+    self.name = "Trip to #{location.try(:name)}"
+    self.description = nil
+    self.venue = nil
+    self.guid ||= "busy#{UUID.new.generate}@eq.com"
+    self.activity = nil
   end
-  
-  def label
-    location.try(:name)
-  end
-  
-  def location
-    locations.first
-  end
-  
-  def location_string=(s)
-    location = Location.from(s)
-    locations.clear
-    locations << location if location
-  end
-  
-  def location_string
-    locations.first.try(:name)
-  end
-  
 end
