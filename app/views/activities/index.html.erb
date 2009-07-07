@@ -3,6 +3,9 @@
 		<% if @mass.blank? && @stream.blank?%>
 			<%= render :partial => 'blank' %>
 		<% else %>
+			<% if @invitation_count > 0%>
+				<h3><%=link_to "#{@invitation_count} new invitation#{"s" if @invitation_count > 1}", user_rsvps_url(current_user), :id => "new_invites" %></h3>
+			<% end %>
 			<h3><%=link_to "What would you like to do?", "#suggest" %></h3>
 			<div class="tgt ideas" id="suggest">
 				<h2>I want to...</h2>

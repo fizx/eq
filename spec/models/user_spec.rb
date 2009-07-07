@@ -14,6 +14,20 @@ describe User do
     @user = Factory(:user)
   end
   
+  describe "#rsvps" do
+    before do 
+      Rsvp.delete_all
+      @user = Factory(:user)
+      @a = Factory(:rsvp, :user => @user, :type => "ConfirmedRsvp")
+      @b = Factory(:rsvp, :user => @user, :type => "DeclinedRsvp")
+      @c = Factory(:rsvp, :user => @user, :type => nil)
+    end
+    
+    it "should contain different types" do
+      @user.rsvps.count.should == 3
+    end
+  end
+  
   describe "#hides_interest" do
     it "should set hidden on the interest" do
       i = Factory(:interest, :user => @user)

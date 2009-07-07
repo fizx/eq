@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090707050542) do
+ActiveRecord::Schema.define(:version => 20090707183053) do
 
   create_table "categories", :force => true do |t|
     t.string   "type"
@@ -91,9 +91,9 @@ ActiveRecord::Schema.define(:version => 20090707050542) do
     t.integer  "location_id"
     t.integer  "activity_id"
     t.text     "venue"
+    t.string   "guid"
     t.datetime "start"
     t.datetime "finish"
-    t.string   "guid"
   end
 
   add_index "events", ["activity_id"], :name => "index_events_on_activity_id"
@@ -118,13 +118,15 @@ ActiveRecord::Schema.define(:version => 20090707050542) do
   add_index "followings", ["responded"], :name => "index_followings_on_responded"
 
   create_table "hidings", :force => true do |t|
-    t.integer  "interest_id"
+    t.integer  "hidable_id"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "hidable_type"
   end
 
-  add_index "hidings", ["interest_id"], :name => "index_hidings_on_interest_id"
+  add_index "hidings", ["hidable_id"], :name => "index_hidings_on_interest_id"
+  add_index "hidings", ["hidable_type"], :name => "index_hidings_on_hidable_type"
   add_index "hidings", ["user_id"], :name => "index_hidings_on_user_id"
 
   create_table "interestings", :force => true do |t|
@@ -204,6 +206,7 @@ ActiveRecord::Schema.define(:version => 20090707050542) do
     t.float    "radius"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "geocodable", :default => false
   end
 
   add_index "locations", ["name"], :name => "locations_name_trgm_idx"
@@ -237,10 +240,6 @@ ActiveRecord::Schema.define(:version => 20090707050542) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "rsvps", ["event_id"], :name => "index_rsvps_on_event_id"
-  add_index "rsvps", ["type"], :name => "index_rsvps_on_type"
-  add_index "rsvps", ["user_id"], :name => "index_rsvps_on_user_id"
 
   create_table "uploads", :force => true do |t|
     t.integer  "uploadable_id"

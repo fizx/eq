@@ -1,4 +1,6 @@
 class Interval < ActiveRecord::Base
+  include EqTimeHelper
+  
   validates_presence_of :start
   validates_presence_of :finish
   belongs_to :intervalable, :polymorphic => true
@@ -37,14 +39,6 @@ class Interval < ActiveRecord::Base
     nil
   end
   
-  def startms
-    (start.to_f * 1000).to_i
-  end
-  
-  def finishms
-    (finish.to_f * 1000).to_i
-  end
-
   def location_string=(s)
     @s = s
   end

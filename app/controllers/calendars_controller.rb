@@ -32,7 +32,7 @@ class CalendarsController < ApplicationController
     @event = current_user.intervals.find(params[:selected_id])
     case params[:button].strip.downcase
     when "delete": 
-      @event.destroy
+      Hiding.find_or_create! :user_id => current_user.id, :hidable_id => @event.id, :hidable_type => "Interval"
       flash[:notice] = "Event deleted"
     when "update":
       @event.location_string = params[:selected_location]

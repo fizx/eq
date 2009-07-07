@@ -7,10 +7,5 @@
 			<%=rsvp_link(event, :maybe) %> 
 	</h4>
 	
-	<ul>
-		<li>Coming: <%=event.confirmed_rsvps.count%></li>
-		<li>Maybe: <%=event.maybe_rsvps.count%></li>
-		<li>No: <%=event.declined_rsvps.count%></li>
-		<li>Not responded: <%=event.unresponded_rsvps.count%></li>
-	</ul>
+<%= render :partial => 'status' %>
 <% end %>

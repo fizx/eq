@@ -74,6 +74,22 @@ Factory.define :proximity do |p|
   p.radius 10
 end
 
+Factory.define :event do |e|
+  e.name "Fake event"
+  e.description "It's fake!"
+  e.creator_id Factory(:user).id
+  e.location Factory(:location)
+  e.venue "Your mom's house"
+  e.start 24.hours.from_now
+  e.finish 26.hours.from_now
+  e.guid { rand.to_s }
+end
+
+Factory.define :rsvp do |r|
+  r.event Factory(:event)
+  r.user Factory(:user)
+end
+
 Factory.define :eventlet do |e|
   
 end

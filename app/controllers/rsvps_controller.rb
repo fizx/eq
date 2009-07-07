@@ -1,8 +1,11 @@
 class RsvpsController < ApplicationController
+  layout "site"
+  before_filter :set_user
   # GET /rsvps
   # GET /rsvps.xml
   def index
-    @rsvps = Rsvp.all
+    @fresh = @user.rsvps.unresponded.future
+    @all = @user.rsvps.actioned.paginate(:page => params[:page])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -79,5 +82,10 @@ class RsvpsController < ApplicationController
       format.html { redirect_to(rsvps_url) }
       format.xml  { head :ok }
     end
+  end
+  
+private 
+  def set_user
+    @user = User.find(params[:user_id]) if params[:user_id]
   end
 end

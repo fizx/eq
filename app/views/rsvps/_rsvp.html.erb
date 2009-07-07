@@ -1,0 +1,23 @@
+<% content_tag :li, rsvp do %>
+	<% event = rsvp.event %>
+	<h4>
+		<span class="right">Are you coming?<br>
+			<%=rsvp_link(event, :yes) %> |
+			<%=rsvp_link(event, :no) %> |
+			<%=rsvp_link(event, :maybe) %>
+			</span>
+		<%=event.human_range %>
+		<%=link_to event.name, event%>
+	</h4>
+	<% unless event.description.blank? %>
+		<p><%=h event.description%></p>
+	<% end %>
+	
+	<h4></h4>
+	<h4>Rsvp:  
+			<%=rsvp_link(event, :yes) %> |
+			<%=rsvp_link(event, :no) %> |
+			<%=rsvp_link(event, :maybe) %> 
+	</h4>
+	
+<% end %>

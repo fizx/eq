@@ -1,11 +1,8 @@
 class Event < ActiveRecord::Base
+  include EqTimeHelper
+  
   belongs_to :location
   has_many :rsvps
-  has_many :unresponded_rsvps, :conditions => "type IS NULL", :class_name => "Rsvp"
-  has_many :confirmed_rsvps
-  has_many :declined_rsvps
-  has_many :maybe_rsvps
-  has_one :interval, :as => :intervalable
   belongs_to :creator, :class_name => "User"
   attr_accessor :invited, :category
   
@@ -13,22 +10,9 @@ class Event < ActiveRecord::Base
     name
   end
   
-  named_scope :in_the_future, {
-    :joins => "INNER JOIN intervals ON intervalable_type='Event' AND intervalable_id=events.id",
-    :conditions => "intervals.start > NOW()"
+  named_scope :future, {
+    :conditions => "start > NOW()"
   }
-  
-  def startms
-    interval.startms
-  end
-  
-  def finishms
-    interval.finishms
-  end
-  
-  def self.populate_ical(string)
-    
-  end
   
   def self.populate_facebook(fb_events)
     fb_events.map do |fb_event|

@@ -1,8 +1,8 @@
 class ActivitiesController < ApplicationController
   def index
-    @upcoming = current_user.events_and_rsvps
+    @upcoming = current_user.rsvps.confirmed.future :include => :event
     @activity = Activity.all.rand
-    @invitations = current_user.unresponded_rsvp_events
+    @invitation_count = current_user.rsvps.unresponded.future.count
     interests = Interest.of_friends_of(current_user)
     interests = Interest.visible_to(current_user) unless params[:show_hidden]
     @stream = interests.paginate(:page => params[:page], :order => "interests.id DESC")

@@ -25,22 +25,22 @@ module ApplicationHelper
   
   def interesting_link(interest)
     if never = current_user.never(interest)
-      link = link_to_remote "unblock", :url => never_path(never, :interest_id => interest.id), :method => :delete, :html => {:class => "interested"}
+      link = link_to_remote "unblock", :url => never_path(never, :hidable_id => interest.id, :hidable_type => "Interest"), :method => :delete, :html => {:class => "interested"}
     else
-      link = link_to_remote "block activity", :url => nevers_path(:interest_id => interest.id, :never => {:activity_id => interest.activity_id}), :html => {:class => "interested"}
+      link = link_to_remote "block activity", :url => nevers_path(:hidable_id => interest.id, :hidable_type => "Interest", :never => {:activity_id => interest.activity_id}), :html => {:class => "interested"}
       
       if current_user.hidden?(interest)
-        link += link_to_remote "unhide", :url => hidings_path(:hiding => {:interest_id => interest.id}, :unhide => true), :method => :post, :html => {:class => "interested" }
+        link += link_to_remote "unhide", :url => hidings_path(:hiding => {:hidable_id => interest.id, :hidable_type => "Interest"}, :unhide => true), :method => :post, :html => {:class => "interested" }
       else
-        link += link_to_remote "hide", :url => hidings_path(:hiding => {:interest_id => interest.id}), :method => :post, :html => {:class => "interested" }
+        link += link_to_remote "hide", :url => hidings_path(:hiding => {:hidable_id => interest.id, :hidable_type => "Interest"}), :method => :post, :html => {:class => "interested" }
       end
       
     end
     
     if current_user.interesting?(interest)
-      link += link_to_remote "I'm not interested", :url => interestings_path(:interesting => {:interest_id => interest.id}, :uninterested => true), :method => :post, :html => {:class => "interested" }
+      link += link_to_remote "I'm not interested", :url => interestings_path(:interesting => {:hidable_id => interest.id, :hidable_type => "Interest"}, :uninterested => true), :method => :post, :html => {:class => "interested" }
     else
-      link += link_to_remote "I'm interested", :url => interestings_path(:interesting => {:interest_id => interest.id}), :method => :post, :html => {:class => "interested" }
+      link += link_to_remote "I'm interested", :url => interestings_path(:interesting => {:hidable_id => interest.id, :hidable_type => "Interest"}), :method => :post, :html => {:class => "interested" }
     end
     link
   end

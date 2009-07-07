@@ -63,7 +63,7 @@ class Interest < ActiveRecord::Base
   
   named_scope :not_hidden_to, lambda{|user|
     {
-      # :conditions => "interests.id NOT IN (SELECT interest_id FROM hidings WHERE user_id=#{user.id})"
+      :conditions => "interests.id NOT IN (SELECT hidable_id FROM hidings WHERE user_id=#{user.id} AND hidable_type='Interest')"
     }
   }
   
@@ -110,7 +110,7 @@ class Interest < ActiveRecord::Base
     end
   }
   
-  named_scope :in_the_future, {
+  named_scope :future, {
     :select => "interests.*",
     :from => "intervals, interests",
     :conditions => "intervals.intervalable_type='Interest' 
@@ -182,7 +182,7 @@ class Interest < ActiveRecord::Base
   
   def self.friendly_interests(interest, user)
     Interest.of_friends_of(user).
-              in_the_future.
+              future.
               visible_to(user).
               interval_overlapping_with(interest).
               activity_overlapping_with(interest).

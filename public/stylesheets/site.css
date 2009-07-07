@@ -1,3 +1,14 @@
+a#new_invites{
+  float:right;
+  color:darkgreen;
+}
+
+span.date{
+  display:block;
+  float:left;
+  width: 4em;
+}
+
 .show_hidden{
   display:table;
   color:darkgreen;

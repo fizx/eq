@@ -1,6 +1,9 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :rsvps
-
+  map.resources :confirmed_rsvps, :controller => "rsvps"
+  map.resources :declined_rsvps, :controller => "rsvps"
+  map.resources :maybe_rsvps, :controller => "rsvps"
+  
   map.resources :trips
   map.resources :nevers
   map.resources :intervals
@@ -25,7 +28,13 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resources :trips
   map.resources :calendars
-  map.resources :users
+  map.resources :users do |users|
+    users.resources :rsvps
+    users.resources :confirmed_rsvps, :controller => "rsvps"
+    users.resources :declined_rsvps, :controller => "rsvps"
+    users.resources :maybe_rsvps, :controller => "rsvps"
+  end
+  
   map.resources :intervals
   map.resources :interests
   map.resources :found_email_addresses
@@ -41,7 +50,7 @@ ActionController::Routing::Routes.draw do |map|
   map.bookmarklet '/bookmarklet.js', :controller => 'bookmarklet', :action => "bookmarklet"
   map.bookmarklet_target '/bookmarklet', :controller => 'bookmarklet', :action => "target"
   
-  map.rsvp '/rsvp/:event_id/:status', :controller => 'rsvps', :action => "update"
+  map.set_rsvp '/rsvp/:event_id/:status', :controller => 'rsvps', :action => "update"
 
   map.connect '/destroy_interest/:id', :controller => 'interests', :action => "destroy"
   map.connect '/destroy_never/:id', :controller => 'nevers', :action => "destroy"

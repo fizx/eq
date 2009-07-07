@@ -24,12 +24,7 @@ class User < ActiveRecord::Base
   has_many :nevers
   has_many :events, :foreign_key => "creator_id"
   
-  
-  has_many :confirmed_rsvps
-  has_many :confirmed_rsvp_events, :through => :confirmed_rsvps, :source => :event
-  
-  has_many :unresponded_rsvps, :conditions => "rsvps.type IS NULL", :class_name => "Rsvp"
-  has_many :unresponded_rsvp_events, :through => :unresponded_rsvps, :source => :event
+  has_many :rsvps 
   
   has_many :friendings_as_followee, :foreign_key => "followee_id", :class_name => "Following", 
                                     :conditions => {:bidi => true}
@@ -132,17 +127,13 @@ class User < ActiveRecord::Base
     name
   end
   
-  def events_and_rsvps
-    events.in_the_future + confirmed_rsvp_events.in_the_future
-  end
-  
   def hides_interest(interest)
     return true if hidden?(interest)
-    Hiding.create!(:user_id => id, :interest_id => interest.id)
+    Hiding.create!(:user_id => id, :hidable_id => interest.id, :hidable_type => interest.class.to_s)
   end
   
   def hidden?(interest)
-    Hiding.count(:conditions => {:user_id => id, :interest_id => interest.id}) > 0
+    Hiding.count(:conditions => {:user_id => id, :hidable_id => interest.id, :hidable_type => interest.class.to_s}) > 0
   end
   
   def interesting?(interest)

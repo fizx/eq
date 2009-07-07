@@ -2,10 +2,7 @@
 <p><%=@event.description%></p>
 <p>At <%=@event.venue%> in <%=@event.location.try(:name) %></p>
 <p>From <%=@event.start%> to <%=@event.finish%></p>
-<p>Coming: <%=@event.confirmed_rsvps.count%></p>
-<p>Maybe: <%=@event.maybe_rsvps.count%></p>
-<p>No: <%=@event.declined_rsvps.count%></p>
-<p>Not responded: <%=@event.rsvps.count%></p>
+<%= render :partial => 'status' %>
 <p>
 	Your status: <%=current_user.event_status(@event)%>
 </p>

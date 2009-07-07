@@ -1,24 +1,11 @@
-<h1>Listing rsvps</h1>
-
-<table>
-  <tr>
-    <th>User</th>
-    <th>Event</th>
-    <th>Type</th>
-  </tr>
-
-<% @rsvps.each do |rsvp| %>
-  <tr>
-    <td><%=h rsvp.user_id %></td>
-    <td><%=h rsvp.event_id %></td>
-    <td><%=h rsvp.type %></td>
-    <td><%= link_to 'Show', rsvp %></td>
-    <td><%= link_to 'Edit', edit_rsvp_path(rsvp) %></td>
-    <td><%= link_to 'Destroy', rsvp, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New rsvp', new_rsvp_path %>
+<div class="yui-gc"> 
+	<div class="yui-u first"> 
+		<h2>Pending Invitations</h2>
+		<ul class="rows"><%=render @fresh%></ul>
+	</div>
+	<div class="yui-u">
+		<h2>History</h2>
+		<ul class="rows"><%=render @all%></ul>
+		<%=will_paginate @all %>
+	</div>
+</div>

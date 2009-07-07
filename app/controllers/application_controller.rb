@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
         :offline_access => facebook_user.has_permission?("offline_access"),
         :events => facebook_user.events({:start_time => Time.now, :end_time => 1.year.from_now})
       }      
-      Event.populate(data[:events])
+      Event.populate_facebook(data[:events])
       current_user.update_attribute :facebook_data, data
     end
   end

@@ -1,0 +1,6 @@
+<% content_tag :li, confirmed_rsvp do %>
+	<% event = confirmed_rsvp.event %>
+	<span class="right">attending</span>
+	<span class="date"><%=event.start.strftime("%b %e") %></span>
+	<%=link_to event.name, event%>
+<% end %>
