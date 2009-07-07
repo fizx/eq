@@ -48,3 +48,10 @@ vendor/plugins/geokit:
   revision: e65a8ed1e7f7d72a6e075cc425defcca1e233c23
   branch: master
   remote: braid/vendor/plugins/geokit
+vendor/plugins/delayed_job: 
+  squashed: true
+  url: git://github.com/tobi/delayed_job.git
+  type: git
+  revision: 266fc15c12953a94a6d052281ce10059ddd5ebc1
+  branch: master
+  remote: braid/vendor/plugins/delayed-job
