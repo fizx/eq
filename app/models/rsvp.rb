@@ -33,4 +33,9 @@ class Rsvp < ActiveRecord::Base
     :joins => "INNER JOIN events on events.id=rsvps.event_id",
     :conditions => "events.start > NOW()"
   }
+  
+  def status
+    "invited"
+  end
+  
 end

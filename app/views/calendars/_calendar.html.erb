@@ -12,20 +12,19 @@ $(function() {
 		}
 		
 		function eventClicky(calEvent, jsEvent) {
-			if(calEvent.id.match("interest")) {
+			if(calEvent.id.match("event")) {
+				location.href = "/events/" + calEvent.id;
+				return false
+			} else if(calEvent.id.match("interest")) {
 				location.href = "/events/new?interest_id="+calEvent.id+"&startms="+calEvent.start.getTime()+"&finishms="+calEvent.end.getTime();
 				return false;
 			}
-			$("#interval_id").val(calEvent.id)
-			if(calEvent.title == "Busy") {
-				$("#interval_busy").attr("checked", "checked");
-				$("#interval_location").val("N/A");
-			} else {
-				$("#interval_busy").removeAttr("checked");
-				$("#interval_location_string").val(calEvent.title);
-			}
-			$("#interval_start").val(calEvent.start);
-			$("#interval_finish").val(calEvent.end);
+			
+			$("#event_id").val(calEvent.id)
+			$("#event_location_string").val(calEvent.location);
+			$("#event_name").val(calEvent.title);
+			$("#event_human_range").val(calEvent.human_range);
+
 			if(location.href.match("calendar")) {
 				location.href = "#clicked";	
 			} else {
@@ -43,7 +42,9 @@ $(function() {
 				<<-STR
 				{
 					"id": "#{e.id}",
-					"title":  "#{h e.label}",
+					"title":  "#{h e.name}",
+					"location":  "#{h e.location_string}",
+					"human_range": "#{h e.human_range}",
 					"start": new Date(#{e.startms}),
 					"end": new Date(#{e.finishms}),
 				}

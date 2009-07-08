@@ -14,12 +14,15 @@ class InvitationsController < ApplicationController
   end
   
   def ac
-    render :text => current_user.
-                    found_email_addresses.
-                    find(:all, 
-                         :limit => 10, 
-                         :conditions => ["address LIKE ?", "%#{params[:q]}%"]
-                    ).map {|model| model.address }.join("\n")
+    render :text => current_user.weak_followees.all(
+    :select => ActiveRecord::Base.send(:sanitize_sql_array, ["users.*, similarity(users.email, ?) AS sml", params[:q]]),
+    :conditions => ["users.email % ?", params[:q]],
+    :order => "sml DESC, users.email",
+    :limit => 10
+    ).map(&:email).join("\n")
+    
+    
+    
   end
 
   # GET /invitations/1

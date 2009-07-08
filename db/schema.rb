@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090707221211) do
+ActiveRecord::Schema.define(:version => 20090708060550) do
 
   create_table "categories", :force => true do |t|
     t.string   "type"
@@ -54,17 +54,6 @@ ActiveRecord::Schema.define(:version => 20090707221211) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  create_table "email_addresses", :force => true do |t|
-    t.integer  "user_id"
-    t.string   "type"
-    t.string   "address"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "email_addresses", ["id", "type"], :name => "index_email_addresses_on_type_and_id"
-  add_index "email_addresses", ["user_id"], :name => "index_email_addresses_on_user_id"
 
   create_table "eventlets", :force => true do |t|
     t.string   "matcher"
@@ -112,12 +101,14 @@ ActiveRecord::Schema.define(:version => 20090707221211) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "responded",   :default => false
+    t.boolean  "weak",        :default => false
   end
 
   add_index "followings", ["bidi", "followee_id", "follower_id"], :name => "index_followings_on_follower_id_and_followee_id_and_bidi"
   add_index "followings", ["followee_id"], :name => "index_followings_on_followee_id"
   add_index "followings", ["follower_id"], :name => "index_followings_on_follower_id"
   add_index "followings", ["responded"], :name => "index_followings_on_responded"
+  add_index "followings", ["weak"], :name => "index_followings_on_weak"
 
   create_table "hidings", :force => true do |t|
     t.integer  "hidable_id"
@@ -279,6 +270,7 @@ ActiveRecord::Schema.define(:version => 20090707221211) do
     t.text     "facebook_data"
   end
 
+  add_index "users", ["email"], :name => "users_email_trgm_idx"
   add_index "users", ["email_hash"], :name => "index_users_on_email_hash"
   add_index "users", ["fb_uid"], :name => "index_users_on_fb_uid"
 

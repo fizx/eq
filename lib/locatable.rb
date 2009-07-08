@@ -1,6 +1,6 @@
 module Locatable
   def location_string
-    location.try :name
+    location.try(:name) || "N/A"
   end
   
   def location_string=(string)

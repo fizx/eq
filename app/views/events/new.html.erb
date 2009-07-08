@@ -1,13 +1,13 @@
-<div class="yui-gc"> 
-	<div class="yui-u first"> 
-		<h2>New event</h2>
-		<h4>Use our <%=link_to "handy bookmarklet", "#bookmarklet"%> to easily import events from across the web.</h4>
-		<div class="tgt" id="bookmarklet">
-			<p>Drag the link below into your bookmarks bar, or right click on it and choose to save the link as a bookmark.</p>
-			<%=link_to "Add eq event", "javascript:(function(){var s=document.createElement('script');s.setAttribute('src', '#{bookmarklet_url}?r='+Math.random()+'&url='+escape(location.href));s.setAttribute('type', 'text/javascript');document.body.appendChild(s);})();" %>
-		</div>
-		<div class="space"></div>
-		<% form_for @event do |f| %>
+<% form_for @event do |f| %>
+	<div class="yui-gc"> 
+		<div class="yui-u first"> 
+			<h2>New event</h2>
+			<h4>Use our <%=link_to "handy bookmarklet", "#bookmarklet"%> to easily import events from across the web.</h4>
+			<div class="tgt" id="bookmarklet">
+				<p>Drag the link below into your bookmarks bar, or right click on it and choose to save the link as a bookmark.</p>
+				<%=link_to "Add eq event", "javascript:(function(){var s=document.createElement('script');s.setAttribute('src', '#{bookmarklet_url}?r='+Math.random()+'&url='+escape(location.href));s.setAttribute('type', 'text/javascript');document.body.appendChild(s);})();" %>
+			</div>
+			<div class="space"></div>
 			<p>
 				Name: <br/>
 				<%=f.text_field :name%>
@@ -17,53 +17,42 @@
 				Activity: <br/>
 				<%=f.text_field :category, :class => "activity_pick"%>
 			</p>
-	
+
 			<p>
 				Description (optional): <br/>
 				<%=f.text_area :description%>
 			</p>
-	
+
 			<p>
 				Venue name: <br/>
 				<%=f.text_field :venue%>
 			</p>
-	
+
 			<p>
 				Location: <br/>
 				<%=f.text_field :location, :class => "location-pick" %>
 			</p>
-	
+
 			<p>
 				When: <br/>
 				<%=f.text_field :human_range, :class => "date-pick" %>
 			</p>
-	
-			<p>
-				People to invite: <br/>
-				<%=f.text_area :invited %>
-			</p>
+
 			<div class="space"></div>
 			<p>
 				<input type="submit" value="Create event!" style="float:left;margin-right:20px">
 				This event will be added to your news feed by default. <br/>
-				<%=f.check_box :description%> <label for="something">Make private</label>
-				
+				<%=f.check_box :private %> <label for="event_private">Make private</label>
 			</p>
-		<% end %>	
-	</div>
-	<div class="yui-u">
-		<h2>People</h2>
-		<h4>Click to add to invitation</h4>
-		<div class="space"></div>
-		<div style="height:400px;overflow:auto;padding:10px;background-color:#eee">
-			<% if current_user.followees? %>
-				<h4>By Name / Username</h4>
-				<%=render current_user.followees%>
-			<% end %>
-			<% if current_user.found_email_addresses? %>
-				<h4>By email</h4>
-				<%=render current_user.found_email_addresses%>
-			<% end %>
+		</div>
+		<div class="yui-u">
+			<h2>Invitees</h2>
+			<h4>Search</h4>
+			<%=text_field_tag :q, "", :class=> "invitation-pick"%>
+			<input type="submit" value="Add">
+			<div class="space"></div>
+			<ul class="rows"><%=render :partial => "rsvp", :collection => @event.rsvps %></ul>
 		</div>
 	</div>
-</div>
+<% end %>	
+	

@@ -1,0 +1,7 @@
+<% content_tag :li, rsvp do %>
+	<span class="right"><%=rsvp.status%>
+	<% if rsvp.event.creator == current_user %>
+		<%=link_to "x"%>
+	<% end %>
+	<%=rsvp.user.short_name %>
+<% end %>

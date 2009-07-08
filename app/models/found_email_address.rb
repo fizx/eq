@@ -1,2 +1,0 @@
-class FoundEmailAddress < EmailAddress
-end

@@ -1,6 +1,7 @@
 require 'digest/sha1'
 # require "geokit"
 class User < ActiveRecord::Base
+  trgm_index :email
   include Authentication
   include Authentication::ByPassword
   include Authentication::ByCookieToken
@@ -26,22 +27,27 @@ class User < ActiveRecord::Base
   
   has_many :rsvps 
   
-  has_many :friendings_as_followee, :foreign_key => "followee_id", :class_name => "Following", 
+  has_many :friendings_as_follower, :foreign_key => "follower_id", :class_name => "Following", 
                                     :conditions => {:bidi => true}
-  has_many :followings_as_followee, :foreign_key => "followee_id", :class_name => "Following"
-  has_many :followings_as_follower, :foreign_key => "follower_id", :class_name => "Following"
+  has_many :followees, :through => :followings_as_follower
+  has_many :followings_as_followee, :foreign_key => "followee_id", :class_name => "Following", 
+                             :conditions => {:weak => false}
+  has_many :followings_as_follower, :foreign_key => "follower_id", :class_name => "Following", 
+                             :conditions => {:weak => false}
+  has_many :weak_followings, :foreign_key => "follower_id", :class_name => "Following", 
+                             :conditions => {:weak => true}
   has_many :followers, :through => :followings_as_followee
   has_many :followees, :through => :followings_as_follower
-  has_many :friends, :through => :friendings_as_followee, :source => :follower
+  has_many :weak_followees, :through => :weak_followings, :source => :followee
+  has_many :friends, :through => :friendings_as_follower, :source => :followee
   
   has_many :found_email_addresses
   
   belongs_to :default_location, :class_name => "Location"
   belongs_to :profile_image, :class_name => "UploadedImage"
   
-  has_many :intervals, :as => :intervalable
-  has_many :busy_events, :as => :intervalable
-  has_many :trips, :as => :intervalable
+  has_many :busy_events
+  has_many :trips
   
   has_many :uploaded_images, :foreign_key => :uploaded_by_id
 
@@ -53,6 +59,9 @@ class User < ActiveRecord::Base
   
   named_scope :friends_of, lambda {|user|
     #TODo
+  }
+  
+  named_scope :known_to, lambda {|user|
   }
   
   named_scope :available_at, lambda {|time|
@@ -124,7 +133,12 @@ class User < ActiveRecord::Base
   end
   
   def short_name
-    name
+    if name.present?
+      arr = name.split(" ")
+      arr.shift + arr.map{|n| " #{n[0..0].upcase}."}.join("")
+    else
+      email
+    end
   end
   
   def hides_interest(interest)
@@ -179,14 +193,7 @@ class User < ActiveRecord::Base
   end
   
   def event_status(event)
-    case Rsvp.find_by_event_id_and_user_id(event.id, self.id)
-    when NilClass: "welcome to come"
-    when DeclinedRsvp: "not coming"
-    when ConfirmedRsvp: "coming"
-    when MaybeRsvp: "on the fence"
-    else
-      "invited"
-    end
+    Rsvp.find_by_event_id_and_user_id(event.id, self.id).status
   end
   
   def never(interest)
@@ -202,12 +209,16 @@ class User < ActiveRecord::Base
   end
   
   def invitable_count
-    found_email_addresses.length - followees.length
+    weak_followees.length
   end
   
   def add_found_emails(emails)
-    emails.each do |e|
-      FoundEmailAddress.find_or_create_by_user_id_and_address(self.id, e)
+    emails && emails.each do |e|
+      user = User.find_or_initialize_by_email(e)
+      user.save(false) if user.new_record?
+      f = Following.find_or_initialize :follower_id => id, :followee_id => user.id
+      f.weak = true if f.new_record?
+      f.save!
     end
   end
   

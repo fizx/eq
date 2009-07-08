@@ -17,15 +17,11 @@ class FriendsController < ApplicationController
       client.authsub_token = session[:token]
       @emails = GmailParser.new(client).parse("http://www.google.com/m8/feeds/contacts/default/full")
       session[:parsed_gmail] = true
-    elsif session[:token] && session[:parsed_gmail]
-      @emails = current_user.found_email_addresses.find(:all, :select => "address").map(&:address)
     end
-    if @emails
-      current_user.add_found_emails(@emails)
-      @users = User.find_any_email @emails
-    end
-    
-    @invites = current_user.found_email_addresses.find(:all, :limit => 5) 
+    current_user.add_found_emails(@emails)
+
+    @users = current_user.weak_followees.find_any_email @emails    
+    @invites = @users.first(5)
   end
   
   def gmail

@@ -1,10 +1,10 @@
 <% content_tag_for :li, user do %>
 	<% if current_user.follows?(user)%>
 		<%= gravatar_for user %> <span><%=link_to user.short_name, user%></span>
-		<span class="location"><%=user.location_string%>
+		<span class="location"><%=user.location_string%></span>
 	<% else %>
 		<input type="submit" value="Follow" />
 		<%= gravatar_for user %> <span><%=user.short_name%></span>
-		<span class="location"><%=user.location_string%>
+		<span class="location"><%=user.location_string%></span>
 	<% end %>
 <%end%>

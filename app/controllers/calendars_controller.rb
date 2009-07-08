@@ -1,8 +1,8 @@
 class CalendarsController < ApplicationController
   def index
-    @events = current_user.events
-    @event = current_user.intervals.find(params[:id]) if params[:id]
-    @event ||= Interval.new
+    @events = current_user.events(:include => :location)
+    @event = current_user.events.find(params[:id]) if params[:id]
+    @event ||= Event.new
   end
   
   def date
@@ -29,16 +29,13 @@ class CalendarsController < ApplicationController
   end
   
   def current_event
-    @event = current_user.intervals.find(params[:selected_id])
+    @event = current_user.events.find(params[:event][:id])
     case params[:button].strip.downcase
     when "delete": 
-      Hiding.find_or_create! :user_id => current_user.id, :hidable_id => @event.id, :hidable_type => "Interval"
+      Hiding.find_or_create! :user_id => current_user.id, :hidable_id => @event.id, :hidable_type => @event.type
       flash[:notice] = "Event deleted"
     when "update":
-      @event.location_string = params[:selected_location]
-      @event.start = params[:selected_start]
-      @event.finish = params[:selected_finish]
-      if @event.save 
+      if @event.update_attributes(params[:event])
         flash[:notice] = "Event updated"
       else
         flash[:notice] = @event.error_text

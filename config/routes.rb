@@ -12,7 +12,6 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :interestings
 
   map.resources :categories
-  map.resources :invitations
   map.resources :events
   map.resources :busy_events
   map.resources :web_calendars
@@ -48,6 +47,7 @@ ActionController::Routing::Routes.draw do |map|
   map.locations_ac "/locations/ac", :controller => "locations", :action => "ac"
   map.dates_ac "/dates/ac", :controller => "dates", :action => "ac"
   map.connect "/invitations/ac", :controller => "invitations", :action => "ac"
+  map.resources :invitations
 
   map.bookmarklet '/bookmarklet.js', :controller => 'bookmarklet', :action => "bookmarklet"
   map.bookmarklet_target '/bookmarklet', :controller => 'bookmarklet', :action => "target"

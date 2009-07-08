@@ -10,7 +10,7 @@ class ActiveRecord::Base
     named_scope "#{field}_similar_to".to_sym, lambda {|text|
       escaped = text.gsub("\\", "\\\\").gsub("'", "\\'")
       {
-        :select => "*, similarity(#{field}, '#{escaped}') AS sml",
+        :select => "#{table_name}.*, similarity(#{table_name}.#{field}, '#{escaped}') AS sml",
         :conditions => "#{field} % '#{escaped}'",
         :order => "sml DESC, #{field}"
       }
