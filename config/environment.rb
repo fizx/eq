@@ -45,3 +45,4 @@ ENV["FACEBOOK_SECRET_KEY"] = "778154a790843719b127dcfa60d78f85"
 
 require "will_paginate"
 require "delayed_job"
+require "date_range"

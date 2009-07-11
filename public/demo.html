@@ -173,9 +173,9 @@ function idea(){
 							<tr>
 								<td valign="top">
 									<h4>
-										I'd like to ... <em><a href="#" onclick="idea()">need an idea?</a></em>
+										I'd like to ... &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em><a href="#" onclick="idea()">need an idea?</a></em>
 									</h4>
-									<div id="search">
+									<form id="search" action="serp.html" method="get">
 										<nobr><input id="q" size="30" onkeypress="noidea()">&nbsp;<input type="submit" value="Yeah!"></nobr>
 										<div id="thumbs" style="visibility:hidden;margin-top:3px">
 <a href="#" onclick="sorry();idea()">Woah, bad idea!</a>
@@ -184,7 +184,7 @@ function idea(){
 											
 						<br>																<span id="sorry" style="display:none">Sorry, how's this? </span>
 										</div>
-									</div>
+									</form>
 								</td>
 								<td width="20"></td>
 								<td valign="top" class="tips">
@@ -747,7 +747,7 @@ function idea(){
 							I'm located in:
 						</h4><input type="text" value="San Francisco, CA"> <input type="submit" value="Update"><br>
 						<br>
-						<input type="checkbox" id="foo" checked> <label for="foo">Notify me of new <span style="color:darkgreen">friend<b>can</b></span>dos <a href="#">?</a></label><br>
+						<input type="checkbox" id="foo" checked> <label for="foo">Notify me when friends create compatible interests?<br>
 						<br>
 						<div class="login">
 							<h4>
@@ -791,7 +791,7 @@ function idea(){
 		</div>
 		<div id="ft" role="contentinfo">
 			<p>
-				<label for="foo">Copyright ©2009 me</label>
+				<label for="foo">Copyright 2009 me</label>
 			</p>
 		</div>
 	</body>

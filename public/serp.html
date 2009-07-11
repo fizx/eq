@@ -1,0 +1,353 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+	<head>
+		<meta name="generator" content="HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 13), see www.w3.org"><!-- Source File -->
+		<link rel="stylesheet" type="text/css" href="stylesheets/reset-fonts-grids.css">
+		<link href="stylesheets/fullcalendar.css?1243839116" media="screen" rel="stylesheet" type="text/css">
+		<script src="javascripts/jquery-1.3.2.min.js?1245736313" type="text/javascript">
+</script>
+		<script src="javascripts/jquery-ui-1.7.2.custom.min.js?1245736313" type="text/javascript">
+</script>
+		<script src="javascripts/fullcalendar.min.js?1245736313" type="text/javascript">
+</script>
+		<style type="text/css">
+
+		.login {
+			background-color:#ffc;
+			overflow:hidden;
+			padding:8px;
+			border: 1px green solid;
+		}
+
+		.high {
+			background-color:#cfc;
+			padding:5px;
+		}
+		.friends li{
+			padding:3px;
+		}
+
+		.friends li.o{
+			background-color: #ddd;
+		}
+
+		.login li{
+			font-weight: bold;
+		}
+		.login ul{
+			padding:10px ;
+		}
+
+		#deets{
+			display:inline;
+			position:absolute;
+			top:5px;
+			right:10px;
+		}
+
+		.tips {
+			color: #666;
+		}
+
+		h1, h2, h3, h4, h5, h6{
+				font-family: Georgia, serif;
+		}
+
+		a {
+				text-decoration:none;
+		}
+
+		a:hover {
+				text-decoration:underline;
+				color:blue !important;
+		}
+
+		a:hover *{
+				text-decoration:underline;
+				color:blue !important;
+		}
+
+		.block {
+				display:table;
+				padding:5px;
+				padding-right:9px
+		}
+
+		a.block:hover {
+				background-color: #ddd;
+				text-decoration:none !important;
+		}
+
+		h1 {
+				font-size:2em;
+		}
+
+		#hd{
+			padding: 20px;
+		}
+
+		h3{
+				font-size: 1.5em;
+		}
+
+		h4{
+				margin:0;
+				font-weight: normal;
+				font-size: 1.3em;
+		}
+
+		#search input {
+				font-size:1.3em;
+		}
+
+		#search {
+		/*        margin-bottom:20px;*/
+		}
+
+		#q{
+				
+		}
+
+		#ft{
+				padding:10px;
+				background-color:#eee;
+				margin-top:50px;
+		}
+
+		.del{
+				float:right;
+				color:#99c;
+		}
+
+		#saved li {
+				padding:3px;
+				background-color:#ddd;
+		}
+
+		#saved li.o {
+				background-color:white;
+		}
+
+		a.s{
+				color:#99c;
+		}
+
+		em {
+				color:#999;
+		}
+
+		em a{
+				color:#99c;
+		}
+		
+		#result_panel>li{
+			margin-bottom:10px;
+		}
+		</style>
+		<title></title>
+	</head>
+	<body>
+		<div id="doc3" class="yui-t7">
+			<div id="hd" role="banner">
+				<div id="deets">
+					<a href="#">about</a> . <a href="#">tools</a> . <a href="#"><b>privacy</b></a> . <a href="#">contact</a>
+				</div>
+				<h1>
+					who<b><i>can</i></b>do?
+				</h1><i>connecting friends to activities</i>
+			</div>
+			<div id="bd" role="main">
+				<div class="yui-gc">
+					<div class="yui-u first">
+						<script type="text/javascript">
+function idea(){
+								var ideas = ["go out", "do something active", "go cycling", "go hiking", "play a sport", "play basketball", "play football", "play volleyball", "go to a concert", "go to a country concert", "go to a rock concert", "go to a folk concert", "go to a indie concert", "go to a punk concert", "go to another concert", "eat something", "eat somewhere simple", "eat somewhere nice", "see a movie", "watch Transformers: Rev...", "watch Ice Age: Dawn of ...", "watch Public Enemies", "watch The Proposal", "watch The Hangover", "watch Up", "watch My Sister's Kee...", "watch The Taking of Pel...", "watch Year One", "watch Night At the Muse...", "watch Star Trek", "watch BrÃ¼no", "watch Humpday", "watch I Love You Beth Coop...", "watch Kambakkht Ishq", "watch Soul Power", "watch Weather Girl",
+								"go surfing",
+								"go out this weekend",
+								"watch Transformers, The Movie",
+								"go shopping",
+								"eat out tonight"
+								];
+								
+								document.getElementById("q").value = ideas[Math.floor(Math.random() * ideas.length)];
+						document.getElementById("thumbs").style.visibility = "";
+						}
+
+						function noidea()
+						{
+							document.getElementById("thumbs").style.visibility = "hidden";
+						}
+
+						function sorry()
+						{
+							// document.getElementById("sorry").style.display = "inline";
+						}
+
+						</script>
+						<h4>
+							
+							I'd like to ... &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em><a href="#" onclick="idea()">need an idea?</a></em>
+						</h4>
+						<div id="search">
+							<nobr><input id="q" value="watch a movie" size="30" onkeypress="noidea()">&nbsp;<input type="submit" value="Yeah!"></nobr>
+							<div id="thumbs" style="visibility:hidden;margin-top:3px;display:inline">
+								<a href="#" onclick="sorry();idea()">Woah, bad idea!</a> <em>or</em> <a href="#" onclick="sorry();idea()">Not this time.</a><br>
+								<span id="sorry" style="display:none">Sorry, how's this?</span>
+							</div>
+							
+							
+						</div>
+			</td></tr></table>				
+						
+						<ul style="clear:both;margin-top:20px" id="result_panel">
+							<li>
+								<div class="high">
+									<div style="float:right;padding:3px">
+										Within <input id="r" name="r" size="4" type="text" value="5"/> miles of 
+										<input class="location-pick" id="location" name="location" type="text" value="San Francisco, CA" />
+										<input type="submit" value="Refine">
+										</div>
+									<h3>7 of your friends want to watch a movie.</h3>
+								</div>
+								<table style="margin:10px">
+									<tr>
+										<td valign="top" width="100%">
+											<ul class="friends">
+												<li>
+													<input type="checkbox" checked> Adam Massanero wants to watch a movie on a weeknight
+												</li>
+												<li class="o">
+													<input type="checkbox" checked> Nick Cooper wants to watch Transformers 2
+												</li>
+												<li>
+													<input type="checkbox" checked> Dani Chapot
+												</li>
+												<li class="o">
+													<input type="checkbox" checked> Kirsten Eide
+												</li>
+												<li>
+													<input type="checkbox" checked> Aaron Owen
+												</li>
+												<li class="o">
+													<input type="checkbox" checked> Jeff Schuil
+												</li>
+												<li>
+													<input type="checkbox" checked> Heather Capri
+												</li>
+											</ul>
+											<br><h4><em>To send an invitation, click on a date in the calendar -&gt;</em></h4>
+										</td>
+										<td valign="top" width="20">
+											<img src="gmail.gif" width="20" style="visibility:hidden">
+										</td>
+										<td valign="top" width="200">
+											<div id="calendar"></div><img src="gmail.gif" width="250" height="1" style="visibility:hidden">
+										</td>
+									</tr>
+								</table>
+							</li>
+							<li>
+								<table width="100%">
+									<tr><td width="50%" valign="top">
+								<h3 class="high">
+									Events matching "watch a movie"
+								</h3></td>
+								<td width=20>											<img src="gmail.gif" width="20" style="visibility:hidden"></td>
+								<td width="50%" valign="top">
+							<h3 class="high">
+								Search results for "watch a movie"
+							</h3></td></tr></table>
+								
+							</li>
+						</ul>
+					</div>
+					<div class="yui-u">
+						<h4>
+							I'm located in:
+						</h4><input type="text" value="San Francisco, CA"> <input type="submit" value="Update"><br>
+						<br>
+						<input type="checkbox" id="foo" checked> <label for="foo">Notify me when friends create compatible interests?<br>
+						<br></label>
+						<div style="clear:both;padding-top:20px">
+							<h3 style="float:left">
+								<label for="foo">Your interests <a href="#" class="s"><nobr>Your friends' interests</nobr></a></label>
+							</h3>
+						</div>
+						<ul id="saved" style="clear:both">
+							<li>
+								<label for="foo"><a href="#" class="del">hide from friends</a> going out <a href="#" style="color:black;text-decoration:underline"><span style="color:darkgreen">2 friends</span> <b>on 3 dates</b></a></label>
+							</li>
+							<li class="o">
+								<label for="foo"><a href="#" class="del">hide from friends</a> hiking near Yosemite</label>
+							</li>
+							<li>
+								<label for="foo"><a href="#" class="del">hide from friends</a> basketball on weekends</label>
+							</li>
+							<li class="o">
+								<label for="foo"><a href="#" class="del">hide from friends</a> getting drinks in the evening</label>
+							</li>
+						</ul>
+						<div style="float:right">
+							<label for="foo"><b>1</b> <a href="#">2</a> <a href="#">3</a> <a href="#">4</a> ... <a href="#">10</a> <a href="#">&gt;</a></label>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="ft" role="contentinfo">
+			<p>
+				<label for="foo"><label for="foo">Copyright 2009 me</label></label>
+			</p>
+		</div><script type="text/javascript">
+
+																				$(function() {
+
+																												var d = new Date();
+																												var y = d.getFullYear();
+																												var m = d.getMonth();
+
+																												function dateClicky(date) {
+																																location.href = "/date/"+(date.getMonth()+1)+"/"+date.getDate()+"/"+date.getFullYear();
+																												}
+
+																												function eventClicky(calEvent, jsEvent) {
+																																if(calEvent.id.match("event")) {
+																																				location.href = "/events/" + calEvent.id;
+																																				return false
+																																} else if(calEvent.id.match("interest")) {
+																																				location.href = "/events/new?interest_id="+calEvent.id+"&startms="+calEvent.start.getTime()+"&finishms="+calEvent.end.getTime();
+																																				return false;
+																																}
+
+																																$("#event_id").val(calEvent.id)
+																																$("#event_location_string").val(calEvent.location);
+																																$("#event_name").val(calEvent.title);
+																																$("#event_human_range").val(calEvent.human_range);
+
+																																if(location.href.match("calendar")) {
+																																				location.href = "#clicked";     
+																																} else {
+																																				location.href = "/calendars?id="+calEvent.id+"#clicked";        
+																																} 
+
+																																return false;
+																												}
+
+																												$('#calendar').fullCalendar({
+																																// draggable: true,
+																																dayClick: dateClicky,
+																																eventClick: eventClicky,
+																																events: [                 
+																																															 {
+																																								"id": "89",
+																																								"title":  "Dani+2",
+																																								"location":  "Collaborative area",
+																																								"human_range": "Nov 30 2006 7-8am",
+																																								"start": new Date(1247295600000),
+																																								"end": new Date(1247382000000)}                     ]
+																												});
+
+																								});     
+		</script>
+	</body>
+</html>
